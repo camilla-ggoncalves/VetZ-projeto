@@ -167,7 +167,7 @@ switch ($request) {
         }
         $controller = new UsuarioController();
         $usuario = $controller->perfil($_GET['id']);
-        include '../views/perfil_usuario.php';
+        include '../views/perfil_usuario.html';
         break;
 
     case '/projeto/vetz/excluir-usuario':

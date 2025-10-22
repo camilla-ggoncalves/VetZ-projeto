@@ -1,14 +1,17 @@
-        <?php
-        include_once "conexao.php";
+<?php
+include_once __DIR__ . '/conexao.php';
 
-        // Consulta para verificar se há algum usuário no banco
-        $sql = "SELECT COUNT(*) AS total FROM usuarios";
-        $result = $conn->query($sql);
+// Consulta para verificar se há algum usuário no banco
+$temUsuario = false;
+if (isset($conn)) {
+    $sql = "SELECT COUNT(*) AS total FROM usuarios";
+    $result = $conn->query($sql);
+    if ($result) {
         $row = $result->fetch_assoc();
-
-        // Se existir pelo menos 1 usuário cadastrado, exibe "Perfil", senão "Cadastro"
-        $temUsuario = ($row['total'] > 0);
-        ?>
+        $temUsuario = (!empty($row) && isset($row['total']) && $row['total'] > 0);
+    }
+}
+?>
 
         <!DOCTYPE html>
         <html lang="pt-BR">

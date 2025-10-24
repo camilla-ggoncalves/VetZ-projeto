@@ -66,9 +66,9 @@ if (isset($conn)) {
 
         <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
 
-        <!-- Begin section 14 -->
-        <section class="section14" id="sec14">
-            <div class="container14">
+        <!-- Begin section 07 -->
+        <section class="section07" id="sec07">
+            <div class="container07">
                 <div class="header-info">
                 <div class="pet-photo">🐕</div>
                 <h1 class="nome-pet">Luck</h1>
@@ -335,7 +335,7 @@ if (isset($conn)) {
 
             </div>
         </section>
-        <!-- End Section 14 -->
+        <!-- End Section 07 -->
 
         <!-- Begin footer-->
         <div class="footer">

@@ -9,17 +9,18 @@ Sequência do CSS Da Página: (use esses nomes a pesquisa rápida no código.)
 02. Nav-Bar
 03. BEGIN PAGE HOME 
     01. Section 01
+    02. Section 01.1
 04. BEGIN PAGE SOBRE NÓS
     01. Section 02
     02. Section 03
-05. BEGIN PAGE PERFIL
+05. BEGIN PAGE PERFIL USUÁRIO
     01. Section 04
     02. Section 04.1
 06. BEGIN PAGE CURIOSIDADES
     01. Section 05
-07. BEGIN PAGE VACINAÇÃO CÃO
+07. BEGIN PAGE VACINAÇÃO GERAL
     01. Section 06
-08. BEGIN PAGE VACINAÇÃO GATO
+08. BEGIN PAGE VACINAÇÃO PET
     01. Section 07
 09. BEGIN PAGE RECOMENDAÇÕES
     01. Section 08
@@ -31,8 +32,8 @@ Sequência do CSS Da Página: (use esses nomes a pesquisa rápida no código.)
     01. Section 11
 13. BEGIN PAGE LOGIN
     01. Section 12
-ADICIONAR 07-VACINAÇÃO
-->alteração de páginas
+14. BEGIN PAGE PERFIL PET
+    01. Section 13
     
 14. Footer
 15. Media Queries
@@ -352,9 +353,10 @@ R
   color: #2c3e50;
   padding: 12px 0;
 }
+ /*End Section 01*/
 
 /*Begin Section 01.1*/
-.section02_2 {
+.section01_1 {
   position: relative;
   padding-top: 60px;
   padding-bottom: 821px;
@@ -371,13 +373,13 @@ R
   padding: 20px 0;
 }
 
-.sec02_2titleh2 {
+.sec01_1titleh2 {
   font-size: 40px;
   font-family: 'Poppins-Bold';
   color: #038654;
 }
 
-.sec02_02ph2{
+.sec01_01ph2{
   font-family: 'Poppins-Regular';
   font-size: 16px;
   line-height: 26px;
@@ -385,7 +387,7 @@ R
   max-width: 800px;
 }
 
-.sec02_2titles{
+.sec01_1titles{
   font-family: 'Poppins-Bold';
   font-size: 20px;
   color: #038654;
@@ -417,8 +419,6 @@ R
   margin-bottom: 1rem;
 }
  /*End Section 01.1*/
-
- /*End Section 01*/
 
 /* ========================================================== */
 /*                  03. END PAGE HOME                         */
@@ -608,10 +608,10 @@ R
  /* ========================================================== */
 
  /* ========================================================== */
- /* 		            05. BEGIN PAGE PERFIL                      */
+ /* 		          05. BEGIN PAGE PERFIL USUÁRIO                */
  /* ========================================================== */
 /* Begin Section 04*/
-.section04{
+.section04 {
   position: relative;
   padding-top: 108px;
   padding-bottom: 780px;
@@ -621,7 +621,6 @@ R
   z-index: 10;
   overflow: hidden;
 }
-
 
 .main-profile {
   background: white;
@@ -644,21 +643,6 @@ R
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.profile-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-}
-
-.profile-header > * {
-  position: relative;
-  z-index: 2;
 }
 
 .banner-upload {
@@ -703,21 +687,6 @@ R
   object-fit: cover;
 }
 
-.profile-avatar:hover {
-  transform: scale(1.05);
-}
-
-.avatar-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  color: white;
-  font-size: 24px;
-  background: #555;
-}
-
 .avatar-upload-overlay {
   position: absolute;
   bottom: 0;
@@ -739,7 +708,7 @@ R
   display: none;
 }
 
-.tutor{
+.tutor {
   font-family: 'Poppins-Bold';
   font-size: 20px;
   color: #2d5016;
@@ -760,6 +729,9 @@ R
   margin-bottom: 15px;
   padding-bottom: 8px;
   border-bottom: 2px solid #90EE90;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .info-grid {
@@ -794,65 +766,6 @@ R
   margin-top: 5px;
 }
 
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.sidebar-card {
-  background: white;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.quick-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.btn {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #90EE90, #98FB98);
-  color: #2d5016;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #7dd87d, #90EE90);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(144, 238, 144, 0.3);
-}
-
-.btn-secondary {
-  background: #f8f9fa;
-  color: #4a7c23;
-  border: 2px solid #90EE90;
-}
-
-.btn-secondary:hover {
-  background: #90EE90;
-  color: white;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 .back-button {
   background: white;
   border: none;
@@ -873,166 +786,20 @@ R
   transform: scale(1.1);
 }
 
-.profile-card {
-  background: linear-gradient(135deg, #90EE90 0%, #98FB98 100%);
-  border-radius: 20px;
-  padding: 40px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-
-.profile-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: #fff;
-  border: 5px solid white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-}
-
-.profile-info {
-  flex: 1;
-}
-
-.profile-name {
-  font-size: 48px;
-  color: #2d5016;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.profile-type {
-  font-size: 20px;
-  color: #4a7c23;
-}
-
-.edit-button {
-  background: white;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
-
-.edit-button:hover {
-  transform: translateY(-2px);
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.info-box {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  border-left: 4px solid #90EE90;
-}
-
-.info-label {
-  font-size: 12px;
-  color: #4a7c23;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.info-value {
-  font-size: 18px;
-  color: #333;
-}
-
-.section-title {
-  font-size: 32px;
-  color: #2d5016;
-  font-weight: bold;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.sec04-1 {
+  position: relative;
+  padding-top: 60px;
+  padding-bottom: 120px;
+  background: #FEFFEF;
+  background-size: cover;
+  z-index: 10;
+  overflow: visible;
 }
 
 .pets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 25px;
-}
-
-.pet-card {
-  background: white;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-align: center;
-}
-
-.pet-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-}
-
-.pet-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  border: 4px solid #90EE90;
-  margin: 0 auto 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 50px;
-}
-
-.pet-name {
-  font-size: 28px;
-  color: #333;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.pet-info {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.view-profile-btn {
-  background: linear-gradient(135deg, #90EE90 0%, #98FB98 100%);
-  border: none;
-  padding: 12px 30px;
-  border-radius: 25px;
-  color: #2d5016;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s;
-  width: 100%;
-}
-
-.view-profile-btn:hover {
-  transform: scale(1.05);
 }
 
 .add-pet-btn {
@@ -1055,18 +822,6 @@ R
   transform: scale(1.1);
 }
 
-/* Begin Section 04.1*/
-.sec04-1{
-  position: relative;
-  padding-top: 60px;
-  padding-bottom: 120px;
-  background: #FEFFEF;
-  background-size: cover;
-  z-index: 10;
-  overflow: visible;
-}
-
-/* Modal para adicionar pet */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -1078,10 +833,6 @@ R
   z-index: 1000;
   justify-content: center;
   align-items: center;
-}
-
-.modal-overlay.active {
-  display: flex;
 }
 
 .modal-content {
@@ -1230,73 +981,17 @@ R
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
-/* End Section 04.1*/
 
-/* User PHP */
-.secUser{
-  position: relative;
-  padding-top: 108px;
-  padding-bottom: 590px;
-  background: #FEFFEF;
-  background-size: cover;
-  z-index: 10;
-  overflow: hidden;
-}
-
-/* PERFIL PET */
-.sectionPet{
-  position: relative;
-  padding-top: 108px;
-  padding-bottom: 650px;
-  background: #FEFFEF;
-  background-size: cover;
-  z-index: 10;
-  overflow: hidden;
-}
-
-.dadoPerfilsecPet1{
-  font-family: 'Poppins-Bold';
-  font-size: 17px;
-  line-height: 26px;
-  margin: 0 10px 0 0;
-  text-align: left;
-}
-
-.dadoPerfilsecPet{
-  font-family: 'Poppins-Bold';
-  font-size: 17px;
-  line-height: 26px;
-  margin: 0 0 0 -25px;
-  text-align: left;
-}
-
-.card-img-top-perfilPet{
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 0 5px 121px;
-  display: block;
-}
-
-.secPeteditar{
-  font-family: 'Poppins-Regular';
-  text-decoration: underline;
-  color: #038654;
-  font-size: 17px;
-  text-align: right;
-  text-transform: none;
-  margin: -15px 0 0 0;
-}
+/* End Section 04*/
 
  /* ========================================================== */
- /* 		             05. END PAGE PERFIL                       */
+ /* 		          05. END PAGE PERFIL USUÁRIO                  */
  /* ========================================================== */
 
  /* ========================================================== */
  /* 		           06. BEGIN PAGE CURIOSIDADES                 */
  /* ========================================================== */
-
+/*Begin Section 05*/
 .video-grid {
   display: none; /* esconde todas as grades por padrão */
 }
@@ -1372,16 +1067,16 @@ R
     border-bottom: 2px solid #FE5F5F; /* destaque do botão selecionado */
 }
 
-
+/*End Section 05*/
  /* ========================================================== */
  /* 		             06. END PAGE CURIOSIDADES                 */
  /* ========================================================== */
 
  /* ========================================================== */
- /* 		             06. BEGIN PAGE VACINAÇÃO                  */
+ /* 		          07. BEGIN PAGE VACINAÇÃO GERAL               */
  /* ========================================================== */
-/*Begin Section 13*/
-.section13{
+/*Begin Section 06*/
+.section06 {
   position: relative;
   padding-top: 108px;
   padding-bottom: 500px;
@@ -1391,7 +1086,7 @@ R
   overflow: hidden;
 }
 
-.sec013titleh1{
+.sec006titleh1 {
   font-family: 'Poppins-Bold';
   font-size: 40px;
   line-height: 52px;
@@ -1401,14 +1096,14 @@ R
   color: #038654;
 }
 
-.sec13ph1{
+.sec06ph1 {
   font-family: 'Poppins-Regular';
   font-size: 16px;
   line-height: 26px;
   text-align: center;
 }
 
-.sec13infosh2{
+.sec06infosh2 {
   font-family: 'Poppins-Bold';
   font-size: 16px;
   text-align: left;
@@ -1416,48 +1111,11 @@ R
   margin-bottom: 10px;
 }
 
-.sec13infos{
+.sec06infos {
   font-family: 'Poppins-Regular';
   font-size: 16px;
   text-align: left;
   margin-bottom: 20px;
-}
-
-.vacina {
-  text-align: center;
-  padding: 20px;
-  transition: transform 0.3s;
-}
-
-.vacina img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
-
-.sec13phvac {
-  font-family: 'Poppins-Regular';
-  font-size: 16px;
-  margin-bottom: 10px;
-  padding: 30px 0 0 0;
-}
-
-.carteirinha {
-  font-family: 'Poppins-Bold';
-  display: inline-block;
-  background: linear-gradient(45deg, #28a745, #20c997);
-  padding: 12px 25px;
-  border-radius: 30px;
-  font-size: 1rem;
-  font-weight: bold;
-  text-decoration: none;
-  transition: transform 0.3s;
-}
-
-.carteirinha:hover {
-  transform: scale(1.05);
 }
 
 .info-cards {
@@ -1480,39 +1138,61 @@ R
   transform: translateY(-5px);
 }
 
-.info-card h2 {
-  color: #038654;
+.vacina {
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s;
+}
+
+.sec06phvac {
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
   margin-bottom: 10px;
-  font-size: 1.3rem;
+  padding: 30px 0 0 0;
 }
 
-.info-card p {
-  font-size: 0.95rem;
-  color: #555;
+.carteirinha {
+  font-family: 'Poppins-Bold';
+  display: inline-block;
+  background: linear-gradient(45deg, #28a745, #20c997);
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.3s;
+  color: white;
 }
 
-/*End Section 13*/
+.carteirinha:hover {
+  transform: scale(1.05);
+}
+
+/*End Section 06*/
  /* ========================================================== */
- /* 		             06. END PAGE VACINAÇÃO                    */
+ /* 		            07. END PAGE VACINAÇÃO GERAL               */
  /* ========================================================== */
 
  /* ========================================================== */
- /* 		           07. BEGIN PAGE VACINAÇÃO CÃO                */
+ /* 		           08. BEGIN PAGE VACINAÇÃO PET                */
  /* ========================================================== */
-/*Begin Section 14*/
-.section14 {
+/*Begin Section 07*/
+.section07 {
   background: #FEFFEF;
   padding-top: 100px;
   font-family: 'Poppins-Regular';
   min-height: 165vh;
 }
 
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  gap: 20px;
+.header-info {
+  background: linear-gradient(135deg, #038654 0%, rgb(96, 193, 101) 100%);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  color: white;
 }
 
 .pet-photo {
@@ -1528,30 +1208,10 @@ R
   font-size: 60px;
 }
 
-.header-info{
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, #038654 0%, rgb(96, 193, 101) 100%);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.header-info {
-  flex: 1;
-  color: white;
-}
-
-.header-info h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-}
-
-.header-info p {
-  font-size: 1.1em;
-  opacity: 0.95;
+.nome-pet {
+  font-family: 'Poppins-Bold';
+  font-size: 30px;
+  color: #fff;
 }
 
 .pet-details {
@@ -1576,17 +1236,12 @@ R
   font-weight: bold;
 }
 
-.nome-pet{
-  font-family: 'Poppins-Bold';
-  font-size: 30px;
-  color: #fff;
-}
-
 .vaccination-card {
   background: white;
   border-radius: 15px;
   padding: 30px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin-top: 30px;
 }
 
 .vaccination-card h2 {
@@ -1628,6 +1283,18 @@ R
   font-size: 1em;
 }
 
+.age-alert {
+  background: #fff9c4;
+  border-left: 4px solid #fbc02d;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.age-alert strong {
+  color: #f57f17;
+}
+
 .vaccine-table {
   width: 100%;
   border-collapse: collapse;
@@ -1639,10 +1306,9 @@ R
   color: white;
 }
 
-.vaccine-table th {
+.vaccine-table th, .vaccine-table td {
   padding: 15px;
   text-align: left;
-  font-weight: 600;
 }
 
 .vaccine-table tbody tr {
@@ -1652,10 +1318,6 @@ R
 
 .vaccine-table tbody tr:hover {
   background: #f1f8e9;
-}
-
-.vaccine-table td {
-  padding: 15px;
 }
 
 .vaccine-name {
@@ -1711,6 +1373,7 @@ R
   padding: 25px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   height: fit-content;
+  margin-top: 30px;
 }
 
 .medications-panel h2 {
@@ -1727,6 +1390,7 @@ R
   border-radius: 10px;
   margin-bottom: 15px;
   border-left: 4px solid #66bb6a;
+  position: relative;
 }
 
 .medication-name {
@@ -1748,17 +1412,30 @@ R
   font-style: italic;
 }
 
-.age-alert {
-  background: #fff9c4;
-  border-left: 4px solid #fbc02d;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+.delete-medication-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e53935;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
 }
 
-.age-alert strong {
-  color: #f57f17;
+.delete-medication-btn:hover {
+  background: #c62828;
+  transform: scale(1.1);
 }
+
+/* ------------------ MODAIS ------------------ */
 
 .modal {
   display: none;
@@ -1885,7 +1562,7 @@ R
   margin: 0;
 }
 
-.checkbox-group .vaccine-date-input {
+.vaccine-date-input {
   width: 150px;
   font-size: 13px;
   padding: 8px;
@@ -1912,181 +1589,26 @@ R
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.medication-card {
-  background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  border-left: 4px solid #66bb6a;
-  position: relative;
-}
-
-.delete-medication-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #e53935;
-  color: white;
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.1em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.delete-medication-btn:hover {
-  background: #c62828;
-  transform: scale(1.1);
-}
-
 @media (max-width: 1024px) {
-  .container {
-      grid-template-columns: 1fr;
+  .header-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pet-details {
+    flex-direction: column;
+    align-items: center;
   }
 }
-/*End Section 14*/
-
+ /*End Section 07*/
  /* ========================================================== */
- /* 		             07. END PAGE VACINAÇÃO CÃO                */
- /* ========================================================== */
-
- /* ========================================================== */
- /* 		           08. BEGIN PAGE VACINAÇÃO GATO               */
- /* ========================================================== */
-/*Begin Section 07*/
-.section07{
-  position: relative;
-  padding-top: 108px;
-  padding-bottom: 500px;
-  background: #FEFFEF;
-  background-size: cover;
-  z-index: 10;
-  overflow: hidden;
-}
-
-.sec07titleh2{
-  font-family: 'Poppins-Bold';
-  font-size: 26px;
-  line-height: 52px;
-  padding: 0px 0 35px 0;
-  text-align: center;
-  color: #038654;
-  margin: 0 auto;
-}
-
-.sec07titleh2{
-  font-family: 'Poppins-Bold';
-  font-size: 26px;
-  line-height: 52px;
-  padding: 0px 0 35px 0;
-  text-align: center;
-  color: #038654;
-  margin: 0 auto;
-}
-
-.sec07th1{
-  font-family: 'Poppins-Regular';
-  font-size: 16px;
-  text-align: center;
-}
-
-.textminsec07{
-  font-family: 'Poppins-Regular';
-  font-size: 12px;
-  text-align: center;
-}
-
-.sec07vacina{
-  font-family: 'Poppins-Regular';
-  font-size: 16px;
-  text-align: center;
-}
-
-.sec07descvacina{
-  font-family: 'Poppins-Regular';
-  font-size: 16px;
-  text-align: center;
-}
-
-.doses{
-  font-family: 'Poppins-Regular';
-  font-size: 16px;
-  text-align: center;
-}
-
-/* Caixa de especificações da vacina */
-.modalTitle{
-  font-family: 'Poppins-Bold';
-  font-size: 16px;
-  text-align: center;
-}
-
-.modalBody{
-  padding: 0 20px 0 20px;
-}
-
-.modalContent{
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    width: 100%;
-    pointer-events: auto;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, .2);
-    border-radius: .3rem;
-    outline: 0;
-    margin: 93px 0 0 0;
-}
-
-.vacinaNome{
-  font-family: 'Poppins-Bold';
-  font-size: 16px;
-  text-align: left;
-}
-
-.vacinaDose{
-  font-family: 'Poppins-Regular';
-  font-size: 16px;
-  text-align: left;
-}
-
-.especificacoes{
-  font-family: 'Poppins-Bold';
-  font-size: 16px;
-  text-align: left;
-}
-
-.sec07Tabela{
-  background-color: #cde8c5;
-  text-align: center;
-  padding: 15px;
-  font-weight: bold;
-  font-size: 16px;
-  color: #2d2d2d;
-}
-
-.modal-backdrop.show {
-  opacity: 0 !important; /* Remove o escurecimento */
-  background-color: transparent !important;
-}
-
-
-/*End Section 07*/
- /* ========================================================== */
- /* 		             08. END PAGE VACINAÇÃO GATO               */
+ /* 		             08. END PAGE VACINAÇÃO PET                */
  /* ========================================================== */
 
  /* ========================================================== */
  /* 		           09. BEGIN PAGE RECOMENDAÇÕES                */
  /* ========================================================== */
+ /*Begin Section 08*/
 
  /* Centralizar o cachorro animado na seção de recomendações */
 .section08 {
@@ -2158,7 +1680,7 @@ R
   height: 1rem;
 }
 
- 
+ /*End Section 08*/
  /* ========================================================== */
  /* 		             09. END PAGE RECOMENDAÇÕES                */
  /* ========================================================== */
@@ -2166,6 +1688,7 @@ R
  /* ========================================================== */
  /* 		           10. BEGIN PAGE TERMOS DE USO                */
  /* ========================================================== */
+ /*Begin Section 09*/
 .sectionTermoUso{
   position: relative;
   padding-top: 108px;
@@ -2315,6 +1838,7 @@ h1 {
   color: #038654;
   text-align: center;
 }
+/*End Section 09*/
 
  /* ========================================================== */
  /* 		             10. END PAGE TERMOS DE USO                */
@@ -2330,7 +1854,7 @@ h1 {
  /* ========================================================== */
  /* 		           12. BEGIN PAGE CADASTRO                     */
  /* ========================================================== */
-
+ /*Begin Section 11*/
  /* Reset e base */
 html, body {
     height: 100%;
@@ -2444,13 +1968,17 @@ html, body {
     font-size: 14px;
     border-top: 1px solid #cfe8b6;
   }  
+
+ /*End Section 11*/
  /* ========================================================== */
  /* 		             12. END PAGE CADASTRO                     */
  /* ========================================================== */
 
-/* ========================================================== */
+ /* ========================================================== */
  /* 		            13. BEGIN PAGE LOGIN                       */
  /* ========================================================== */
+/*Begin Section 12*/
+
  /* Reset e base */
  html, body {
   height: 100%;
@@ -2653,15 +2181,66 @@ input[type="password"] {
       max-width: 100px;
   }
 }
+/*End Section 12*/
  /* ========================================================== */
  /*                     13. END PAGE LOGIN                     */
  /* ========================================================== */
  /* ========================================================== */
- /*                     13. BEGIN PAGE RECUPERAR                 */
+ /*                  14. BEGIN PAGE PERFIL PET                 */
+ /* ========================================================== */
+/* Begin Section 13 */
+.sectionPet {
+  position: relative;
+  padding-top: 108px;
+  padding-bottom: 650px;
+  background: #FEFFEF;
+  background-size: cover;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.dadoPerfilsecPet1 {
+  font-family: 'Poppins-Bold';
+  font-size: 17px;
+  line-height: 26px;
+  margin: 0 10px 0 0;
+  text-align: left;
+}
+
+.dadoPerfilsecPet {
+  font-family: 'Poppins-Bold';
+  font-size: 17px;
+  line-height: 26px;
+  margin: 0 0 0 -25px;
+  text-align: left;
+}
+
+.card-img-top-perfilPet {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 0 5px 121px;
+  display: block;
+}
+
+.secPeteditar {
+  font-family: 'Poppins-Regular';
+  text-decoration: underline;
+  color: #038654;
+  font-size: 17px;
+  text-align: right;
+  text-transform: none;
+  margin: -15px 0 0 0;
+}
+/*End Section 13*/
+
+ /* ========================================================== */
+ /*                  14. END PAGE PERFIL PET                   */
  /* ========================================================== */
 
  /* ========================================================== */
- /* 			             14. BEGIN FOOTER                         */
+ /* 			             14. BEGIN FOOTER                        */
  /* ========================================================== */
  .footer{
   padding: 12px 0 10px 0;
@@ -2720,25 +2299,22 @@ input[type="password"] {
     z-index: 10;
     overflow: hidden;
   }
-
-
-
   /*End HOME PAGE*/
 
   /*Begin PAGE SOBRE NÓS*/
   /*End PAGE SOBRE NÓS*/
 
-  /*Begin PAGE PERFIL*/
-  /*End PAGE PERFIL*/
+  /*Begin PAGE PERFIL USUÁRIO*/
+  /*End PAGE PERFIL USUÁRIO*/
 
   /*Begin PAGE CURIOSIDADES*/
   /*End PAGE CURIOSIDADES*/
 
-  /*Begin PAGE VACINAÇÃO CÃO*/
-  /*End PAGE VACINAÇÃO CÃO*/
+  /*Begin PAGE VACINAÇÃO GERAL*/
+  /*End PAGE VACINAÇÃO GERAL*/
 
-  /*Begin PAGE VACINAÇÃO GATO*/
-  /*End PAGE VACINAÇÃO GATO*/
+  /*Begin PAGE VACINAÇÃO PET*/
+  /*End PAGE VACINAÇÃO PET*/
 
   /*Begin PAGE RECOMENDAÇÕES*/
   /*End PAGE RECOMENDAÇÕES*/
@@ -2754,6 +2330,9 @@ input[type="password"] {
 
   /*Begin PAGE LOGIN*/
   /*End PAGE LOGIN*/
+
+  /*Begin PAGE PERFIL PET*/
+  /*End PAGE PERFIL PET*/
 
 
   /*Begin footer*/

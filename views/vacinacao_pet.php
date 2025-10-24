@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/conexao.php';
+include_once __DIR__ . '/../config/database_site.php';
 
 // Consulta para verificar se há algum usuário no banco
 $temUsuario = false;
@@ -68,7 +68,7 @@ if (isset($conn)) {
 
         <!-- Begin section 14 -->
         <section class="section14" id="sec14">
-            <div class="container">
+            <div class="container14">
                 <div class="header-info">
                 <div class="pet-photo">🐕</div>
                 <h1 class="nome-pet">Luck</h1>

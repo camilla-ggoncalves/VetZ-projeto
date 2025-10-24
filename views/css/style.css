@@ -1590,7 +1590,7 @@ R
 }
 
 .vaccination-card h2 {
-  color: #2e7d32;
+  color: #038654;
   font-size: 25px;
   margin-bottom: 25px;
   border-bottom: 3px solid #81c784;
@@ -1616,7 +1616,7 @@ R
 }
 
 .edit-btn:hover, .add-btn:hover {
-  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  background: linear-gradient(135deg, #038654 0%, #66bb6a 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }

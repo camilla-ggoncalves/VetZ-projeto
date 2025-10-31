@@ -1,3 +1,4 @@
+<?php include 'navbar.php'; ?>
 <?php
 require_once '../controllers/VacinacaoController.php';
 require_once '../controllers/PetController.php';
@@ -23,9 +24,19 @@ if ($id) { // Se um ID foi passado (ou seja, é uma edição)
 <!DOCTYPE html>
 <html lang="pt-br"> <!-- Define o idioma da página como português do Brasil -->
 <head>
-    <meta charset="UTF-8"> <!-- Define o conjunto de caracteres como UTF-8 -->
-    <!-- O título da página será "Editar Vacinação" se estiver editando, ou "Cadastrar Vacinação" se for um novo cadastro -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
     <title><?= $id ? "Editar Vacinação" : "Cadastrar Vacinação" ?></title>
+    <!-- Loading Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Loading código CSS -->
+    <link href="css/style.css" rel="stylesheet" media="screen and (color)">
+    <!-- Awsome Fonts -->
+    <link href="css/all.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="images/logoPNG.png" rel="shortcut icon">
 </head>
 <body>
     <!-- Exibe o título da página de acordo com a ação (edição ou cadastro) -->

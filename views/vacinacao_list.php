@@ -1,3 +1,4 @@
+<?php include 'navbar.php'; ?>
 <?php
 // views/vacinacao/vacina_list.php
 // Arquivo responsável por exibir a lista de vacinações registradas no sistema.
@@ -6,9 +7,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
     <title>VetZ</title>
-    <link rel="stylesheet" href="./style.css">
+    <!-- Loading Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Loading código CSS -->
+    <link href="css/style.css" rel="stylesheet" media="screen and (color)">
+    <!-- Awsome Fonts -->
+    <link href="css/all.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link href="images/logoPNG.png" rel="shortcut icon">
 </head>
 <body>
     <h1>Vacinações Registradas</h1>

@@ -1,10 +1,14 @@
+<?php include 'navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VetZ</title>
-  <link rel="stylesheet" href="views\css\style.css" />
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet" media="screen and (color)">
+  <link href="css/all.min.css" rel="stylesheet">
+  <link href="images/logoPNG.png" rel="shortcut icon">
 </head>
 <body>    
 <body>

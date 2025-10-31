@@ -29,7 +29,7 @@
                 <nav class="navbar navbar-expand-lg">
 
                     <a href="/projeto/vetz/" rel="home">
-                        <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                        <img class="logomenu" src="images/logo_vetz.svg" alt="VET Z" title="VetZ">
                     </a>
                     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon">
@@ -44,8 +44,13 @@
                     <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
                     <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
                     <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                    <li> <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                    <img class="imgperfil" src="/projeto/vetz/views/images/perfil" alt="Perfil"> CADASTRO</a></li>
+                    <li> <a class="btn btn-menu" href="cadastro.php" role="button">
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <span class="perfil-emoji" title="Perfil">👤</span>
+                    <?php else: ?>
+                        <img class="imgperfil" src="images/perfil" alt="Perfil">
+                    <?php endif; ?>
+                    CADASTRO</a></li>
                 </ul>
                     </div>
                 </nav>
@@ -66,10 +71,10 @@
                     <div class="col-lg-8 mx-auto">
                         <p class="sec01ph1">Gerencie todas as vacinações dos seus pets em um só lugar. Mantenha o histórico completo e nunca perca uma data importante.</p>
                         <div class="hero-buttons">
-                            <a href="/projeto/vetz/cadastrarForm" class="btn-hero">
+                            <a href="cadastro.php" class="btn-hero">
                                 <i class="fas fa-user-plus"></i> Começar Gratuitamente
                             </a>
-                            <a href="/projeto/vetz/loginForm" class="btn-hero-outline">
+                            <a href="login.php" class="btn-hero-outline">
                                 <i class="fas fa-sign-in-alt"></i> Já tenho conta
                             </a>
                         </div>
@@ -80,7 +85,7 @@
                         <!-- Card 1 -->
                         <div class="product-card">
                             <a href="https://lista.mercadolivre.com.br/tapete-higienico-c%C3%A3o-e-gato?sb=all_mercadolibre#D[A:tapete%20higienico%20c%C3%A3o%20e%20gato]" target="_blank">
-                                <img src="/projeto/vetz/views/images/tapete_cao.jpg" alt="Tapete higiênico para cães e gatos" class="product-img">
+                                <img src="images/tapete_cao.jpg" alt="Tapete higiênico para cães e gatos" class="product-img">
                                 <h2 class="product-title">TAPETE</h2>
                             </a>
                         </div>
@@ -88,7 +93,7 @@
                         <!-- Card 2 -->
                         <div class="product-card">
                             <a href="https://lista.mercadolivre.com.br/ra%C3%A7%C3%A3o-c%C3%A3o-e-gato#D[A:ra%C3%A7%C3%A3o%20c%C3%A3o%20e%20gato]" target="_blank">
-                                <img src="/projeto/vetz/views/images/racao_cao.jpg" alt="Ração para cães e gatos" class="product-img">
+                                <img src="images/racao_cao.jpg" alt="Ração para cães e gatos" class="product-img">
                                 <h2 class="product-title">RAÇÃO</h2>
                             </a>
                         </div>
@@ -96,7 +101,7 @@
                         <!-- Card 3 -->
                         <div class="product-card">
                             <a href="https://lista.mercadolivre.com.br/brinquedos-para-c%C3%A3o-e-gato?sb=all_mercadolibre#D[A:brinquedos%20para%20c%C3%A3o%20e%20gato]" target="_blank">
-                                <img src="/projeto/vetz/views/images/brinquedo_cao.jpg" alt="Brinquedos para cães e gatos" class="product-img">
+                                <img src="images/brinquedo_cao.jpg" alt="Brinquedos para cães e gatos" class="product-img">
                                 <h2 class="product-title">BRINQUEDOS</h2>
                             </a>
                         </div>
@@ -104,7 +109,7 @@
                         <!-- Card 4 -->
                         <div class="product-card">
                             <a href="https://www.mercadolivre.com.br/colcho-cachorro-grande-pet-impermeavel-100x70-cor-marinho/p/MLB36933404?pdp_filters=item_id:MLB5233031478" target="_blank">
-                                <img src="/projeto/vetz/views/images/cama_cao.jpg" alt="Cama para cachorro" class="product-img">
+                                <img src="images/cama_cao.jpg" alt="Cama para cachorro" class="product-img">
                                 <h2 class="product-title">CAMA</h2>
                             </a>
                         </div>
@@ -194,23 +199,15 @@
                 <!--
                 <div class="col-md-1">
                     <p class="instagram">
-                        <a><img href="#!" src="/projeto/vetz/views/images/instagram.svg"></a>
+                        <a><img href="#!" src="images/instagram.svg"></a>
                 </div>
                 <div class="col-md-1">
                     <p class="email">
-                        <a><img href="#!" src="/projeto/vetz/views/images/email.svg"></a>
+                        <a><img href="#!" src="images/email.svg"></a>
                 </div>
                 -->
             </div>
         </div>
     </div>
-    <!--End footer-->
+    <?php include 'navbar.php'; ?>
 
-
-    <!-- Load JS =============================-->
-    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
-    <script src="/projeto/vetz/views/js/scripts.js"></script>
-</body>
-</html>

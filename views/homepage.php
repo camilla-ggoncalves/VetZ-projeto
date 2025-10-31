@@ -1,67 +1,8 @@
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <title>VetZ</title>
-        <!-- Loading Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Loading código CSS -->
-        <link href="css/style.css" rel="stylesheet" media="screen and (color)">
-
-        <!-- Awsome Fonts -->
-        <link href="css/all.min.css" rel="stylesheet">
-
-        <!-- Favicon -->
-        <link href="images/logoPNG.png" rel="shortcut icon">
-</head>
-
-<body>
-    <!--Begin Header-->
-    <header class="header">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg">
-
-                    <a href="/projeto/vetz/" rel="home">
-                        <img class="logomenu" src="images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                    </a>
-                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon">
-                            <i class="fas fa-bars"></i>
-                        </span>
-                    </button>
-
-                    <div class="navbar-collapse collapse" id="navbarCollapse">
-                <ul class="navbar-nav ml-auto 1  left-menu">
-                    <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                    <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                    <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                    <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                    <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                    <li> <a class="btn btn-menu" href="cadastro.php" role="button">
-                    <?php if (!isset($_SESSION['usuario'])): ?>
-                        <span class="perfil-emoji" title="Perfil">👤</span>
-                    <?php else: ?>
-                        <img class="imgperfil" src="images/perfil" alt="Perfil">
-                    <?php endif; ?>
-                    CADASTRO</a></li>
-                </ul>
-                    </div>
-                </nav>
-            </div>
-        </nav>
-    </header>
-    <!--End Header-->
-
-
-    <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
-
+<?php
+$title = "VetZ - Home";
+ob_start();
+?>
     <!-- Begin Section 01 -->
     <section class="section01" id="sec01">
         <div class="container">
@@ -98,39 +39,11 @@
                             </a>
                         </div>
 
-                        <!-- Card 3 -->
-                        <div class="product-card">
-                            <a href="https://lista.mercadolivre.com.br/brinquedos-para-c%C3%A3o-e-gato?sb=all_mercadolibre#D[A:brinquedos%20para%20c%C3%A3o%20e%20gato]" target="_blank">
-                                <img src="images/brinquedo_cao.jpg" alt="Brinquedos para cães e gatos" class="product-img">
-                                <h2 class="product-title">BRINQUEDOS</h2>
-                            </a>
-                        </div>
-
-                        <!-- Card 4 -->
-                        <div class="product-card">
-                            <a href="https://www.mercadolivre.com.br/colcho-cachorro-grande-pet-impermeavel-100x70-cor-marinho/p/MLB36933404?pdp_filters=item_id:MLB5233031478" target="_blank">
-                                <img src="images/cama_cao.jpg" alt="Cama para cachorro" class="product-img">
-                                <h2 class="product-title">CAMA</h2>
-                            </a>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Section 01 -->
-
-    <!-- Begin Section 01.1 -->
-    <section id="features" class="section01_1">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center mb-5">
-                    <h2 class="sec01_1titleh2">Por que escolher o VetZ?</h2>
-                    <p class="sec01_01ph2">Desenvolvido especialmente para donos de pets que se preocupam com a saúde dos seus companheiros</p>
-                </div>
-            </div>
+                <!-- End Section 01.1 -->
+            <?php
+            $content = ob_get_clean();
+            include 'layout.php';
+            ?>
 
             <div class="row">
                 <div class="col-md-4">

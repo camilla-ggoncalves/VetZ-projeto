@@ -1,6 +1,4 @@
-<?php
-// layout.php - Layout base para todas as páginas
-?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -23,7 +21,7 @@
 <body>
     <?php include 'navbar.php'; ?>
     <main>
-        <?php if (isset($content)) echo $content; ?>
+        <?= $content ?? '' ?>
     </main>
     <footer class="rodape">
         <p>Todos os direitos reservados © <?= date('Y') ?> - VetZ</p>

@@ -7,7 +7,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Vacinações</title>
+    <title>VetZ</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>

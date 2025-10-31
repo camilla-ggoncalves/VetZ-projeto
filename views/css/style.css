@@ -1179,14 +1179,17 @@ R
 /*Begin Section 07*/
 .section07 {
   background: #FEFFEF;
-  padding-top: 100px;
   font-family: 'Poppins-Regular';
-  min-height: 165vh;
+  min-height: 160vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .header-info {
   background: linear-gradient(135deg, #038654 0%, rgb(96, 193, 101) 100%);
   padding: 30px;
+  margin: 110px 0 0 0;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   display: flex;
@@ -1456,7 +1459,7 @@ R
 
 .modal-content {
   background-color: white;
-  margin: 5% auto;
+  margin: 6% auto;
   padding: 30px;
   border-radius: 15px;
   width: 90%;

@@ -28,6 +28,28 @@ class Pet {
             die("Erro: " . $e->getMessage());
         }
     }
+        // Retorna pets paginados
+        public static function getPetsPaginated($limit, $offset) {
+            $database = new Database();
+            $conn = $database->getConnection();
+            $query = "SELECT * FROM pets LIMIT :limit OFFSET :offset";
+            $stmt = $conn->prepare($query);
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        // Retorna o total de pets
+        public static function getTotalPets() {
+            $database = new Database();
+            $conn = $database->getConnection();
+            $query = "SELECT COUNT(*) as total FROM pets";
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['total'];
+        }
 
     public function save() {
         $query = "INSERT INTO " . $this->table_name . " 

@@ -11,7 +11,7 @@
   <!-- Cabeçalho -->
   <header class="topo">
     <div class="logo-box">
-      <img src="logo.png" alt="Logo da Clínica" />
+      <img src="views/images/Logo VETZ.svg" alt="Logo da Clínica" />
       <span class="titulo">VetZ</span>
     </div>
     <button class="voltar" onclick="history.back()">VOLTAR</button>
@@ -22,11 +22,15 @@
     <div class="cadastro-box">
       <h2 class="cadastro-title">Registrar-se</h2>
       <form action="/projeto/vetz/cadastrar" method="POST">
-    <input type="text" name="nome" required>
-    <input type="email" name="email" required>
-    <input type="password" name="senha" required>
-    <button type="submit">Cadastrar</button>        
+    <input type="text" name="nome" placeholder="Digite seu nome" required>
+    <input type="email" name="email" placeholder="Digite seu e-mail" required>
+    <input type="password" name="senha" placeholder="Digite sua senha" required>
+    <button type="submit"class="cadastrar">Cadastrar</button>   
+
+    
+      
 </form>
+
     </div>
   </main>
 

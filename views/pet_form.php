@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <title>Cadastrar Pet</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VetZ</title>
+  <link rel="stylesheet" href="views\css\style.css" />
 </head>
+<body>    
 <body>
-    <h1>Cadastrar / Atualizar Pet</h1>
+      <!-- Cabeçalho -->
+  <header class="topo">
+    <div class="logo-box">
+      <img src="views/images/Logo_vetz.svg" alt="Logo da Clínica" />
+      <span class="titulo">VetZ</span>
+    </div>
+    <button class="voltar" onclick="history.back()">VOLTAR</button>
+  </header>
 
-    <!-- Se estiver editando, o campo hidden vai ter o id, não vai aparecer -->
+    <!-- Se estiver editando, o campo hidden vai ter o id, mas não vai aparecer -->
      <form action="/projeto/vetz/save-pet" method="POST" enctype="multipart/form-data">
+        <div class="cadastro-box">
+            <h2 class="cadastro-title">Cadastrar Pet</h2>
+            <input type="hidden" name="id" value="<?= $pet['id'] ?? '' ?>">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required><br><br>
 
@@ -19,7 +32,7 @@
             <input type="number" id="idade" name="idade"><br><br>
 
             <label for="porte">Porte:</label>
-            <select type="text" id="porte" name="porte">
+            <select type="text" id="porte" name="porte" required>
                 <option value="">Selecione</option>
                 <option value="pequeno">Pequeno</option>
                 <option value="medio">Médio</option>
@@ -37,7 +50,7 @@
             </select>
             
             <label>Imagem do Pet:</label>
-            <input type="file" name="imagem" accept="image/*" required>
+            <input type="file" name="imagem" accept="image/*">
 
             <input type="submit" value="Cadastrar Pet">
     </form>

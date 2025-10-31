@@ -146,6 +146,14 @@ switch ($request) {
         (new VacinacaoController())->listVacina();
         break;
 
+    case '/projeto/vetz/curiosidades':
+        include '../views/curiosidades.html';
+        break;
+
+    case '/projeto/vetz/recomendacoes':
+        include '../views/exibicao_pets.html';  
+        break;
+
     // case '/projeto/vetz/list-ficha':
     //     $controller = new FichaController();
     //     $controller->listFicha();
@@ -159,7 +167,7 @@ switch ($request) {
         }
         $controller = new UsuarioController();
         $usuario = $controller->perfil($_GET['id']);
-        require_once '../views/usuario/perfil_usuario.php';
+        include '../views/perfil_usuario.html';
         break;
 
     case '/projeto/vetz/excluir-usuario':
@@ -175,6 +183,14 @@ switch ($request) {
     case '/projeto/vetz/perfil':
 
         break;
+    
+    case '/projeto/vetz/homepage':
+        include '../views/homepage.html';
+        break;
+
+    case '/projeto/vetz/sobre-nos':
+        include '../views/sobre_nos.html';
+        break;
 
     case '/projeto/vetz/pets-exibir':
         include '../views/exibicao_pets.html';
@@ -184,4 +200,6 @@ switch ($request) {
         http_response_code(404);
         echo "Página não encontrada: $request";
         break;
+
+        //teste
 }

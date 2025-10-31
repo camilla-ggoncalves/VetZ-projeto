@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Atualizar Pet</title>
+    <title>VetZ</title>
 </head>
 <body>
     <h1>Atualizar Pet</h1>

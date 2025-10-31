@@ -199,24 +199,6 @@ if (isset($conn)) {
             </table>
         </div>
 
-        <div class="medications-panel">
-            <h2>Medicações</h2>
-            
-            <div id="medicationsList">
-                <div class="medication-card">
-                    <button class="delete-medication-btn" onclick="deleteMedication(this)">×</button>
-                    <div class="medication-name">Vermífugo</div>
-                    <div class="medication-info">📊 Dosagem: 1 comprimido</div>
-                    <div class="medication-info">⏰ Frequência: A cada 3 meses</div>
-                    <div class="medication-date">Próxima aplicação: 05/11/2025</div>
-                </div>
-
-            <button class="add-btn" onclick="openAddMedicationModal()">
-                 Adicionar Medicação
-            </button>
-        </div>
-    </div>
-
     <!-- Modal de Edição de Vacinas -->
     <div id="editVaccineModal" class="modal">
         <div class="modal-content">
@@ -280,55 +262,6 @@ if (isset($conn)) {
                 </div>
 
                 <button type="submit" class="save-btn">Salvar Alterações</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal de Adicionar Medicação -->
-    <div id="addMedicationModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Adicionar Medicação</h3>
-                <button class="close-btn" onclick="closeAddMedicationModal()">×</button>
-            </div>
-            <form id="medicationForm" onsubmit="addMedication(event)">
-                <div class="form-group">
-                    <label for="medName">Nome da Medicação *</label>
-                    <input type="text" id="medName" required placeholder="Ex: Vermífugo, Antipulgas...">
-                </div>
-
-                <div class="form-group">
-                    <label for="medDosage">Dosagem *</label>
-                    <input type="text" id="medDosage" required placeholder="Ex: 1 comprimido, 5ml...">
-                </div>
-
-                <div class="form-group">
-                    <label for="medFrequency">Frequência *</label>
-                    <select id="medFrequency" required>
-                        <option value="">Selecione a frequência</option>
-                        <option value="Diária">Diária</option>
-                        <option value="Semanal">Semanal</option>
-                        <option value="Quinzenal">Quinzenal</option>
-                        <option value="Mensal">Mensal</option>
-                        <option value="A cada 2 meses">A cada 2 meses</option>
-                        <option value="A cada 3 meses">A cada 3 meses</option>
-                        <option value="A cada 4 meses">A cada 4 meses</option>
-                        <option value="A cada 6 meses">A cada 6 meses</option>
-                        <option value="Anual">Anual</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="medNextDate">Próxima Aplicação *</label>
-                    <input type="date" id="medNextDate" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="medNotes">Observações (opcional)</label>
-                    <textarea id="medNotes" rows="3" placeholder="Informações adicionais sobre a medicação..."></textarea>
-                </div>
-
-                <button type="submit" class="save-btn">Adicionar Medicação</button>
             </form>
         </div>
     </div>

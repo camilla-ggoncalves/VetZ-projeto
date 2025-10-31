@@ -56,5 +56,10 @@
 <a href="/projeto/vetz/formulario">Cadastrar novo pet</a>
 <a href="/projeto/vetz/cadastrar-vacina">Adicionar Vacina</a>
 
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
+
 </body>
 </html>

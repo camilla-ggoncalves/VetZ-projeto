@@ -102,14 +102,14 @@
       box-shadow: 0 0 4px rgba(0,0,0,0.1);
     }
 
-    footer { 
-      text-align: center
-      padding: 15px;
-      background-color: #eaf7dc;
-      color: #4a6542;
-      font-size: 14px;
-      border-top: 1px solid #cfe8b6;
-    }
+    footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #eaf7dc;
+  color: #4a6542;
+  font-size: 14px;
+  border-top: 1px solid #cfe8b6;
+}
 
     .icons {
       position: absolute;
@@ -133,7 +133,7 @@
 <body>
 
   <header>
-    <img src="#" alt="Logo VetZ" class="logo">
+    <img src="views/images/logo_vetz.svg" alt="Logo VetZ" class="logo">
     <button class="btn-voltar" onclick="window.history.back()">VOLTAR</button>
   </header>
 
@@ -165,7 +165,7 @@
   <div style="background:#fff; padding:30px; border-radius:15px; width:300px; margin:auto; text-align:center; position:relative;">
     <h3>Digite o código recebido</h3>
     <form action="/projeto/vetz/verificarCodigo" method="POST">
-      <input name="email" id="popup-email" type="hidden">
+      <input name="email" id="popup-recupera" type="hidden">
       <input name="codigo" type="text" placeholder="Código" required style="margin-bottom:10px; width:90%;"><br>
       <input name="nova_senha" type="password" placeholder="Nova senha" required style="margin-bottom:10px; width:90%;"><br>
       <button type="submit">Trocar senha</button>
@@ -178,7 +178,7 @@
       <div id="popup-sucesso" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:2000; align-items:center; justify-content:center;">
         <div style="background:#fff; padding:30px; border-radius:15px; width:300px; margin:auto; text-align:center; position:relative;">
           <h3 style="color:#038654;">Senha alterada com sucesso!</h3>
-          <button onclick="fecharPopupSucesso()" style="margin-top:20px; background:#038654; color:#fff; border:none; border-radius:8px; padding:10px 20px; cursor:pointer;">OK</button>
+          <button  onclick="fecharPopupSucesso()" style="margin-top:20px; background:#038654; color:#fff; border:none; border-radius:8px; padding:10px 20px; cursor:pointer;" >OK</button>
         </div>
       </div>
 
@@ -202,6 +202,8 @@ function fecharPopup() {
 }
 function fecharPopupSucesso() {
   document.getElementById('popup-sucesso').style.display = 'none';
+  window.location.href="/projeto/vetz/loginForm"
+  
 }
 
 // Envio do e-mail para receber o código

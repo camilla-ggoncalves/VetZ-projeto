@@ -4,7 +4,7 @@ ob_start();
 ?>
 <div class="login-box">
   <h2 class="login-title">LOGIN</h2>
-  <form action="../vetz/login" method="POST">
+  <form action="/projeto/vetz/login" method="POST">
     <?php if (isset($erro)): ?>
       <div class="erro" style="color: red; margin-bottom: 10px;">
         <?= htmlspecialchars($erro) ?>
@@ -15,9 +15,9 @@ ob_start();
     <button type="submit">Entrar</button>
   </form>
   <div class="links">
-    <a href="cadastro.php">Criar conta</a>
+  <a href="/projeto/vetz/cadastrarForm">Criar conta</a>
     <br>
-    <a href="recuperar.php">Esqueceu a senha?</a>
+  <a href="/projeto/vetz/recuperarForm">Esqueceu a senha?</a>
   </div>
 </div>
 <?php

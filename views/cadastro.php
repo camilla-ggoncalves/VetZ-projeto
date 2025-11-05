@@ -8,9 +8,9 @@ ob_start();
     <input type="text" name="nome" placeholder="Digite seu nome" required>
     <input type="email" name="email" placeholder="Digite seu e-mail" required>
     <input type="password" name="senha" placeholder="Digite sua senha" required>
-    <button type="submit" class="cadastrar">Cadastrar</button>
+    <button type="submit" class="cadastrarForm">Cadastrar</button>
     <div class="links">
-      <a href="login.php">Já tem uma conta? Logar</a>
+  <a href="/projeto/vetz/loginForm">Já tem uma conta? Logar</a>
     </div>
   </form>
 </div>

@@ -17,13 +17,20 @@
                         <li><a href="sobre_nos.html">SOBRE NÓS</a></li>
                         <li><a href="curiosidades.html">CURIOSIDADES</a></li>
                         <li><a href="vacinacao_geral.html">VACINAÇÃO</a></li>
-                        <li><a href="cadastro.php" class="btn btn-menu" role="button">
-                            <?php if (!isset($_SESSION['usuario'])): ?>
+                        <li><a href="carteirinha.php">CARTEIRINHA</a></li>
+                        <?php if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); } ?>
+                        <?php if (!isset($_SESSION['usuario'])): ?>
+                            <li><a href="cadastro.php" class="btn btn-menu" role="button">
                                 <span class="perfil-emoji" title="Perfil">👤</span>
-                            <?php else: ?>
-                                <img class="imgperfil" src="images/perfil" alt="Perfil">
-                            <?php endif; ?>
-                            CADASTRO</a></li>
+                                CADASTRO</a></li>
+                            <li><a href="login.php" class="btn btn-menu" role="button">LOGIN</a></li>
+                        <?php else: ?>
+                            <li><a href="perfil_usuario.php" class="btn btn-menu" role="button">
+                                <span class="perfil-emoji" title="Perfil">👤</span>
+                                <?= htmlspecialchars($_SESSION['usuario']['nome']) ?></a></li>
+                            <li><form method="post" style="display:inline;"><button type="submit" name="logout" class="btn btn-menu" style="background:#d9534f;color:#fff;">SAIR</button></form></li>
+                            <?php if (isset($_POST['logout'])) { session_destroy(); header('Location: homepage.php'); exit; } ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </nav>

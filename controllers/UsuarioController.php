@@ -38,13 +38,15 @@ class UsuarioController {
 
     if ($usuario) {
         session_start();
-        $_SESSION['usuario'] = $usuario;
+         $_SESSION['user_id'] = $usuario['id'];
+        $_SESSION['user_name'] = $usuario['nome'];
         header('Location: /projeto/vetz/perfil-usuario?id=' . $usuario['id']);
         exit;
     } else {
         $erro = "Credenciais inválidas.";
         include '../views/login.php';
     }
+
     }
 
     public function enviarCodigo() {

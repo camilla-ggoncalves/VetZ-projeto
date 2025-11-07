@@ -185,11 +185,11 @@ switch ($request) {
         break;
     
     case '/projeto/vetz/homepage':
-        include '../views/homepage.html';
+        include '../views/homepage.php';
         break;
 
     case '/projeto/vetz/sobre-nos':
-        include '../views/sobre_nos.html';
+        include '../views/sobre_nos.php';
         break;
 
     case '/projeto/vetz/pets-exibir':

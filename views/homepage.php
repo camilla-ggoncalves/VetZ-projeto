@@ -1,56 +1,92 @@
+<?php
+session_start();
+
+// Garante que as variáveis sempre existam
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $_SESSION['user_name'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="">
-        <meta name="description" content="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>VetZ</title>
 
-        <title>VetZ</title>
-        
-        <!-- Loading Bootstrap -->
-         <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/projeto/vetz/views/css/style.css" rel="stylesheet" media="screen and (color)">
-        <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
 
-        <!-- Favicon -->
-        <link href="images/logoPNG.png" rel="shortcut icon">
-    </head>
+    <!-- Favicon -->
+    <link href="images/logoPNG.png" rel="shortcut icon">
+</head>
 
 <body>
-    <!--Begin Header-->
-    <header class="header">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg">
 
-                    <a href="/projeto/vetz/" rel="home">
-                        <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                    </a>
-                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon">
-                            <i class="fas fa-bars"></i>
-                        </span>
-                    </button>
+<header class="header">
 
-                    <div class="navbar-collapse collapse" id="navbarCollapse">
-                <ul class="navbar-nav ml-auto 1  left-menu">
-                    <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                    <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                    <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                    <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                    <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                    <li> <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                    <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil"> CADASTRO</a></li>
-                </ul>
-                    </div>
-                </nav>
+    <!-- NAV CORRIGIDO (AGORA NÃO TEM NAV DUPLO SEM FECHAR) -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+
+            <div class="navbar navbar-expand-lg">
+
+                <a href="/projeto/vetz/" rel="home">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                </a>
+
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-bars"></i>
+                    </span>
+                </button>
+
+                <div class="navbar-collapse collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto left-menu">
+
+                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
+
+                        <?php if ($isLoggedIn): ?>
+                            <!-- Usuário LOGADO -->
+                            <li>
+                                <div class="user-logged-menu">
+                                    <span class="user-name">Olá, <?php echo htmlspecialchars($userName); ?></span>
+
+                                    <a class="btn btn-menu btn-perfil" href="/projeto/vetz/perfil" role="button">
+                                        <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                        PERFIL
+                                    </a>
+
+                                    <a class="btn btn-menu btn-logout" href="/projeto/vetz/logout.php" role="button">
+                                        SAIR
+                                    </a>
+                                </div>
+                            </li>
+
+                        <?php else: ?>
+                            <!-- Usuário NÃO LOGADO -->
+                            <li>
+                                <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
+                                    <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                    CADASTRO
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        
+                    </ul>
+                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
     <!--End Header-->
-
 
     <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
 

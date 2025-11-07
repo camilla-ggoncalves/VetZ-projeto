@@ -1,63 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>VetZ</title>
-   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-    }
-
-    body {
-      background-color: #fdfcea;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 100vh;
-    }
-      
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      border-bottom: 2px solid #b1b1b1;
-    }
-
-    .logo {
-      height: 60px;
-    }
-
-    .btn-voltar {
-      background-color: #b0e8a4;
-      color: #000;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .btn-voltar:hover {
-      background-color: #9bd68f;
-    }
-
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
-    .box {
-      background: linear-gradient(#ffffff, #fcfcfc);
-      border-radius: 20px;
-      box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
-      padding: 30px;
+<?php
+$title = "Recuperar Senha - VetZ";
+ob_start();
+?>
+<div class="cadastro-box">
+  <h2 class="cadastro-title">Recuperar Senha</h2>
+  <form action="/projeto/vetz/recuperar" method="POST">
+    <input type="email" name="email" placeholder="Digite seu e-mail" required>
+    <button type="submit" class="cadastrar">Recuperar</button>
+    <div class="links">
+      <a href="login.php">Voltar ao login</a>
+    </div>
+  </form>
+</div>
+<?php
+$content = ob_get_clean();
+include 'layout.php';
+?>
       width: 400px;
       text-align: center;
     }

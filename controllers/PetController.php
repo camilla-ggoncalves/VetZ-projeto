@@ -57,9 +57,9 @@ class PetController {
         }
     }
 
-    public function updatePet() {
+    public function updatePet($id = null) {
         $pet = new Pet();
-        $pet->id    = $_POST['id'];
+        $pet->id    = $id ?? $_POST['id'];
         $pet->nome  = $_POST['nome'];
         $pet->raca  = $_POST['raca'];
         $pet->idade = $_POST['idade'];

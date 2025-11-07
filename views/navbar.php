@@ -19,13 +19,13 @@
                     <a class="nav-link fw-medium text-dark px-3" href="homepage.php">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-3" href="sobre_nos.html">SOBRE NÓS</a>
+                    <a class="nav-link fw-medium text-dark px-3" href="sobre_nos.php">SOBRE NÓS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-3" href="curiosidades.html">CURIOSIDADES</a>
+                    <a class="nav-link fw-medium text-dark px-3" href="curiosidades.php">CURIOSIDADES</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-3" href="vacinacao_geral.html">VACINAÇÃO</a>
+                    <a class="nav-link fw-medium text-dark px-3" href="vacinacao_geral.php">VACINAÇÃO</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-medium text-dark px-3" href="carteirinha.php">CARTEIRINHA</a>
@@ -34,6 +34,22 @@
 
             <!-- Botões de Login/Cadastro -->
             <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <?php
+                if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
+                if (isset($_POST['logout'])) {
+                    $_SESSION = array();
+                    if (ini_get("session.use_cookies")) {
+                        $params = session_get_cookie_params();
+                        setcookie(session_name(), '', time() - 42000,
+                            $params["path"], $params["domain"],
+                            $params["secure"], $params["httponly"]
+                        );
+                    }
+                    session_destroy();
+                    header('Location: login.php');
+                    exit;
+                }
+                ?>
                 <?php if (!isset($_SESSION['usuario'])): ?>
                     <!-- DESLOGADO -->
                     <a href="cadastro.php" class="btn btn-success px-4 py-2 rounded-pill shadow-sm">
@@ -51,9 +67,11 @@
                                 <?= htmlspecialchars($_SESSION['usuario']['nome']) ?>
                             </span>
                         </a>
-                        <a href="logout.php" class="btn btn-outline-danger px-4 py-2 rounded-pill shadow-sm">
-                            <i class="fas fa-sign-out-alt me-2"></i> Sair
-                        </a>
+                        <form method="post" style="display:inline;">
+                            <button type="submit" name="logout" class="btn btn-outline-danger px-4 py-2 rounded-pill shadow-sm">
+                                <i class="fas fa-sign-out-alt me-2"></i> Sair
+                            </button>
+                        </form>
                     </div>
                 <?php endif; ?>
             </div>

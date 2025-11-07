@@ -28,7 +28,7 @@
                     <a class="nav-link fw-medium text-dark px-3" href="vacinacao_geral.php">VACINAÇÃO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-3" href="carteirinha.php">CARTEIRINHA</a>
+                    <a class="nav-link fw-medium text-dark px-3" href="vacinacao_pet.php">CARTEIRINHA</a>
                 </li>
             </ul>
 

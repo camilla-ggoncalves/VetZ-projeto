@@ -143,7 +143,7 @@ ob_start();
                 </div>
                 <div class="vacina">
                     <p class="sec06phvac">Confira as vacinas indicadas para proteger seu gato contra doenças comuns.</p>
-                    <a href="carteirinha-gato.php" class="carteirinha">Carteirinha Digital</a>
+                    <a href="vacinacao_pet.php" class="carteirinha">Carteirinha Digital</a>
                 </div>
             </div>
         </div>

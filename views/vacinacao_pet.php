@@ -28,16 +28,7 @@ if (isset($conn)) {
         </head>
 
         <body>
-        <header class="header">
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container">
-                    <nav class="navbar navbar-expand-lg">
-                        <a href="index.php" rel="home">
-                            <img class="logomenu" src="images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                        </a>
-                        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon">
-                                <i class="fas fa-bars"></i>
+                <?php include 'navbar.php'; ?>
                             </span>
                         </button>
 

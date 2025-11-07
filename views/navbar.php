@@ -1,39 +1,62 @@
 <!-- navbar.php -->
-<header class="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg">
-                <a href="homepage.php" rel="home">
-                    <img class="logomenu" src="images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                </a>
-                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon">
-                        <i class="fas fa-bars"></i>
-                    </span>
-                </button>
-                <div class="navbar-collapse collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto left-menu">
-                        <li><a href="homepage.php">HOME PAGE</a></li>
-                        <li><a href="sobre_nos.html">SOBRE NÓS</a></li>
-                        <li><a href="curiosidades.html">CURIOSIDADES</a></li>
-                        <li><a href="vacinacao_geral.html">VACINAÇÃO</a></li>
-                        <li><a href="carteirinha.php">CARTEIRINHA</a></li>
-                        <?php if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); } ?>
-                        <?php if (!isset($_SESSION['usuario'])): ?>
-                            <li><a href="cadastro.php" class="btn btn-menu" role="button">
-                                <span class="perfil-emoji" title="Perfil">👤</span>
-                                CADASTRO</a></li>
-                            <li><a href="login.php" class="btn btn-menu" role="button">LOGIN</a></li>
-                        <?php else: ?>
-                            <li><a href="perfil_usuario.php" class="btn btn-menu" role="button">
-                                <span class="perfil-emoji" title="Perfil">👤</span>
-                                <?= htmlspecialchars($_SESSION['usuario']['nome']) ?></a></li>
-                            <li><form method="post" style="display:inline;"><button type="submit" name="logout" class="btn btn-menu" style="background:#d9534f;color:#fff;">SAIR</button></form></li>
-                            <?php if (isset($_POST['logout'])) { session_destroy(); header('Location: homepage.php'); exit; } ?>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container py-2">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="homepage.php">
+            <img src="images/logo_vetz.svg" alt="VetZ" height="45" class="me-2">
+            <span class="fw-bold text-success fs-5">VetZ</span>
+        </a>
+
+        <!-- Toggler (mobile) -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="fas fa-bars text-success fs-4"></i>
+        </button>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto text-center">
+                <li class="nav-item">
+                    <a class="nav-link fw-medium text-dark px-3" href="homepage.php">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium text-dark px-3" href="sobre_nos.html">SOBRE NÓS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium text-dark px-3" href="curiosidades.html">CURIOSIDADES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium text-dark px-3" href="vacinacao_geral.html">VACINAÇÃO</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium text-dark px-3" href="carteirinha.php">CARTEIRINHA</a>
+                </li>
+            </ul>
+
+            <!-- Botões de Login/Cadastro -->
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <?php if (!isset($_SESSION['usuario'])): ?>
+                    <!-- DESLOGADO -->
+                    <a href="cadastro.php" class="btn btn-success px-4 py-2 rounded-pill shadow-sm">
+                        <i class="fas fa-user-plus me-2"></i> Cadastrar
+                    </a>
+                    <a href="login.php" class="btn btn-outline-success px-4 py-2 rounded-pill shadow-sm">
+                        <i class="fas fa-sign-in-alt me-2"></i> Login
+                    </a>
+                <?php else: ?>
+                    <!-- LOGADO -->
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="perfil_usuario.php" class="text-decoration-none">
+                            <span class="d-flex align-items-center text-success fw-medium">
+                                <i class="fas fa-user-circle fs-4 me-2"></i>
+                                <?= htmlspecialchars($_SESSION['usuario']['nome']) ?>
+                            </span>
+                        </a>
+                        <a href="logout.php" class="btn btn-outline-danger px-4 py-2 rounded-pill shadow-sm">
+                            <i class="fas fa-sign-out-alt me-2"></i> Sair
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
-    </nav>
-</header>
+    </div>
+</nav>

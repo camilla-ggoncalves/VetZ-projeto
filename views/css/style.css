@@ -1,3 +1,147 @@
+.login-box {
+  max-width: 400px;
+  margin: 120px auto 40px auto; /* margem superior menor para aparecer totalmente na tela */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(44,122,122,0.12);
+  padding: 32px 28px;
+  text-align: center;
+}
+/* Estilo para o ícone/emoji de perfil na navbar */
+.navbar .imgperfil {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e0f7fa;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.navbar .perfil-emoji {
+  font-size: 2rem;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Estilo aprimorado para login */
+.login-box {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(44,122,122,0.12);
+  padding: 32px 28px;
+  text-align: center;
+}
+.login-title {
+  color: #2d7a7a;
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #b2d8d8;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f8f8f8;
+  transition: border 0.2s;
+}
+.login-box input:focus {
+  border-color: #2d7a7a;
+  outline: none;
+}
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background: #2d7a7a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.login-box button:hover {
+  background: #1e5454;
+}
+.links {
+  margin-top: 18px;
+  font-size: 0.95rem;
+}
+.links a {
+  color: #2d7a7a;
+  text-decoration: underline;
+  margin: 0 4px;
+}
+.bichinho {
+  margin-top: 18px;
+  width: 120px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #b2d8d8;
+}
+/* Estilo para cadastro e login */
+.cadastro-box, .login-box {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(44,122,122,0.12);
+  padding: 32px 28px;
+  text-align: center;
+}
+.cadastro-title, .login-title {
+  color: #2d7a7a;
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+.cadastro-box input, .login-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #b2d8d8;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f8f8f8;
+  transition: border 0.2s;
+}
+.cadastro-box input:focus, .login-box input:focus {
+  border-color: #2d7a7a;
+  outline: none;
+}
+.cadastro-box button, .login-box button {
+  width: 100%;
+  padding: 12px;
+  background: #2d7a7a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cadastro-box button:hover, .login-box button:hover {
+  background: #1e5454;
+}
+.links {
+  margin-top: 18px;
+  font-size: 0.95rem;
+}
+.links a {
+  color: #2d7a7a;
+  text-decoration: underline;
+  margin: 0 4px;
+}
+.bichinho {
+  margin-top: 18px;
+  width: 120px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #b2d8d8;
+}
 /*
 VetZ
 */

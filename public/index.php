@@ -4,9 +4,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../controllers/PetController.php';
-require_once __DIR__ . '/../controllers/UsuarioController.php';
-require_once __DIR__ . '/../controllers/VacinacaoController.php';
+require_once '../controllers/PetController.php';
+require_once '../controllers/UsuarioController.php';
+require_once '../controllers/VacinacaoController.php';
 
 $request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 

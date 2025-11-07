@@ -18,26 +18,35 @@ $vacinacao = null; // Inicializa a variável $vacinacao como nula
 if ($id) { // Se um ID foi passado (ou seja, é uma edição)
     $vacinacao = $vacinacaoController->buscarPorId($id); // Busca os dados da vacinação correspondente ao ID
 }
-
-$title = $id ? "Editar Vacinação - VetZ" : "Cadastrar Vacinação - VetZ";
-ob_start();
 ?>
-    <div class="cadastro-box">
-        <h2 class="cadastro-title"><?= $id ? "Editar Vacinação" : "Cadastrar Vacinação" ?></h2>
-        <form action="/projeto/vetz/salvar-vacina" method="POST">
-            <label>Data:</label>
-            <input type="date" name="data" required><br>
-            <label>Doses:</label>
-            <input type="number" name="doses" required><br>
-            <label>Vacina:</label>
-            <select name="id_vacina" required>
-                <option value="">Selecione uma vacina</option>
-                <?php foreach ($vacinas as $v): ?>
-                    <option value="<?= $v['id_vacina'] ?>"><?= htmlspecialchars($v['vacina']) ?></option>
-                <?php endforeach; ?>
-            </select><br>
-            <label>Pet:</label>
-            <select name="id_pet" required>
+
+<!DOCTYPE html>
+<html lang="pt-br"> <!-- Define o idioma da página como português do Brasil -->
+<head>
+    <meta charset="UTF-8"> <!-- Define o conjunto de caracteres como UTF-8 -->
+    <!-- O título da página será "Editar Vacinação" se estiver editando, ou "Cadastrar Vacinação" se for um novo cadastro -->
+    <title><?= $id ? "Editar Vacinação" : "Cadastrar Vacinação" ?></title>
+</head>
+<body>
+    <!-- Exibe o título da página de acordo com a ação (edição ou cadastro) -->
+    <h1>Cadastrar Vacinação</h1>
+<form action="/projeto/vetz/salvar-vacina" method="POST">
+    <label>Data:</label>
+    <input type="date" name="data" required><br>
+
+    <label>Doses:</label>
+    <input type="number" name="doses" required><br>
+
+    <label>Vacina:</label>
+<select name="id_vacina" required>
+    <option value="">Selecione uma vacina</option> <!-- opção vazia -->
+    <?php foreach ($vacinas as $v): ?>
+        <option value="<?= $v['id_vacina'] ?>"><?= htmlspecialchars($v['vacina']) ?></option>
+    <?php endforeach; ?>
+</select><br>
+
+<label>Pet:</label>
+<select name="id_pet" required>
     <option value="">Selecione um pet</option> <!-- opção vazia -->
     <?php foreach ($pets as $pet): ?>
         <option value="<?= $pet['id'] ?>"><?= htmlspecialchars($pet['nome']) ?></option>

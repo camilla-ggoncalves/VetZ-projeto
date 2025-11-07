@@ -17,7 +17,7 @@ class UsuarioController {
         $ok = $model->cadastrar($dados['nome'], $dados['email'], $dados['senha']);
 
         if ($ok) {
-            header('Location: /projeto/vetz/loginForm');
+            header('Location: ../vetz/loginForm'); 
             exit;
         } else {
             echo "Erro ao cadastrar.";
@@ -86,47 +86,31 @@ class UsuarioController {
         echo $ok ? "Senha alterada com sucesso!" : "Erro ao alterar senha.";
     }
 
-
     public function perfil($id) {
         $usuarioModel = new Usuario();
-        $usuario = $usuarioModel->buscarPorId($id);
-        require_once __DIR__ . '/../models/Pet.php';
-        $petModel = new Pet();
-        $pets = $petModel->getPetsByUsuario($id);
-        include '../views/perfil_usuario.html';
-        // Não retorna nada
+        return $usuarioModel->buscarPorId($id);
     }
 
     public function atualizar($dados, $file) {
         $usuarioModel = new Usuario();
         $imagem = null;
+
         if (isset($file['imagem']) && $file['imagem']['error'] === UPLOAD_ERR_OK) {
             $imagem = basename($file['imagem']['name']);
             move_uploaded_file($file['imagem']['tmp_name'], '../uploads/' . $imagem);
         }
-        $ok = $usuarioModel->atualizar(
+
+        return $usuarioModel->atualizar(
             $dados['id'],
             $dados['nome'],
             $dados['email'],
             $dados['senha'],
             $imagem
         );
-        if ($ok) {
-            header('Location: /projeto/vetz/perfil-usuario?id=' . $dados['id']);
-            exit;
-        } else {
-            echo "Erro ao atualizar usuário.";
-        }
     }
 
     public function excluir($id) {
         $usuarioModel = new Usuario();
-        $ok = $usuarioModel->excluir($id);
-        if ($ok) {
-            header('Location: /projeto/vetz/loginForm');
-            exit;
-        } else {
-            echo "Erro ao excluir usuário.";
-        }
+        return $usuarioModel->excluir($id);
     }
 }

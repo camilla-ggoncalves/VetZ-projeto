@@ -71,7 +71,7 @@ class VacinacaoController {
     public function editar($id, $data, $doses, $id_vacina, $id_pet) {
         $model = new Vacinacao();
         $model->editar($id, $data, $doses, $id_vacina, $id_pet);
-        header("Location: /projeto/vetz/list-vacinas");
+        header("Location: ../views/vacinacao_pet.php");
         exit;
     }
 

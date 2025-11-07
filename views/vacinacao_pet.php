@@ -27,12 +27,6 @@ function calcularIdade($dataNascimento) {
 
 <body>
 
-        <body>
-                <?php include 'navbar.php'; ?>
-                            </span>
-                        </button>
-
-
 <header class="header">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">

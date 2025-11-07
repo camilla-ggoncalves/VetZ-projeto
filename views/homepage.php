@@ -28,7 +28,6 @@ $userName = $_SESSION['user_name'] ?? '';
 
 <header class="header">
 
-    <!-- NAV CORRIGIDO (AGORA NÃO TEM NAV DUPLO SEM FECHAR) -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
 
@@ -79,7 +78,7 @@ $userName = $_SESSION['user_name'] ?? '';
                                 </a>
                             </li>
                         <?php endif; ?>
-                        
+
                     </ul>
                 </div>
             </div>

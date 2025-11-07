@@ -81,6 +81,19 @@ elseif ($request === '/projeto/vetz/delete-pet') {
     exit;
 }
 
+
+// Carteirinha individual de vacinação do pet
+if (preg_match('#^/projeto/vetz/vacinacao-pet/(\d+)$#', $request, $matches)) {
+    session_start();
+    $idUsuario = $_SESSION['usuario_id'] ?? null;
+    $idPet = $matches[1];
+
+    $controller = new VacinacaoController($idUsuario);
+    $controller->vacinacaoPet($idPet);
+    exit;
+}
+
+
 // ---------------- ROTAS FIXAS ------------------
 switch ($request) {
 
@@ -151,7 +164,7 @@ switch ($request) {
         break;
 
     case '/projeto/vetz/recomendacoes':
-        include '../views/exibicao_pets.html';  
+        include '../views/exibicao_pets.php';  
         break;
 
     // case '/projeto/vetz/list-ficha':
@@ -193,7 +206,7 @@ switch ($request) {
         break;
 
     case '/projeto/vetz/pets-exibir':
-        include '../views/exibicao_pets.html';
+        include '../views/exibicao_pets.php';
         break;
 
     default:

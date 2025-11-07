@@ -31,18 +31,21 @@ class Vacinacao {
     }
 
     public function editar($id, $data, $doses, $id_vacina, $id_pet) {
-        $query = "UPDATE vacinacao SET data = :data, doses = :doses, 
-                  id_vacina = :id_vacina, id_pet = :id_pet
-                  WHERE id = :id";
+        $query = "UPDATE vacinacao 
+              SET data = :data, doses = :doses, id_vacina = :id_vacina, id_pet = :id_pet
+              WHERE id = :id";
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':data', $data);
         $stmt->bindParam(':doses', $doses);
-        $stmt->bindParam(':id_vacina', $id_vacina);
-        $stmt->bindParam(':id_pet', $id_pet);
-        $stmt->bindParam(':id_usuario', $id);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
+    $stmt->bindParam(':id_vacina', $id_vacina);
+    $stmt->bindParam(':id_pet', $id_pet);
+    $stmt->bindParam(':id', $id);
+
+    return $stmt->execute();
     }
+
+    
 
     public function excluir($id) {
         $query = "DELETE FROM vacinacao WHERE id = :id";
@@ -99,10 +102,4 @@ class Vacinacao {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function petTemVacina($id_pet) {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM vacinacao WHERE id_pet = :id_pet");
-        $stmt->bindParam(':id_pet', $id_pet);
-        $stmt->execute();
-        return $stmt->fetchColumn() > 0;
-    }
 }

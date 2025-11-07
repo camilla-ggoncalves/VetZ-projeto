@@ -28,7 +28,6 @@ $userName = $_SESSION['user_name'] ?? '';
 
 <header class="header">
 
-    <!-- NAV CORRIGIDO (AGORA NÃO TEM NAV DUPLO SEM FECHAR) -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
 
@@ -79,70 +78,56 @@ $userName = $_SESSION['user_name'] ?? '';
                                 </a>
                             </li>
                         <?php endif; ?>
-                        
+
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
 </header>
-        <!--End Header-->
+    <!--End Header-->
 
 
         <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
-
-        <!-- Begin Section 02 -->
-        <section class="section02" id="sec02">
+        <!-- Begin Section 06 -->
+        <section class="section06" id="sec06">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="sec02titleh1">Bem-vindos</h1>
-                        <p class="sec02ph1">Quem somos nós?
+                        <h1 class="sec006titleh1">Pagina de Vacinações!</h1>
+                        <p class="sec06ph1">Nesta página você poderá acessar as vacinações do seu pet.</p>
+                        <div class="info-cards">
+                        <!-- Card 1 -->
+                        <div class="info-card">
+                            <h2 class="sec06infosh2">Proteção</h2>
+                            <p class="sec06infos">As vacinas são essenciais para proteger a saúde do seu pet e prevenir doenças graves.</p>
+                        </div>
 
-                            Somos um grupo de estudantes do 3º ano do ensino médio, com foco em veterinária e zootecnia. Nosso projeto, "Vetz", busca explorar de forma inovadora a relação entre os animais, a saúde deles e a acessibilidade.
-                            com foco em áreas como comportamento animal, controle de vacinação e práticas de cuidado, unindo conhecimento e sensibilidade para transformar a forma como lidamos com os nossos animais.
-                            Nosso objetivo é contribuir para o bem-estar dos animais, de forma que possamos juntar o carinho e cuidado por eles no VetZ.</p>
-                        <!-- <p class="sec02ph2">texto.</p> -->
-                    </div>
-                </section>
-        <!-- End Section 02 --> 
+                        <!-- Card 2 -->
+                        <div class="info-card">
+                            <h2 class="sec06infosh2">Segurança</h2>
+                            <p class="sec06infos">Elas evitam riscos tanto para os animais quanto para os humanos que convivem com eles.</p>
+                        </div>
 
-        <!-- Begin Section 03 -->
-        <section class="section03" id="sec03">
-            <div class="container">
-                <h2 class="sec03titleh2">Integrantes do Projeto</h2>
+                        <!-- Card 3 -->
+                        <div class="info-card">
+                            <h2 class="sec06infosh2">Acompanhamento</h2>
+                            <p class="sec06infos">Você pode visualizar e acompanhar as vacinações do seu cachorro ou gato.</p>
+                        </div>
+                        </div>
 
-                <!-- Contêiner para a primeira linha -->
-                <div class="grid-container-line1">
-                    <div class="grid-item">
-                        <img src="/projeto/vetz/views/images/camilla_foto.png" class="card-img-top" alt="Camilla">
-                        <p class="sec03phinte">CAMILLA GARCEZ</p>
-                    </div>
-                    <div class="grid-item">
-                        <img src="/projeto/vetz/views/images/marcela_foto.jpg" class="card-img-top" alt="Marcela">
-                        <p class="sec03phinte">MARCELA SANCHES</p>
-                    </div>
-                    <div class="grid-item">
-                        <img src="/projeto/vetz/views/images/isadora_foto.png" class="card-img-top" alt="Isadora">
-                        <p class="sec03phinte">ISADORA MOREIRA</p>
-                    </div>
-                </div>
-
-                <!-- Contêiner para a segunda linha -->
-                <div class="grid-container-line2">
-
-                    <div class="grid-item-img1">
-                        <img src="images/vitinho subistituto.jpg" class="card-img-top" alt="Victor">
-                        <p class="sec03phinte">VICTOR M.</p>
-                    </div>
-                    <div class="grid-item-img2z">
-                        <img src="/projeto/vetz/views/images/alexandre_foto.jpeg" class="card-img-top" alt="Guilherme">
-                        <p class="sec03phinte">GUILHERME A.</p>
+                        <div class="vacina">
+                            <p class="sec06phvac">Confira as vacinas indicadas para proteger seu pet contra doenças comuns.</p>
+                            <a href="/projeto/vetz/views/vacinacao_pet.php" class="carteirinha">Carteirinha Digital</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- End Section 03  -->
+
+        <!-- End Section 06 -->
+
+        
 
         <!-- Begin footer-->
         <div class="footer">

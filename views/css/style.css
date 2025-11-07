@@ -2127,8 +2127,10 @@ input {
   padding: 10px;
   border: 1px solid #959494;
   border-radius: 5px;
+  width: 100%;
 }
 
+/* Botão cadastrar */
 .cadastrar {
   background-color: #b6e9a4;
   border: none;
@@ -2136,6 +2138,7 @@ input {
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .cadastrar:hover {
@@ -2151,6 +2154,95 @@ input {
   font-size: 14px;
   border-top: 1px solid #cfe8b6;
 }
+
+/* Indicador de força da senha */
+.mensagem-forca {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 5px 0 0 0;
+  text-align: left;
+  padding-left: 5px;
+}
+
+/* Cores da força da senha */
+.fraca {
+  color: #ff4d4d;
+}
+
+.media {
+  color: #e6b800;
+}
+
+.forte {
+  color: #2e8b57;
+}
+
+/* Container da senha (input + olho + tooltip) */
+.senha-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Botão olho */
+.toggle-senha {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+  padding: 5px;
+}
+
+.toggle-senha:hover {
+  color: #2e8b57;
+}
+
+/* Tooltip lateral (requisitos da senha) */
+.tooltip-senha {
+  position: absolute;
+  top: 50%;
+  right: -240px;
+  transform: translateY(-50%);
+  width: 220px;
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #cde7b0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.tooltip-senha ul {
+  margin: 5px 0 0 15px;
+  padding: 0;
+}
+
+.tooltip-senha li {
+  list-style-type: disc;
+}
+
+/* Exibir tooltip quando ativo */
+.tooltip-senha.mostrar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mensagem de erro de senha */
+.erro-senha {
+  display: block;
+  font-size: 13px;
+  margin-top: 5px;
+  color: #ff4d4d;
+}
+
 
 /* ========================================================== */
 /* 		             12. END PAGE CADASTRO                     */

@@ -1,6 +1,7 @@
 <?php
 require_once '../models/Vacinacao.php';
 require_once '../models/Pet.php';
+require_once '../models/Usuario.php';
 
 class VacinacaoController {
 
@@ -86,5 +87,33 @@ class VacinacaoController {
     public function buscarPorId($id) {
         $model = new Vacinacao();
         return $model->buscarPorId($id);
+    }
+
+
+    // Exibir carteirinha individual de um pet
+    public function vacinacaoPet($id_pet) {
+        if (!$this->usuarioId) {
+            echo "Usuário não autenticado.";
+            return;
+        }
+
+        $petModel = new Pet();
+        $vacinacaoModel = new Vacinacao();
+
+        $pet = $petModel->buscarPorId($id_pet);
+
+        if (!$pet) {
+            echo "Pet não encontrado.";
+            return;
+        }
+
+        if ($pet['id_usuario'] != $this->usuarioId) {
+            echo "Acesso negado. Este pet não pertence ao seu usuário.";
+            return;
+        }
+
+        $vacinas = $vacinacaoModel->listarPorPet($id_pet);
+
+        include '../views/vacinacao_pet.php';
     }
 }

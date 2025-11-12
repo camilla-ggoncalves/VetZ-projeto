@@ -81,6 +81,21 @@ elseif ($request === '/projeto/vetz/delete-pet') {
     exit;
 }
 
+
+// Carteirinha individual de vacinação do pet
+if (preg_match('#^/projeto/vetz/vacinacao-pet/(\d+)$#', $request, $matches)) {
+    session_start();
+    $idUsuario = $_SESSION['usuario_id'] ?? null;
+    $idPet = $matches[1];
+
+    $controller = new VacinacaoController($idUsuario);
+    $controller->vacinacaoPet($idPet);
+    exit;
+}
+
+
+
+
 // ---------------- ROTAS FIXAS ------------------
 switch ($request) {
 
@@ -103,6 +118,13 @@ switch ($request) {
 
     case '/projeto/vetz/login':
         (new UsuarioController())->login();
+        break;
+
+    case '/projeto/vetz/logout':
+        session_start();
+        session_destroy();
+        header('Location: /projeto/vetz/');
+        exit;
         break;
 
     case '/projeto/vetz/enviarCodigo':
@@ -147,11 +169,11 @@ switch ($request) {
         break;
 
     case '/projeto/vetz/curiosidades':
-        include '../views/curiosidades.html';
+        include '../views/curiosidades.php';
         break;
 
     case '/projeto/vetz/recomendacoes':
-        include '../views/exibicao_pets.html';  
+        include '../views/exibicao_pets.php';  
         break;
 
     // case '/projeto/vetz/list-ficha':
@@ -167,7 +189,7 @@ switch ($request) {
         }
         $controller = new UsuarioController();
         $usuario = $controller->perfil($_GET['id']);
-        include '../views/perfil_usuario.html';
+        include '../views/perfil_usuario.php';
         break;
 
     case '/projeto/vetz/excluir-usuario':
@@ -185,15 +207,15 @@ switch ($request) {
         break;
     
     case '/projeto/vetz/homepage':
-        include '../views/homepage.html';
+        include '../views/homepage.php';
         break;
 
     case '/projeto/vetz/sobre-nos':
-        include '../views/sobre_nos.html';
+        include '../views/sobre_nos.php';
         break;
 
     case '/projeto/vetz/pets-exibir':
-        include '../views/exibicao_pets.html';
+        include '../views/exibicao_pets.php';
         break;
 
     default:

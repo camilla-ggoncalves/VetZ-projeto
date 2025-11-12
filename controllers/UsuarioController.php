@@ -24,28 +24,32 @@ class UsuarioController {
         }
     }
 
-    public function login() {
-        $email = isset($_POST['email']) ? $_POST['email'] : null;
-        $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
+   public function login() {
+    $email = isset($_POST['email']) ? $_POST['email'] : null;
+    $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
 
-        if (!$email || !$senha) {
-           echo "Por favor, preencha email e senha.";
-            return;
-        }
+    if (!$email || !$senha) {
+        echo "Por favor, preencha email e senha.";
+        return;
+    }
 
     $model = new Usuario();
     $usuario = $model->autenticar($email, $senha);
 
     if ($usuario) {
         session_start();
-        $_SESSION['usuario'] = $usuario;
-        header('Location: /projeto/vetz/perfil-usuario?id=' . $usuario['id']);
+        $_SESSION['user_id'] = $usuario['id'];
+        $_SESSION['user_name'] = $usuario['nome'];
+        $_SESSION['user_email'] = $usuario['email']; // ADICIONE ESTA LINHA
+        
+        // MUDE AQUI: redireciona para homepage em vez de perfil-usuario
+        header('Location: /projeto/vetz/homepage');
         exit;
     } else {
-        $erro = "Credenciais inválidas.";
+        $_SESSION['erro'] = "Credenciais inválidas."; // ADICIONE ESTA LINHA
         include '../views/login.php';
     }
-    }
+}
 
     public function enviarCodigo() {
         $email = $_POST['email'];

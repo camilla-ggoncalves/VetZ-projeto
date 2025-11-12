@@ -1,0 +1,116 @@
+<?php 
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="veterinária, vídeos, pets, animais">
+    <meta name="description" content="Vídeos sobre cuidados veterinários e curiosidades sobre animais">
+
+    <title>Vídeos - VetZ</title>
+    
+    <!-- Loading Bootstrap -->
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet" media="screen and (color)">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+</head>
+
+<body>
+    <!--Begin Header-->
+    <header class="header">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+    
+                <a href="/projeto/vetz/" rel="home">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                </a>
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon">
+                            <i class="fas fa-bars"></i>
+                        </span>
+                    </button>
+    
+                    <div class="navbar-collapse collapse" id="navbarCollapse">
+                        <ul class="navbar-nav ml-auto left-menu">
+                            <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                            <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                            <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                            <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                            <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
+                            <li>
+                                <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
+                                <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil"> CADASTRO
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div> 
+        </nav>
+    </header>
+    <!--End Header-->
+
+    <!-- Conteúdo principal -->
+    <main>
+        <section class="youtube-section">
+            <h2>Vídeos</h2>
+
+            <div class="video-buttons">
+                <button class="recentes active">MAIS RECENTES</button>
+                <button class="antigos">MAIS ANTIGOS</button>
+            </div>
+
+            <div id="recentes" class="video-grid ativo">
+                <!-- Os vídeos serão carregados aqui via JavaScript -->
+            </div>
+            
+            <div id="antigos" class="video-grid">
+                <!-- Os vídeos serão carregados aqui via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">Todos os direitos reservados <span id="footer-year"></span> © - VetZ</p>
+                </div>
+                <div class="col-md-1">
+                    <p class="instagram">
+                        <a href="#!"><img src="/projeto/vetz/views/images/instagram_icone.svg" alt="Instagram"></a>
+                    </p>
+                </div>
+                <div class="col-md-1">
+                    <p class="email">
+                        <a href="#!"><img src="/projeto/vetz/views/images/gmail_icone.svg" alt="Email"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://apis.google.com/js/api.js"></script> <!-- API do YouTube -->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/bootstrap.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script> <!-- Seu script com a API -->
+    
+    <script>
+        // Atualiza o ano no rodapé automaticamente
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
+</body>

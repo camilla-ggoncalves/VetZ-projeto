@@ -3,6 +3,11 @@ require_once '../controllers/VacinacaoController.php';
 require_once '../controllers/PetController.php';
 require_once '../controllers/UsuarioController.php';
 
+
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+
 // Controlador de vacinação
 $vacinacaoModel = new Vacinacao();
 $vacinas = $vacinacaoModel->listarVacinas(); // Lista de vacinas disponíveis no sistema

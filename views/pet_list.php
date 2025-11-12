@@ -1,10 +1,15 @@
+<?php 
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pets Cadastrados</title>
+    <title>VetZ</title>
 </head>
 <body>
 
@@ -55,6 +60,11 @@
 <br>
 <a href="/projeto/vetz/formulario">Cadastrar novo pet</a>
 <a href="/projeto/vetz/cadastrar-vacina">Adicionar Vacina</a>
+
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
 
 </body>
 </html>

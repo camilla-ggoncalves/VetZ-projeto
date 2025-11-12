@@ -1,13 +1,14 @@
-<?php
-// views/vacinacao/vacina_list.php
-// Arquivo responsável por exibir a lista de vacinações registradas no sistema.
+<?php 
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Vacinações</title>
+    <title>VetZ</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>

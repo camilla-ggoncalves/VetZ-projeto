@@ -1,9 +1,14 @@
+<?php 
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> Cadastro pet - VetZ </title>
+  <title>VetZ</title>
   <link rel="stylesheet" href="views\css\style.css" />
 </head>
 <body>    

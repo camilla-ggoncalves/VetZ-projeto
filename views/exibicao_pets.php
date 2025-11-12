@@ -1,22 +1,28 @@
+<?php
+session_start();
+
+// Garante que as variáveis sempre existam
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $_SESSION['user_name'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="">
-        <meta name="description" content="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>VetZ</title>
 
-        <title>VetZ</title>
-        
-        <!-- Loading Bootstrap -->
-         <link href="./css/bootstrap.min.css" rel="stylesheet">
-        <link href="./css/style.css" rel="stylesheet" media="screen and (color)">
-        <link href="./css/all.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
 
-        <!-- Favicon -->
-        <link href="images/logoPNG.png" rel="shortcut icon">
-    </head>
+    <!-- Favicon -->
+    <link href="images/logoPNG.png" rel="shortcut icon">
+</head>
 
     <body>
         <!--Begin Header-->
@@ -267,7 +273,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="footerp1">
-                            Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                            Todos os direitos reservados <span id="footer-year"></span> © 2025 - VetZ </p>
                     </div>
 
                     <!-- <div class="col-md-1">

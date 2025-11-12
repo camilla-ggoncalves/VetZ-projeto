@@ -1,4 +1,9 @@
 <?php 
+
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+
 require_once '../models/Vacinacao.php';
 
 // Obtém o ID da vacinação a ser atualizada através do parâmetro GET da URL

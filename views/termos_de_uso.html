@@ -39,15 +39,15 @@
                         </button>
         
                         <div class="navbar-collapse collapse" id="navbarCollapse">
-                            <ul class="navbar-nav ml-auto 1  left-menu">
-                                <li><a href="./homepage.html">HOME PAGE</a></li>
-                                <li><a href="./sobre_nos.html">SOBRE NÓS</a></li>
-                                <li><a href="./curiosidades.html">CURIOSIDADES</a></li>
-                                <li><a href="./exibicao_pets.html">RECOMENDAÇÕES</a></li>
-                                <li><a href="./vacinacao_form.php">VACINAÇÃO</a></li>
-                                <li><a class="btn btn-menu" href="./perfil_usuario.php" role="button"><img class="imgperfil" src="images/perfil.svg"> SEU PERFIL</a></li>
-                            </ul> 
-                            
+                <ul class="navbar-nav ml-auto 1  left-menu">
+                    <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                    <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                    <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                    <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                    <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
+                    <li> <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
+                    <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil"> CADASTRO</a></li>
+                </ul>                            
                         </div>
                     </nav>
                 </div> 
@@ -150,10 +150,9 @@
 
 
         <!-- Load JS =============================-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/jquery.scrollTo-min.js"></script>
-        <script src="js/jquery.nav.js"></script>
-        <script src="js/scripts.js"></script>
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
     </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Pet - PetCare</title>
+    <title>VetZ</title>
     <style>
         * {
             margin: 0;
@@ -603,34 +603,6 @@
         </div>
 
         <div class="sidebar">
-            <div class="sidebar-card">
-                <h3 style="color: #2d5016; margin-bottom: 20px;">Ações Rápidas</h3>
-                <div class="quick-actions">
-                    <button class="btn btn-primary" onclick="openVaccinationCard()">
-                        📋 Carteirinha de Vacinação
-                    </button>
-                    <button class="btn btn-secondary" onclick="scheduleAppointment()">
-                        📅 Agendar Consulta
-                    </button>
-                    <button class="btn btn-secondary" onclick="addMedication()">
-                        💊 Adicionar Medicação
-                    </button>
-                    <button class="btn btn-secondary" onclick="viewHistory()">
-                        📚 Histórico Médico
-                    </button>
-                </div>
-            </div>
-
-            <div class="sidebar-card vaccination-preview">
-                <div class="vaccination-icon">💉</div>
-                <h4 style="color: #2d5016; margin-bottom: 10px;">Carteirinha Digital</h4>
-                <p style="color: #4a7c23; font-size: 14px; margin-bottom: 15px;">
-                    Todas as vacinas em dia! Próxima dose em 30 dias.
-                </p>
-                <button class="btn btn-primary" onclick="openVaccinationCard()">
-                    Ver Carteirinha
-                </button>
-            </div>
 
             <div class="sidebar-card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -649,6 +621,19 @@
                         <small style="color: #666;">Em 15 dias</small>
                     </div>
                 </div>
+            </div>
+
+            <div class="sidebar-card vaccination-preview">
+                <div class="vaccination-icon">💉</div>
+                <h4 style="color: #2d5016; margin-bottom: 10px;">Carteirinha Digital</h4>
+                <p style="color: #4a7c23; font-size: 14px; margin-bottom: 15px;">
+                    Todas as vacinas em dia! Próxima dose em 30 dias.
+                </p>
+                <button class="btn btn-primary" onclick="openVaccinationCard()">
+                    Ver Carteirinha
+                </button>
+            </div>
+
             </div>
         </div>
     </div>
@@ -875,5 +860,12 @@
                 closeReminderModal();
             }
         }
-
-        function showNotification(message, type) {}
+</script>
+        <!-- Load JS =============================-->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
+    </body>
+</html>
+        

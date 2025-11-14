@@ -1,25 +1,32 @@
+<?php
+include 'views/check-auth.php';
+
+// Proteção: redireciona se não estiver logado
+if (!$isLoggedIn) {
+    header('Location: /projeto/vetz/cadastrarForm');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+    <meta name="keywords" content="veterinária, vídeos, pets, animais">
+    <meta name="description" content="Vídeos sobre cuidados veterinários e curiosidades sobre animais">
 
-    <title>VetZ - Perfil do Tutor</title>
+    <title>Vídeos - VetZ</title>
     
     <!-- Loading Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Loading código CSS -->
-    <link href="css/style.css" rel="stylesheet" media="screen and (color)">
-
-    <!-- Awsome Fonts -->
-    <link href="css/all.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet" media="screen and (color)">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="images/logo_vetz.svg" rel="shortcut icon">
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
 </head>
 
 <body>
@@ -29,9 +36,9 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
     
-                    <a href="index.html" rel="home">
-                        <img class="logomenu" src="images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                    </a>
+                <a href="/projeto/vetz/" rel="home">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                </a>
                     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon">
                             <i class="fas fa-bars"></i>
@@ -47,10 +54,10 @@
                             <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
                             <li>
                                 <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                                    <img class="imgperfil" src="/projeto/vetz/views/images/perfil" alt="Perfil"> CADASTRO
+                                <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil"> CADASTRO
                                 </a>
                             </li>
-                        </ul>                            
+                        </ul>
                     </div>
                 </nav>
             </div> 
@@ -200,8 +207,7 @@
     <!--End footer-->
 
     <!-- Load JS =============================-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/jquery.scrollTo-min.js"></script>
-    <script src="js/jquery.nav.js"></script>
-    <script src="./js/scripts.js"></script>
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>

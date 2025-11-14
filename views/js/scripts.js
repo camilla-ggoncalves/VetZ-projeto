@@ -64,174 +64,239 @@ $(window).on('load', function(){
 
 });
 
-	/* ========================================================== */
-	/*   API Youtube - Vídeos Atuais e Antigos - ChatGPT          */
-	/* ========================================================== */
+/* ========================================================== */
+/*   API Youtube - Arquivo Separado para evitar conflitos      */
+/* ========================================================== */
 
-// Defina sua chave de API do YouTube aqui
-const apiKey = 'AIzaSyCK_SS_gw9xG9m5xAo3aO6dZ-6sWqWaK0w';
+(function() {
+    'use strict';
 
-const canaisVeterinarios = [
-    'UCsKneoQQHq93LsJpfspj_6A',
-    'UCTU-01IN0p5JXB7VxEzDdJg',
-    'UCpfYQpjkTmxMPN1vUoTaAMw'
-];
+    // Sua chave de API do YouTube
+    const apiKey = 'AIzaSyCK_SS_gw9xG9m5xAo3aO6dZ-6sWqWaK0w';
 
-/* ---------- Mostrar / ocultar (mais recentes / antigos) ---------- */
-function mostrarRecentes() {
-    const recentes = document.getElementById('recentes');
-    const antigos = document.getElementById('antigos');
+    const canaisVeterinarios = [
+        'UCsKneoQQHq93LsJpfspj_6A',
+        'UCTU-01IN0p5JXB7VxEzDdJg',
+        'UCpfYQpjkTmxMPN1vUoTaAMw'
+    ];
 
-    if (!recentes || !antigos) {
-        console.warn('Seções #recentes ou #antigos não encontradas no DOM.');
-        return;
-    }
+    const MAX_PER_SECTION = 9;
 
-    recentes.classList.add('ativo');
-    antigos.classList.remove('ativo');
+    /* ---------- Funções de navegação ---------- */
+    function mostrarRecentes() {
+        const recentes = document.getElementById('recentes');
+        const antigos = document.getElementById('antigos');
+        const btnRecentes = document.querySelector('.video-buttons .recentes');
+        const btnAntigos = document.querySelector('.video-buttons .antigos');
 
-    const btnRecentes = document.querySelector('.video-buttons .recentes') || document.getElementById('btn-recentes');
-    const btnAntigos = document.querySelector('.video-buttons .antigos') || document.getElementById('btn-antigos');
-
-    if (btnRecentes) btnRecentes.classList.add('active');
-    if (btnAntigos) btnAntigos.classList.remove('active');
-}
-
-function mostrarAntigos() {
-    const recentes = document.getElementById('recentes');
-    const antigos = document.getElementById('antigos');
-
-    if (!recentes || !antigos) {
-        console.warn('Seções #recentes ou #antigos não encontradas no DOM.');
-        return;
-    }
-
-    antigos.classList.add('ativo');
-    recentes.classList.remove('ativo');
-
-    const btnRecentes = document.querySelector('.video-buttons .recentes') || document.getElementById('btn-recentes');
-    const btnAntigos = document.querySelector('.video-buttons .antigos') || document.getElementById('btn-antigos');
-
-    if (btnAntigos) btnAntigos.classList.add('active');
-    if (btnRecentes) btnRecentes.classList.remove('active');
-}
-
-/* Expor as funções no window para compatibilidade com onclick inline (se estiver usando) */
-window.mostrarRecentes = mostrarRecentes;
-window.mostrarAntigos = mostrarAntigos;
-
-/* ---------- Inicializar eventos dos botões quando DOM pronto ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-    const btnRecentes = document.querySelector('.video-buttons .recentes') || document.getElementById('btn-recentes');
-    const btnAntigos = document.querySelector('.video-buttons .antigos') || document.getElementById('btn-antigos');
-
-    if (btnRecentes) {
-        btnRecentes.addEventListener('click', mostrarRecentes);
-    } else {
-        console.warn('Botão de "recentes" não encontrado — verifique se ele tem a classe "recentes" ou id "btn-recentes" e se está dentro de .video-buttons.');
-    }
-
-    if (btnAntigos) {
-        btnAntigos.addEventListener('click', mostrarAntigos);
-    } else {
-        console.warn('Botão de "antigos" não encontrado — verifique se ele tem a classe "antigos" ou id "btn-antigos" e se está dentro de .video-buttons.');
-    }
-
-    // estado inicial
-    mostrarRecentes();
-});
-
-/* ---------- YouTube API / busca / exibição (melhorias pequenas de robustez) ---------- */
-function loadYouTubeAPI() {
-    gapi.client.init({ apiKey: apiKey }).then(() => {
-        getVideosDeCanaisVeterinarios();
-    }).catch(err => {
-        console.error('Erro ao inicializar gapi:', err);
-    });
-}
-
-function buscarVideosDoCanal(channelId) {
-    return gapi.client.request({
-        'path': '/youtube/v3/search',
-        'params': {
-            'part': 'snippet',
-            'channelId': channelId,
-            'maxResults': 5,
-            'order': 'date',
-            'type': 'video',
+        if (recentes && antigos) {
+            recentes.classList.add('ativo');
+            antigos.classList.remove('ativo');
         }
-    }).then(response => response.result.items)
-      .catch(err => {
-          console.warn('Erro buscando vídeos do canal', channelId, err);
-          return [];
-      });
-}
 
-function getVideosDeCanaisVeterinarios() {
-    const promessas = canaisVeterinarios.map(canal => buscarVideosDoCanal(canal));
-    Promise.all(promessas).then(resultados => {
-        const todosVideos = resultados.flat();
-        displayVideos(todosVideos);
-    });
-}
-
-function displayVideos(videos) {
-    const recentList = document.getElementById('recentes');
-    const oldList = document.getElementById('antigos');
-    if (!recentList || !oldList) {
-        console.warn('Containers #recentes ou #antigos não encontrados. Verifique o HTML.');
-        return;
+        if (btnRecentes) btnRecentes.classList.add('active');
+        if (btnAntigos) btnAntigos.classList.remove('active');
     }
 
-    recentList.innerHTML = '';
-    oldList.innerHTML = '';
+    function mostrarAntigos() {
+        const recentes = document.getElementById('recentes');
+        const antigos = document.getElementById('antigos');
+        const btnRecentes = document.querySelector('.video-buttons .recentes');
+        const btnAntigos = document.querySelector('.video-buttons .antigos');
 
-    const hoje = new Date();
-    const trintaDiasAtras = new Date();
-    trintaDiasAtras.setDate(hoje.getDate() - 30);
+        if (recentes && antigos) {
+            antigos.classList.add('ativo');
+            recentes.classList.remove('ativo');
+        }
 
-    const videosOrdenados = videos.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
+        if (btnAntigos) btnAntigos.classList.add('active');
+        if (btnRecentes) btnRecentes.classList.remove('active');
+    }
 
-    videosOrdenados.forEach(video => {
-        const title = (video.snippet.title || '').replace(/#[^\s#]+/g, '').trim();
-        const videoId = video.id?.videoId || (typeof video.id === 'string' ? video.id : '');
-        const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '#';
-        const thumb = video.snippet.thumbnails?.maxres?.url
-                    || video.snippet.thumbnails?.high?.url
-                    || video.snippet.thumbnails?.medium?.url
-                    || video.snippet.thumbnails?.default?.url
-                    || '';
+    /* ---------- Inicializar botões ---------- */
+    function inicializarBotoes() {
+        const btnRecentes = document.querySelector('.video-buttons .recentes');
+        const btnAntigos = document.querySelector('.video-buttons .antigos');
 
-        const publishedAt = new Date(video.snippet.publishedAt);
-        const dataFormatada = isNaN(publishedAt) ? '' : publishedAt.toLocaleDateString('pt-BR');
+        if (btnRecentes) {
+            btnRecentes.addEventListener('click', mostrarRecentes);
+        }
 
-        const listItem = document.createElement('div');
-        listItem.classList.add('video-item');
-        listItem.innerHTML = `
-            <p class="video-title">${title}</p>
-            <a href="${videoUrl}" target="_blank" rel="noopener noreferrer">
-                <img src="${thumb}" alt="${title}">
-            </a>
-            <p class="video-date">${dataFormatada}</p>
-        `;
+        if (btnAntigos) {
+            btnAntigos.addEventListener('click', mostrarAntigos);
+        }
 
-        if (!isNaN(publishedAt) && publishedAt >= trintaDiasAtras) {
-            recentList.appendChild(listItem);
+        // Estado inicial
+        mostrarRecentes();
+    }
+
+    /* ---------- YouTube API ---------- */
+    function loadYouTubeAPI() {
+        if (!window.gapi) {
+            console.error('Google API (gapi) não carregada!');
+            return;
+        }
+
+        gapi.client.init({ apiKey: apiKey })
+            .then(() => {
+                console.log('✓ Google API inicializada');
+                getVideosDeCanaisVeterinarios();
+            })
+            .catch(err => {
+                console.error('Erro ao inicializar gapi:', err);
+            });
+    }
+
+    function buscarVideosDoCanal(channelId) {
+        return gapi.client.request({
+            'path': '/youtube/v3/search',
+            'params': {
+                'part': 'snippet',
+                'channelId': channelId,
+                'maxResults': 20,
+                'order': 'date',
+                'type': 'video',
+            }
+        })
+        .then(response => response.result.items || [])
+        .catch(err => {
+            console.warn('Erro buscando vídeos do canal', channelId, err);
+            return [];
+        });
+    }
+
+    function getVideosDeCanaisVeterinarios() {
+        const promessas = canaisVeterinarios.map(canal => buscarVideosDoCanal(canal));
+        
+        Promise.all(promessas).then(resultados => {
+            const todosVideos = resultados.flat();
+
+            // Remove duplicatas
+            const mapa = new Map();
+            todosVideos.forEach(v => {
+                const videoId = v.id && v.id.videoId ? v.id.videoId : '';
+                if (videoId && !mapa.has(videoId)) {
+                    mapa.set(videoId, v);
+                }
+            });
+
+            const uniqueVideos = Array.from(mapa.values());
+
+            // Ordenar por data
+            uniqueVideos.sort((a, b) => {
+                return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
+            });
+
+            // Separar em recentes e antigos
+            const hoje = new Date();
+            const trintaDiasAtras = new Date();
+            trintaDiasAtras.setDate(hoje.getDate() - 30);
+
+            const videosRecentes = [];
+            const videosAntigos = [];
+
+            uniqueVideos.forEach(v => {
+                const publishedAt = new Date(v.snippet.publishedAt);
+                if (!isNaN(publishedAt)) {
+                    if (publishedAt >= trintaDiasAtras) {
+                        videosRecentes.push(v);
+                    } else {
+                        videosAntigos.push(v);
+                    }
+                }
+            });
+
+            // Pegar exatamente 9 de cada
+            const recentes9 = videosRecentes.slice(0, MAX_PER_SECTION);
+            const antigos9 = videosAntigos.slice(0, MAX_PER_SECTION);
+
+            console.log(`✓ ${recentes9.length} vídeos recentes carregados`);
+            console.log(`✓ ${antigos9.length} vídeos antigos carregados`);
+
+            displayVideosSplit(recentes9, antigos9);
+        })
+        .catch(err => {
+            console.error('Erro ao buscar vídeos:', err);
+        });
+    }
+
+    function displayVideosSplit(recentes, antigos) {
+        const recentList = document.getElementById('recentes');
+        const oldList = document.getElementById('antigos');
+        
+        if (!recentList || !oldList) {
+            console.error('Elementos #recentes ou #antigos não encontrados!');
+            return;
+        }
+
+        recentList.innerHTML = '';
+        oldList.innerHTML = '';
+
+        function criarItem(video) {
+            const title = (video.snippet.title || '').replace(/#[^\s#]+/g, '').trim();
+            const videoId = video.id && video.id.videoId ? video.id.videoId : '';
+            const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '#';
+            const thumb = (video.snippet.thumbnails && 
+                          (video.snippet.thumbnails.high?.url || 
+                           video.snippet.thumbnails.medium?.url || 
+                           video.snippet.thumbnails.default?.url)) || '';
+
+            const publishedAt = new Date(video.snippet.publishedAt);
+            const dataFormatada = isNaN(publishedAt) ? '' : publishedAt.toLocaleDateString('pt-BR');
+
+            const listItem = document.createElement('div');
+            listItem.classList.add('video-item');
+            listItem.innerHTML = `
+                <a href="${videoUrl}" target="_blank" rel="noopener noreferrer" class="video-thumb">
+                    <img src="${thumb}" alt="${escapeHtml(title)}">
+                </a>
+                <div class="video-content">
+                    <p class="video-title">${escapeHtml(title)}</p>
+                    <p class="video-date">${dataFormatada}</p>
+                </div>
+            `;
+            return listItem;
+        }
+
+        recentes.forEach(v => recentList.appendChild(criarItem(v)));
+        antigos.forEach(v => oldList.appendChild(criarItem(v)));
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /* ---------- Inicialização ---------- */
+    function init() {
+        // Aguarda o DOM estar pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                inicializarBotoes();
+                
+                // Carrega a API do YouTube
+                if (window.gapi && gapi.load) {
+                    gapi.load('client', loadYouTubeAPI);
+                } else {
+                    console.error('Google API (gapi) não encontrada!');
+                }
+            });
         } else {
-            oldList.appendChild(listItem);
+            inicializarBotoes();
+            
+            if (window.gapi && gapi.load) {
+                gapi.load('client', loadYouTubeAPI);
+            } else {
+                console.error('Google API (gapi) não encontrada!');
+            }
         }
-    });
-}
-
-function start() {
-    if (window.gapi && gapi.load) {
-        gapi.load('client', loadYouTubeAPI);
-    } else {
-        console.warn('gapi não encontrado — verifique se o script da Google API foi carregado antes deste script.');
     }
-}
 
-window.addEventListener('load', start);
+    // Inicia tudo
+    init();
+
+})();
 
 
 	/* ========================================================== */

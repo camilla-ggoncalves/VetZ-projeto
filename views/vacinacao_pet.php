@@ -1,14 +1,7 @@
 <?php 
-// $pet — vindo do controller
-// $vacinas — vindo do controller
-// $usuarioId — vindo da sessão
-
-// Função opcional para calcular idade
-function calcularIdade($dataNascimento) {
-    $hoje = new DateTime();
-    $nasc = new DateTime($dataNascimento);
-    return $hoje->diff($nasc)->y;
-}
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 ?>
 
 <!DOCTYPE html>

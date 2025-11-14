@@ -94,6 +94,8 @@ if (preg_match('#^/projeto/vetz/vacinacao-pet/(\d+)$#', $request, $matches)) {
 }
 
 
+
+
 // ---------------- ROTAS FIXAS ------------------
 switch ($request) {
 
@@ -116,6 +118,13 @@ switch ($request) {
 
     case '/projeto/vetz/login':
         (new UsuarioController())->login();
+        break;
+
+    case '/projeto/vetz/logout':
+        session_start();
+        session_destroy();
+        header('Location: /projeto/vetz/');
+        exit;
         break;
 
     case '/projeto/vetz/enviarCodigo':
@@ -160,7 +169,7 @@ switch ($request) {
         break;
 
     case '/projeto/vetz/curiosidades':
-        include '../views/curiosidades.html';
+        include '../views/curiosidades.php';
         break;
 
     case '/projeto/vetz/recomendacoes':
@@ -180,7 +189,7 @@ switch ($request) {
         }
         $controller = new UsuarioController();
         $usuario = $controller->perfil($_GET['id']);
-        include '../views/perfil_usuario.html';
+        include '../views/perfil_usuario.php';
         break;
 
     case '/projeto/vetz/excluir-usuario':

@@ -1,7 +1,19 @@
 <?php 
 session_start();
+
 $isLoggedIn = isset($_SESSION['user_id']);
 $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+
+// SE $pet NÃO EXISTIR, EVITA ERROS
+$pet = isset($pet) && is_array($pet) ? $pet : [];
+
+// SE $vacinas NÃO EXISTIR
+$vacinas = isset($vacinas) && is_array($vacinas) ? $vacinas : [];
+
+function safe($value) {
+    return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +21,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carteira de Vacinação - <?= htmlspecialchars($pet['nome']) ?></title>
+    <title>Carteira de Vacinação - <?= safe($pet['nome'] ?? 'Pet Desconhecido') ?></title>
 
     <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
@@ -40,10 +52,10 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
 
                         <li>
-                            <a class="btn btn-menu" href="/projeto/vetz/perfil">
-                                <img class="imgperfil" src="/projeto/vetz/views/images/perfil" alt="Perfil">
-                                PERFIL
-                            </a>
+        <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
+            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+            CADASTRO
+        </a>
                         </li>
                     </ul>
                 </div>
@@ -62,24 +74,29 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
         <div class="header-info">
             <div class="pet-photo">🐕</div>
 
-            <h1 class="nome-pet"><?= htmlspecialchars($pet['nome']) ?></h1>
+            <h1 class="nome-pet">
+                <?= safe($pet['nome'] ?? 'Nome não informado') ?>
+            </h1>
 
             <p>Tutor: 
-                <?= isset($pet['nome_tutor']) ? htmlspecialchars($pet['nome_tutor']) : 'Desconhecido' ?>
+                <?= safe($pet['nome_tutor'] ?? 'Desconhecido') ?>
             </p>
 
             <div class="pet-details">
 
                 <div class="pet-detail-item">
                     <span class="pet-detail-label">Raça</span>
-                    <span class="pet-detail-value"><?= htmlspecialchars($pet['raca']) ?></span>
+                    <span class="pet-detail-value">
+                        <?= safe($pet['raca'] ?? 'Não informada') ?>
+                    </span>
                 </div>
-
 
                 <div class="pet-detail-item">
                     <span class="pet-detail-label">Nascimento</span>
                     <span class="pet-detail-value">
-                        <?= date("d/m/Y", strtotime($pet['data_nascimento'])) ?>
+                        <?= (isset($pet['data_nascimento']) && !empty($pet['data_nascimento']))
+                            ? date("d/m/Y", strtotime($pet['data_nascimento']))
+                            : 'Não informado' ?>
                     </span>
                 </div>
 
@@ -91,7 +108,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 
             <h2>
                 Carteirinha de Vacinação Digital
-                <a href="/projeto/vetz/cadastrar-vacina">
+                <a href="/projeto/vetz/views/vacinacao_form.php">
                     <button class="edit-btn">✏️ Registrar Vacinas</button>
                 </a>
             </h2>
@@ -126,16 +143,16 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                     <?php foreach ($vacinas as $v): ?>
 
                         <tr>
+                            <td><strong><?= safe($v['nome_vacina']) ?></strong></td>
+
+                            <td><?= safe($v['doses']) ?></td>
+
                             <td>
-                                <strong><?= htmlspecialchars($v['nome_vacina']) ?></strong>
+                                <?= isset($v['data']) ? date("d/m/Y", strtotime($v['data'])) : '---' ?>
                             </td>
 
-                            <td><?= htmlspecialchars($v['doses']) ?></td>
-
-                            <td><?= date("d/m/Y", strtotime($v['data'])) ?></td>
-
                             <td>
-                                <?= date("d/m/Y", strtotime($v['data'] . " + 1 year")) ?>
+                                <?= isset($v['data']) ? date("d/m/Y", strtotime($v['data'] . " + 1 year")) : '---' ?>
                             </td>
                         </tr>
 

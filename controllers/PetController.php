@@ -2,10 +2,12 @@
 require_once '../models/Pet.php';
 require_once '../models/Vacinacao.php';
 
-class PetController {
+class PetController
+{
     private $petModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->petModel = new Pet();
     }
 
@@ -229,12 +231,11 @@ class PetController {
         return $pets;
     }
 
-    public function listarPets() {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        if (!isset($_SESSION['user_id'])) {
-            return [];
-        }
 
+    /** Lista todos os pets do usuário logado */
+    public function listarPets()
+    {
+        $this->garantirSessao();
         try {
             return $this->petModel->getPetsByUsuario($_SESSION['user_id']);
         } catch (Exception $e) {
@@ -243,9 +244,14 @@ class PetController {
         }
     }
 
-    public function usuarioTemPets($usuarioId) {
+    /** Verifica se o usuário tem pelo menos um pet cadastrado */
+    public function usuarioTemPets($usuarioId = null)
+    {
+        $id = $usuarioId ?? $_SESSION['user_id'] ?? null;
+        if (!$id) return false;
+
         try {
-            $pets = $this->petModel->getPetsByUsuario($usuarioId);
+            $pets = $this->petModel->getPetsByUsuario($id);
             return !empty($pets);
         } catch (Exception $e) {
             error_log("Erro ao verificar pets do usuário: " . $e->getMessage());

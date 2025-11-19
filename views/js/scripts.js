@@ -894,3 +894,31 @@ window.addEventListener('DOMContentLoaded', function() {
     // Ano no footer
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 });
+
+
+
+// Navbar things
+document.addEventListener('DOMContentLoaded', function() {
+    const userMenuToggle = document.getElementById('userMenuToggle');
+    const userDropdown = document.getElementById('userDropdown');
+   
+    if (userMenuToggle && userDropdown) {
+        // Toggle dropdown ao clicar no botão
+        userMenuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+       
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+       
+        // Prevenir que cliques dentro do dropdown o fechem
+        userDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});

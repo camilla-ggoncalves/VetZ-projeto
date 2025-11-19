@@ -122,7 +122,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                 <div class="grid-container-line2">
 
                     <div class="grid-item-img1">
-                        <img src="images/vitinho subistituto.jpg" class="card-img-top" alt="Victor">
+                        <img src="/projeto/vetz/views/images/victor_hugo_foto.png" class="card-img-top" alt="Victor">
                         <p class="sec03phinte">VICTOR M.</p>
                     </div>
                     <div class="grid-item-img2z">

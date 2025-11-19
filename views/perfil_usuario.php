@@ -1,14 +1,25 @@
 <?php
-include 'views/check-auth.php';
 session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
-$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
-?>
-// Proteção: redireciona se não estiver logado
+
 if (!$isLoggedIn) {
-    header('Location: /projeto/vetz/cadastrarForm');
+    header('Location: /projeto/vetz/loginForm');
     exit;
 }
+
+if (!isset($usuario) || empty($usuario)) {
+    echo "Usuário não encontrado.";
+    exit;
+}
+
+$nome  = htmlspecialchars($usuario['nome'] ?? 'N/A');
+$email = htmlspecialchars($usuario['email'] ?? 'N/A');
+$telefone = htmlspecialchars($usuario['telefone'] ?? 'N/A');
+$endereco = htmlspecialchars($usuario['endereco'] ?? 'N/A');
+$nascimento = htmlspecialchars($usuario['nascimento'] ?? 'N/A');
+
+$imagem = !empty($usuario['imagem']) ? $usuario['imagem'] : 'avatar-padrao.png';
+$imagemPath = "/projeto/vetz/uploads/" . htmlspecialchars($imagem);
 ?>
 
 <!DOCTYPE html>
@@ -17,200 +28,153 @@ if (!$isLoggedIn) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="veterinária, vídeos, pets, animais">
-    <meta name="description" content="Vídeos sobre cuidados veterinários e curiosidades sobre animais">
+    <title>Perfil do Usuário - VetZ</title>
 
-    <title>Vídeos - VetZ</title>
-    
-    <!-- Loading Bootstrap -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet" media="screen and (color)">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
-    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    <style>
+        .avatar-placeholder {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ddd;
+        }
+        .section-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .info-label {
+            font-size: 14px;
+            color: #666;
+        }
+        .info-value {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
-    <!--Begin Header-->
-    <header class="header">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg">
-    
+
+<header class="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+
                 <a href="/projeto/vetz/" rel="home">
-                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VetZ">
                 </a>
-                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon">
-                            <i class="fas fa-bars"></i>
-                        </span>
-                    </button>
-    
-                    <div class="navbar-collapse collapse" id="navbarCollapse">
-                        <ul class="navbar-nav ml-auto left-menu">
-                            <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                            <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                            <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                            <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                            <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                            <li>
-                                <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                                <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil"> CADASTRO
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div> 
-        </nav>
-    </header>
-    <!--End Header-->
 
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-bars"></i>
+                    </span>
+                </button>
 
-    <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
-
-    <!-- Begin Section 04 -->
-    <section class="section04" id="sec04">
-        <button class="back-button" onclick="window.history.back()">←</button>
-        
-        <div class="container">
-            <div class="main-profile">
-                <div class="profile-header" id="profileHeader">
-                    <button class="banner-upload" type="button" id="bannerUploadBtn">
-                        📷 Alterar Banner
-                    </button>
-                    <input type="file" id="bannerInput" class="file-input" accept="image/*" style="display: none;">
-                    
-                    <div class="profile-avatar" id="avatarUploadBtn">
-                        <img id="avatarImage" src="images/avatar-padrao.png" alt="Foto de perfil" class="avatar-placeholder">
-                        <div class="avatar-upload-overlay">Clique para alterar</div>
-                    </div>
-                    <input type="file" id="avatarInput" class="file-input" accept="image/*" style="display: none;">
-                    
-                    <div class="tutor">Tutor</div>
-                    <div class="pet-breed">Marcela Sanches Miossi</div>
+                <div class="navbar-collapse collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto left-menu">
+                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
+                        <li><a class="btn btn-menu" href="/projeto/vetz/perfil-usuario">
+                            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                            PERFIL
+                        </a></li>
+                    </ul>
                 </div>
 
-                <div class="profile-content">
-                    <div class="info-section">
-                        <h3 class="section-title">Contato do Tutor</h3>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <div class="info-label">Nome</div>
-                                <div class="info-value">Marcela Sanches</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Telefone</div>
-                                <div class="info-value">(11) 99999-9999</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Endereço</div>
-                                <div class="info-value">São Paulo, SP</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Nascimento</div>
-                                <div class="info-value">29/03/2008</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Email</div>
-                                <div class="info-value">marcelasanches@email.com</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </nav>
         </div>
-    </section>
-    <!-- End Section 04 -->
+    </nav>
+</header>
 
-    <!-- Begin Section 04.1 -->
-    <section class="sec04-1">
-        <div class="container">
-            <div class="section-title">
-                Meus Pets
-                <button class="add-pet-btn" type="button" id="addPetButton" title="Adicionar novo pet">+</button>
-            </div>
 
-            <div class="pets-grid" id="petsGrid">
-                <!-- Os pets serão renderizados aqui pelo JavaScript -->
-            </div>
-        </div>
-    </section>
-    <!-- End Section 04.1 -->
+<section class="section04" id="sec04">
+    <button class="back-button" onclick="window.history.back()">←</button>
 
-    <!-- Modal para adicionar novo pet -->
-    <div id="addPetModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Adicionar Novo Pet</h2>
-                <button class="close-modal" type="button" id="closeModalBtn">&times;</button>
-            </div>
-            
-            <form id="addPetForm">
-                <div class="form-group">
-                    <label for="petNameInput">Nome do Pet *</label>
-                    <input type="text" id="petNameInput" name="petNameInput" placeholder="Ex: Rex, Miau, Bolinha..." required>
+    <div class="container">
+        <div class="main-profile">
+
+            <!-- FOTO E BANNER -->
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img id="avatarImage" src="<?= $imagemPath ?>" alt="Foto do usuário" class="avatar-placeholder">
                 </div>
 
-                <div class="form-group">
-                    <label for="petSpeciesInput">Espécie *</label>
-                    <select id="petSpeciesInput" name="petSpeciesInput" required>
-                        <option value="">Selecione a espécie</option>
-                        <option value="Cachorro">Cachorro</option>
-                        <option value="Gato">Gato</option>
-                        <option value="Coelho">Coelho</option>
-                        <option value="Pássaro">Pássaro</option>
-                        <option value="Hamster">Hamster</option>
-                        <option value="Peixe">Peixe</option>
-                        <option value="Tartaruga">Tartaruga</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                </div>
+                <div class="tutor">Tutor</div>
+                <div class="pet-breed"><?= $nome ?></div>
+            </div>
 
-                <div class="form-group">
-                    <label for="petAgeInput">Idade (em anos) *</label>
-                    <input type="number" id="petAgeInput" name="petAgeInput" placeholder="Ex: 3" min="0" max="30" required>
-                </div>
+            <!-- DADOS DE CONTATO -->
+            <div class="profile-content">
+                <div class="info-section">
+                    <h3 class="section-title">Informações do Usuário</h3>
 
-                <div class="form-group">
-                    <label for="petPhotoInput">Foto do Pet</label>
-                    <div class="photo-upload-area" id="photoUploadArea">
-                        <div class="photo-preview" id="photoPreview">
-                            <span class="upload-icon">📷</span>
-                            <span class="upload-text">Clique para adicionar foto do pet</span>
+                    <div class="info-grid">
+
+                        <div class="info-item">
+                            <div class="info-label">Nome</div>
+                            <div class="info-value"><?= $nome ?></div>
                         </div>
-                        <img id="petPhotoPreview" class="pet-photo-img" style="display: none;" alt="Preview">
-                    </div>
-                    <input type="file" id="petPhotoInput" name="petPhotoInput" accept="image/*" style="display: none;">
-                </div>
 
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" id="cancelBtn">Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar Pet</button>
+                        <div class="info-item">
+                            <div class="info-label">Email</div>
+                            <div class="info-value"><?= $email ?></div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-label">Telefone</div>
+                            <div class="info-value"><?= $telefone ?></div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-label">Endereço</div>
+                            <div class="info-value"><?= $endereco ?></div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-label">Nascimento</div>
+                            <div class="info-value"><?= $nascimento ?></div>
+                        </div>
+
+                    </div>
                 </div>
-            </form>
+            </div>
+
         </div>
     </div>
-    <!-- End Modal -->
+</section>
 
-    <!-- Begin footer-->
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="footerp1">
-                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ
-                    </p>
-                </div>
-            </div>
+
+<!-- SEÇÃO "MEUS PETS" — (você já tinha ela, mantida 100%) -->
+<section class="sec04-1">
+    <div class="container">
+        <div class="section-title">
+            Meus Pets
+            <button class="add-pet-btn" type="button" id="addPetButton">+</button>
         </div>
-    </div>
-    <!--End footer-->
 
-    <!-- Load JS =============================-->
-    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
-    <script src="/projeto/vetz/views/js/scripts.js"></script>
+        <div class="pets-grid" id="petsGrid"></div>
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<div class="footer">
+    <div class="container">
+        <p class="footerp1">Todos os direitos reservados <span id="footer-year"></span> © - VetZ</p>
+    </div>
+</div>
+
+<script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+<script src="/projeto/vetz/views/js/scripts.js"></script>
+
+</body>
+</html>

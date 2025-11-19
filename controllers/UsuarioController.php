@@ -115,4 +115,26 @@ class UsuarioController {
         $usuarioModel = new Usuario();
         return $usuarioModel->excluir($id);
     }
+
+    public function perfilUsuario() {
+    session_start();
+    
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /projeto/vetz/loginForm');
+        exit;
+    }
+
+    $id = $_SESSION['user_id'];
+
+    $usuarioModel = new Usuario();
+    $usuario = $usuarioModel->buscarPorId($id);
+
+    if (!$usuario) {
+        echo "Usuário não encontrado.";
+        return;
+    }
+
+    include '../views/perfil_usuario.php';
+}
+
 }

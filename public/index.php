@@ -218,6 +218,10 @@ switch ($request) {
         include '../views/exibicao_pets.php';
         break;
 
+            case '/projeto/vetz/pets-perfil':
+        include '../views/perfil_pet.php';
+        break;
+
     default:
         http_response_code(404);
         echo "Página não encontrada: $request";

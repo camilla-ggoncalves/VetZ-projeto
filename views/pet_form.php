@@ -13,14 +13,10 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 </head>
 <body>    
 <body>
-      <!-- Cabeçalho -->
-  <header class="topo">
-    <div class="logo-box">
-      <img src="views/images/Logo_vetz.svg" alt="Logo da Clínica" />
-      <span class="titulo">VetZ</span>
-    </div>
-    <button class="voltar" onclick="history.back()">VOLTAR</button>
-  </header>
+
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
     <!-- Se estiver editando, o campo hidden vai ter o id, mas não vai aparecer -->
      <form action="/projeto/vetz/save-pet" method="POST" enctype="multipart/form-data">
@@ -59,5 +55,12 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 
             <input type="submit" value="Cadastrar Pet">
     </form>
+
+  <!-- Load JS =============================-->
+  <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+  <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+  <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+  <script src="/projeto/vetz/views/js/scripts.js"></script>
+
 </body>
 </html>

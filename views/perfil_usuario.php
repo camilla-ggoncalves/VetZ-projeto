@@ -61,39 +61,9 @@ $imagemPath = "/projeto/vetz/uploads/" . htmlspecialchars($imagem);
 
 <body>
 
-<header class="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg">
-
-                <a href="/projeto/vetz/" rel="home">
-                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VetZ">
-                </a>
-
-                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon">
-                        <i class="fas fa-bars"></i>
-                    </span>
-                </button>
-
-                <div class="navbar-collapse collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto left-menu">
-                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                        <li><a class="btn btn-menu" href="/projeto/vetz/perfil-usuario">
-                            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                            PERFIL
-                        </a></li>
-                    </ul>
-                </div>
-
-            </nav>
-        </div>
-    </nav>
-</header>
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
 
 <section class="section04" id="sec04">
@@ -166,15 +136,24 @@ $imagemPath = "/projeto/vetz/uploads/" . htmlspecialchars($imagem);
 </section>
 
 
-<!-- FOOTER -->
-<div class="footer">
-    <div class="container">
-        <p class="footerp1">Todos os direitos reservados <span id="footer-year"></span> © - VetZ</p>
+    <!-- Begin footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <!--End footer-->
 
-<script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-<script src="/projeto/vetz/views/js/scripts.js"></script>
+    <!-- Load JS =============================-->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
 
 </body>
 </html>

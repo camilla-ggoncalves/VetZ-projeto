@@ -33,5 +33,12 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 
         <button type="submit">Atualizar</button>
     </form>
+
+    <!-- Load JS =============================-->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
+    
 </body>
 </html>

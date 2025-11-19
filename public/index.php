@@ -173,7 +173,7 @@ switch ($request) {
         break;
 
     case '/projeto/vetz/recomendacoes':
-        include '../views/exibicao_pets.php';  
+        include '../views/adocao_pets.php';  
         break;
 
     // case '/projeto/vetz/list-ficha':

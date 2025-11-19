@@ -966,13 +966,6 @@ form.addEventListener('submit', function (e) {
 });
 
   /* ========================================================== */
-  /*   Curiosidades.                                            */
-  /* ========================================================== */
-
-// Atualiza o ano no rodapé automaticamente
-document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-  /* ========================================================== */
   /*   Exibição Pets.                                           */
   /* ========================================================== */
 
@@ -1072,14 +1065,75 @@ getToken();
 });
 
   /* ========================================================== */
-  /*   Login.                                                   */
+  /*   Vacinação Form.                                          */
   /* ========================================================== */
 
-const senhaInput = document.getElementById('senha');
-const toggleSenha = document.getElementById('toggleSenha');
+document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-toggleSenha.addEventListener('click', () => {
-    const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    senhaInput.setAttribute('type', tipo);
-    toggleSenha.innerHTML = tipo === 'password' ? '🐵' : '🙈';
+// Validação da data
+document.querySelector('form').addEventListener('submit', function(e) {
+    const dataInput = document.querySelector('input[name="data"]');
+    const selectedDate = new Date(dataInput.value);
+    const today = new Date();
+    
+    if (selectedDate > today) {
+        e.preventDefault();
+        alert('A data da vacinação não pode ser futura.');
+        dataInput.focus();
+    }
 });
+
+// Auto-complete para vacinas
+const vacinaInput = document.querySelector('input[name="id_vacina"]');
+const sugestoes = json_encode($sugestoesVacinas);
+
+vacinaInput.addEventListener('input', function() {
+    const valor = this.value.toLowerCase();
+    if (valor.length > 1) {
+        const sugestoesFiltradas = sugestoes.filter(vacina => 
+            vacina.toLowerCase().includes(valor)
+        );
+        
+        // Se quiser mostrar sugestões em tempo real, pode implementar aqui
+        console.log('Sugestões:', sugestoesFiltradas);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+const userMenuToggle = document.getElementById('userMenuToggle');
+const userDropdown = document.getElementById('userDropdown');
+
+if (userMenuToggle && userDropdown) {
+// Toggle dropdown ao clicar no botão
+userMenuToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    userDropdown.classList.toggle('show');
+});
+
+// Fechar dropdown ao clicar fora
+document.addEventListener('click', function(e) {
+    if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+        userDropdown.classList.remove('show');
+    }
+});
+
+// Prevenir que cliques dentro do dropdown o fechem
+userDropdown.addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+}
+});
+
+  /* ========================================================== */
+  /*   Vacinação List.                                          */
+  /* ========================================================== */
+// Link para excluir a vacinação selecionada, com confirmação de exclusão via JavaScript
+<a href="/projeto/vetz/excluir-vacina/<?= $vacina['id'] ?>" 
+   onclick="return confirm('Tem certeza que deseja excluir esta vacinação?');">
+   Excluir
+</a>
+
+  /* ========================================================== */
+  /*   Vacinação Pet.                                          */
+  /* ========================================================== */
+document.getElementById('footer-year').textContent = new Date().getFullYear();

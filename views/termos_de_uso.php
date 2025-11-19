@@ -23,37 +23,10 @@
     </head>
 
     <body>
-        <!--Begin Header-->
-        <header class="header">
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container">
-                    <nav class="navbar navbar-expand-lg">
-        
-                        <a href="index.html" rel="home">
-                            <img class="logomenu" src="images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                        </a>
-                        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon">
-                                <i class="fas fa-bars"></i>
-                            </span>
-                        </button>
-        
-                        <div class="navbar-collapse collapse" id="navbarCollapse">
-                <ul class="navbar-nav ml-auto 1  left-menu">
-                    <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                    <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                    <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                    <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                    <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                    <li> <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                    <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil"> CADASTRO</a></li>
-                </ul>                            
-                        </div>
-                    </nav>
-                </div> 
-            </nav>
-        </header>
-        <!--End Header-->
+
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
         <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
          <section class="sectionTermoUso" id="termos">
@@ -134,25 +107,17 @@
                         <p class="footerp1">
                             Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
                     </div>
-
-                    <!-- <div class="col-md-1">
-                        <p class="instagram">
-                            <a><img href="#!" src="images/instagram.svg"></a>
-                    </div>
-                    <div class="col-md-1">
-                        <p class="email">
-                            <a><img href="#!" src="images/email.svg"></a>
-                    </div> -->
                 </div>
             </div>
         </div>
         <!--End footer-->
 
 
-        <!-- Load JS =============================-->
+    <!-- Load JS =============================-->
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
+
     </body>
 </html>

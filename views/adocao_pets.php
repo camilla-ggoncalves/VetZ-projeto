@@ -184,26 +184,20 @@ $userName = $_SESSION['user_name'] ?? '';
 }
     </style>
 </head>
-
     <body>
-        <!--Begin Header-->
-        <?php include __DIR__ . '/navbar.php'; ?>
-        <!--End Header-->
+
+  <!--Begin Header-->
+  <?php include __DIR__ . '/navbar.php'; ?>
+  <!--End Header-->
 
 
-
-        <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
-
- <!-- Conteúdo Principal -->
-        <section class="section08" id="sec08">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+  <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
+  <!-- Conteúdo Principal -->
+    <section class="section08" id="sec08">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
                         
-                <!-- conteudo da pagina começo -->
-       
-<!-- ================== ESTILO ESPECÍFICO VITdogs ================== -->
-<!-- ================== ESTILO ESPECÍFICO VITdogs ================== -->
 <style>
   /* Container específico para VITdogs */
   #vitdogs-container { 
@@ -347,30 +341,19 @@ $userName = $_SESSION['user_name'] ?? '';
                         <p class="footerp1">
                             Todos os direitos reservados <span id="footer-year"></span> © 2025 - VetZ </p>
                     </div>
-
-                    <!-- <div class="col-md-1">
-                        <p class="instagram">
-                            <a><img href="#!" src="images/instagram.svg"></a>
-                    </div>
-                    <div class="col-md-1">
-                        <p class="email">
-                            <a><img href="#!" src="images/email.svg"></a>
-                    </div> -->
                 </div>
             </div>
         </div>
         <!--End footer-->
 
 
-        <!-- Load JS =============================-->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/jquery.scrollTo-min.js"></script>
-        <script src="js/jquery.nav.js"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+  <!-- Load JS =============================-->
+  <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+  <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+  <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+  <script src="/projeto/vetz/views/js/scripts.js"></script>
+
+ 
+
+</body>
 </html>
-
-
-
-
-<!-- dog -->

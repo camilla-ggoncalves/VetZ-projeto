@@ -61,13 +61,13 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
             <?php endif; ?>
         </tbody>
     </table>
-<script>
-<!-- Link para excluir a vacinação selecionada, com confirmação de exclusão via JavaScript -->
-<a href="/projeto/vetz/excluir-vacina/<?= $vacina['id'] ?>" 
-   onclick="return confirm('Tem certeza que deseja excluir esta vacinação?');">
-   Excluir
-</a>
-</script>
+
+    <!-- Load JS =============================-->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
+
 </body>
 </html>
 

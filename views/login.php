@@ -11,14 +11,9 @@
 
 <body>
 
-  <!-- Cabeçalho -->
-  <header class="topo">
-    <div class="logo-box">
-      <img src="views/images/logo_vetz.svg" alt="Logo">
-      <span class="titulo">VetZ</span>
-    </div>
-    <button class="voltar" onclick="history.back()">VOLTAR</button>
-  </header>
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
   <!-- Conteúdo Principal -->
   <main>
@@ -58,16 +53,35 @@
     </div>
   </main>
 
-  <!-- Rodapé -->
-  <footer class="rodape">
-    <p>© 2025 VetZ - Todos os direitos reservados.</p>
-  </footer>
+    <!-- Begin footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End footer-->
 
     <!-- Load JS =============================-->
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
-    
+
+    <script>
+      const senhaInput = document.getElementById('senha');
+      const toggleSenha = document.getElementById('toggleSenha');
+
+      toggleSenha.addEventListener('click', () => {
+          const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          senhaInput.setAttribute('type', tipo);
+          toggleSenha.innerHTML = tipo === 'password' ? '🐵' : '🙈';
+      });
+    </script>
+
 </body>
 </html>

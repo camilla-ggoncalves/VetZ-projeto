@@ -337,7 +337,10 @@ $sugestoesVacinas = [
     </style>
 </head>
 <body>
-<?php include __DIR__ . '/navbar.php'; ?>
+
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
     <!-- Botão voltar -->
     <a href="/projeto/vetz/listar-vacinas" class="back-btn">
@@ -477,73 +480,24 @@ $sugestoesVacinas = [
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Begin footer-->
     <div class="footer">
         <div class="container">
-            <p class="footerp1">
-                Todos os direitos reservados <span id="footer-year"></span> © - VetZ
-            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
         </div>
     </div>
+    <!--End footer-->
 
+    <!-- Load JS =============================-->
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-    <script src="/projeto/vetz/views/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
 
-        // Validação da data
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const dataInput = document.querySelector('input[name="data"]');
-            const selectedDate = new Date(dataInput.value);
-            const today = new Date();
-            
-            if (selectedDate > today) {
-                e.preventDefault();
-                alert('A data da vacinação não pode ser futura.');
-                dataInput.focus();
-            }
-        });
-
-        // Auto-complete para vacinas
-        const vacinaInput = document.querySelector('input[name="id_vacina"]');
-        const sugestoes = <?= json_encode($sugestoesVacinas) ?>;
-        
-        vacinaInput.addEventListener('input', function() {
-            const valor = this.value.toLowerCase();
-            if (valor.length > 1) {
-                const sugestoesFiltradas = sugestoes.filter(vacina => 
-                    vacina.toLowerCase().includes(valor)
-                );
-                
-                // Se quiser mostrar sugestões em tempo real, pode implementar aqui
-                console.log('Sugestões:', sugestoesFiltradas);
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-    const userMenuToggle = document.getElementById('userMenuToggle');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userMenuToggle && userDropdown) {
-        // Toggle dropdown ao clicar no botão
-        userMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('show');
-        });
-        
-        // Fechar dropdown ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('show');
-            }
-        });
-        
-        // Prevenir que cliques dentro do dropdown o fechem
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
-    </script>
 </body>
 </html>

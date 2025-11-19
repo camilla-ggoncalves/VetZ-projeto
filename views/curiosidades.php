@@ -210,26 +210,18 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
         </section>
     </main>
 
-    <!-- Rodapé -->
-    <footer class="footer">
+    <!-- Begin footer-->
+    <div class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="footerp1">Todos os direitos reservados <span id="footer-year"></span> © - VetZ</p>
-                </div>
-                <div class="col-md-1">
-                    <p class="instagram">
-                        <a href="#!"><img src="/projeto/vetz/views/images/instagram_icone.svg" alt="Instagram"></a>
-                    </p>
-                </div>
-                <div class="col-md-1">
-                    <p class="email">
-                        <a href="#!"><img src="/projeto/vetz/views/images/gmail_icone.svg" alt="Email"></a>
-                    </p>
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+    <!--End footer-->
 
     <!-- Scripts -->
     <script src="https://apis.google.com/js/api.js"></script> <!-- API do YouTube -->
@@ -237,6 +229,11 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <script src="/projeto/vetz/views/js/bootstrap.min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
-    <script src="/projeto/vetz/views/js/scripts.js"></script> <!-- Seu script com a API -->
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
+
+    <script>
+        // Atualiza o ano no rodapé automaticamente
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
     
 </body>

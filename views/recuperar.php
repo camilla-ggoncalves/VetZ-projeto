@@ -136,11 +136,10 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 
 </head>
 <body>
-
-  <header>
-    <img src="views/images/logo_vetz.svg" alt="Logo VetZ" class="logo">
-    <button class="btn-voltar" onclick="window.history.back()">VOLTAR</button>
-  </header>
+  
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
   <main>
     <div class="box">
@@ -192,14 +191,18 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     </div>
   </main>
         
-  <footer>
-    Todos os direitos reservados 2025 © – VetZ
-    <div class="icons">         
-     
+    <!-- Begin footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-  </footer>
+    <!--End footer-->
 
   <script>
 function fecharPopup() {

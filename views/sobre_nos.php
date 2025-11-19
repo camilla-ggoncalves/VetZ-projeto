@@ -252,25 +252,17 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <p class="footerp1">
                             Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
                     </div>
-
-                    <!-- <div class="col-md-1">
-                        <p class="instagram">
-                            <a><img href="#!" src="images/instagram.svg"></a>
-                    </div>
-                    <div class="col-md-1">
-                        <p class="email">
-                            <a><img href="#!" src="images/email.svg"></a>
-                    </div> -->
                 </div>
             </div>
         </div>
         <!--End footer-->
 
 
-        <!-- Load JS =============================-->
+    <!-- Load JS =============================-->
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
+
     </body>
 </html>

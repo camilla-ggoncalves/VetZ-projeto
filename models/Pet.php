@@ -56,7 +56,7 @@ class Pet {
                       peso = :peso, sexo = :sexo";
         $query = "UPDATE " . $this->table_name . " 
                   SET nome = :nome, raca = :raca, idade = :idade, 
-                      porte = :porte, peso = :peso, sexo = :sexo;
+                      porte = :porte, peso = :peso, sexo = :sexo";
 
         if (!empty($this->imagem)) $query .= ", imagem = :imagem";
 

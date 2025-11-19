@@ -32,7 +32,7 @@ $userName = $_SESSION['user_name'] ?? '';
                     <nav class="navbar navbar-expand-lg">
         
                         <a href="index.html" rel="home">
-                            <img class="logomenu" src="../views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                            <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
                         </a>
                         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon">
@@ -43,7 +43,7 @@ $userName = $_SESSION['user_name'] ?? '';
                         <div class="navbar-collapse collapse" id="navbarCollapse">
                             <ul class="navbar-nav ml-auto 1  left-menu">
                 <ul class="navbar-nav ml-auto 1  left-menu">
-                    <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                    <li><a href="/projeto/vetz/homepage">HOMEPAGE</a></li>
                     <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
                     <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
                     <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>

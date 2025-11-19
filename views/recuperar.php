@@ -164,6 +164,16 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
       font-size: 16px;
       transition: background-color 0.3s ease;
     }
+    .bt-trsenha{
+      background-color: #7ADEA7;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
 
     @media (max-width: 480px) {
       .box {
@@ -200,7 +210,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
             <input name="email" id="popup-email" type="hidden">
             <input name="codigo" type="text" placeholder="Código" required style="margin-bottom:10px; width:90%;"><br>
             <input name="nova_senha" type="password" placeholder="Nova senha" required style="margin-bottom:10px; width:90%;"><br>
-            <button type="submit">Trocar senha</button>
+            <button class="bt-trsenha" type="submit">Trocar senha</button>
           </form>
           <button onclick="fecharPopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:18px; cursor:pointer;">&times;</button>
           <div id="msg-codigo" style="margin-top:10px; color:#038654;"></div>
@@ -214,7 +224,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
       <input name="email" id="popup-recupera" type="hidden">
       <input name="codigo" type="text" placeholder="Código" required style="margin-bottom:10px; width:90%;"><br>
       <input name="nova_senha" type="password" placeholder="Nova senha" required style="margin-bottom:10px; width:90%;"><br>
-      <button type="submit">Trocar senha</button>
+      <button class="bt-trsenha"type="submit">Trocar senha</button>
     </form>
     <button onclick="fecharPopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:18px; cursor:pointer;">&times;</button>
   </div>

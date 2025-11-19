@@ -46,7 +46,7 @@ class VacinacaoController {
         $vacinas = $vacinacaoModel->listarVacinas();
 
         $pets = (new Pet())->getPetsByUsuario($this->usuarioId);
-        include '../views/vacinacao_geral.php';
+        include '../views/vacinacao_form.php';
     }
 
     // Cadastrar vacinação
@@ -59,7 +59,7 @@ class VacinacaoController {
             $id_pet = $_POST['id_pet'];
 
             if ($vacinacao->cadastrar($data, $doses, $id_vacina, $id_pet)) {
-                header('Location: ../views/vacinacao_geral.php');
+                header('Location: ../views/vacinacao_form.php');
                 exit;
             } else {
                 echo "Erro ao cadastrar a vacina.";

@@ -420,7 +420,7 @@ $sugestoesVacinas = [
             <div class="alert alert-info">
                 <i class="fas fa-info-circle"></i> 
                 <strong>Nenhum pet cadastrado!</strong> Você precisa cadastrar um pet antes de registrar vacinações. 
-                <a href="/projeto/vetz/cadastrar-pet" class="btn btn-primary btn-sm ml-2">Cadastrar Pet</a>
+                <a href="/projeto/vetz/formulario" class="btn btn-primary btn-sm ml-2">Cadastrar Pet</a>
             </div>
         <?php endif; ?>
 

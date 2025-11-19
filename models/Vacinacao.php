@@ -27,22 +27,23 @@ class Vacinacao {
         $stmt->bindParam(':doses', $doses);
         $stmt->bindParam(':id_vacina', $id_vacina);
         $stmt->bindParam(':id_pet', $id_pet);
+        
         return $stmt->execute();
     }
 
     public function editar($id, $data, $doses, $id_vacina, $id_pet) {
         $query = "UPDATE vacinacao 
-              SET data = :data, doses = :doses, id_vacina = :id_vacina, id_pet = :id_pet
-              WHERE id = :id";
+                  SET data = :data, doses = :doses, id_vacina = :id_vacina, id_pet = :id_pet
+                  WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':data', $data);
         $stmt->bindParam(':doses', $doses);
-    $stmt->bindParam(':id_vacina', $id_vacina);
-    $stmt->bindParam(':id_pet', $id_pet);
-    $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_vacina', $id_vacina);
+        $stmt->bindParam(':id_pet', $id_pet);
+        $stmt->bindParam(':id', $id);
 
-    return $stmt->execute();
+        return $stmt->execute();
     }
 
     
@@ -89,7 +90,7 @@ class Vacinacao {
             INNER JOIN usuarios u ON p.id_usuario = u.id";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    }
 
     public function listarPorPet($id_pet) {
         $sql = "SELECT v.id, v.data, v.doses, rv.vacina AS nome_vacina
@@ -100,6 +101,23 @@ class Vacinacao {
         $stmt->bindParam(':id_pet', $id_pet);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProximaVacina($id_pet) {
+        $sql = "SELECT * FROM vacinacao WHERE id_pet = :id_pet AND data >= NOW() ORDER BY data ASC LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id_pet', $id_pet);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function petTemVacina($id_pet) {
+        $sql = "SELECT COUNT(*) as total FROM vacinacao WHERE id_pet = :id_pet";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id_pet', $id_pet);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] > 0;
     }
 
 }

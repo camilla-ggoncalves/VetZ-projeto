@@ -23,8 +23,8 @@ class Pet {
         $query = "INSERT INTO pets (nome, raca, idade, porte, peso, sexo, imagem, id_usuario)
                   VALUES (:nome, :raca, :idade, :porte, :peso, :sexo, :imagem, :id_usuario)";
         $query = "INSERT INTO " . $this->table_name . " 
-                  (nome, raca, idade, porte, peso, sexo, imagem, id_usuario, especie) 
-                  VALUES (:nome, :raca, :idade, :porte, :peso, :sexo, :imagem, :id_usuario, :especie)";
+                  (nome, raca, idade, porte, peso, sexo, imagem, id_usuario) 
+                  VALUES (:nome, :raca, :idade, :porte, :peso, :sexo, :imagem, :id_usuario)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':nome', $this->nome);

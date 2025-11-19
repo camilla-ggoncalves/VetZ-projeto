@@ -5,19 +5,81 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro - VetZ</title>
-  <link rel="stylesheet" href="views/css/style.css" />
+
+    <!-- CSS -->
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+
 </head>
+         <!-- #region -->
+  <!-- CSS NAVBAR -->
+  <style>
+    .header {
+      position: relative;
+    }
+    .navbar {
+      padding: 15px 0;
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+    }
+    .navbar .navbar-expand-lg {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logomenu {
+      max-height: 50px;
+    }
+    .left-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+    .left-menu li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .left-menu li a:hover {
+      color: #007bff;
+    }
+  </style>
 
-<body>
+  <!-- JS NAVBAR -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const userMenuToggle = document.getElementById('userMenuToggle');
+      const userDropdown = document.getElementById('userDropdown');
+      if (userMenuToggle && userDropdown) {
+        userMenuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          userDropdown.classList.toggle('show');
+        });
+        document.addEventListener('click', function(e) {
+          if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+            userDropdown.classList.remove('show');
+          }
+        });
+        userDropdown.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      }
+    });
+  </script>
 
-  <!-- Cabeçalho -->
-  <header class="topo">
-    <div class="logo-box">
-      <img src="views/images/logo_vetz.svg" alt="Logo da Clínica" />
-      <span class="titulo">VetZ</span>
-    </div>
-    <button class="voltar" onclick="history.back()">VOLTAR</button>
-  </header>
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
   <!-- Conteúdo principal -->
   <main>
@@ -61,79 +123,24 @@
     </div>
   </main>
 
-  <!-- Rodapé -->
-  <footer class="rodape">
-    <p>Todos os direitos reservados © 2025 - VetZ</p>
-  </footer>
+    <!-- Begin footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End footer-->
 
-  <!-- Script -->
-  <script>
-    const senhaInput = document.getElementById('senha');
-    const mensagemForca = document.getElementById('mensagem-forca');
-    const erroSenha = document.getElementById('erro-senha');
-    const tooltip = document.getElementById('tooltip-senha');
-    const toggleSenha = document.getElementById('toggleSenha');
-    const form = document.getElementById('formCadastro');
-
-    // Mostrar/ocultar senha
-    toggleSenha.addEventListener('click', () => {
-      const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      senhaInput.setAttribute('type', tipo);
-      toggleSenha.innerHTML = tipo === 'password' ? '🐵' : '🙈';
-    });
-
-    // Mostra tooltip
-    senhaInput.addEventListener('focus', () => {
-      tooltip.style.opacity = '1';
-      tooltip.style.pointerEvents = 'auto';
-    });
-
-    // Esconde tooltip
-    senhaInput.addEventListener('blur', () => {
-      tooltip.style.opacity = '0';
-      tooltip.style.pointerEvents = 'none';
-    });
-
-    // Teste de força da senha
-    senhaInput.addEventListener('input', function () {
-      const senha = senhaInput.value;
-      let forca = 0;
-
-      if (senha.length >= 8) forca++;
-      if (/[A-Z]/.test(senha)) forca++;
-      if (/[a-z]/.test(senha)) forca++;
-      if (/\d/.test(senha)) forca++;
-      if (/[^A-Za-z0-9]/.test(senha)) forca++;
-
-      if (senha.length === 0) {
-        mensagemForca.textContent = "Digite uma senha";
-        mensagemForca.style.color = "#555";
-      } else if (forca <= 2) {
-        mensagemForca.textContent = "Senha fraca";
-        mensagemForca.style.color = "red";
-      } else if (forca === 3 || forca === 4) {
-        mensagemForca.textContent = "Senha média";
-        mensagemForca.style.color = "orange";
-      } else if (forca === 5) {
-        mensagemForca.textContent = "Senha forte";
-        mensagemForca.style.color = "green";
-      }
-    });
-
-    // Validação personalizada no envio
-    form.addEventListener('submit', function (e) {
-      const senha = senhaInput.value;
-      const padrao = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}/;
-
-      if (!padrao.test(senha)) {
-        e.preventDefault();
-        erroSenha.textContent = 'Senha inválida.';
-        erroSenha.style.color = "#d62828";
-      } else {
-        erroSenha.textContent = '';
-      }
-    });
-  </script>
+  <!-- Load JS =============================-->
+  <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+  <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+  <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+  <script src="/projeto/vetz/views/js/scripts.js"></script>
 
 </body>
 </html>

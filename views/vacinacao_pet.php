@@ -21,76 +21,23 @@ function safe($value) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carteira de Vacinação - <?= safe($pet['nome'] ?? 'Pet Desconhecido') ?></title>
+    <title>Carteirinha - <?= safe($pet['nome'] ?? 'Pet Desconhecido') ?></title>
 
     <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/images/logo_vetz.svg" rel="shortcut icon">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    
 </head>
 
 <body>
 
-<header class="header">
-
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-
-            <div class="navbar navbar-expand-lg">
-
-                <a href="/projeto/vetz/" rel="home">
-                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                </a>
-
-                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon">
-                        <i class="fas fa-bars"></i>
-                    </span>
-                </button>
-
-                <div class="navbar-collapse collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto left-menu">
-
-                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-
-                        <?php if ($isLoggedIn): ?>
-                            <!-- Usuário LOGADO -->
-                            <li>
-                                <div class="user-logged-menu">
-                                    <span class="user-name">Olá, <?php echo htmlspecialchars($userName); ?></span>
-
-                                    <a class="btn btn-menu btn-perfil" href="/projeto/vetz/views/perfil_usuario.php" role="button">
-                                        <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                                        PERFIL
-                                    </a>
-
-                                    <a class="btn btn-menu btn-logout" href="/projeto/vetz/logout.php" role="button">
-                                        SAIR
-                                    </a>
-                                </div>
-                            </li>
-
-                        <?php else: ?>
-                            <!-- Usuário NÃO LOGADO -->
-                            <li>
-                                <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                                    <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                                    CADASTRO
-                                </a>
-                            </li>
-                        <?php endif; ?>
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
 
 <!-- ------------------ CONTEÚDO ---------------------- -->
@@ -195,22 +142,24 @@ function safe($value) {
 </section>
 
 
-<!-- ------------------- FOOTER ----------------------- -->
-
-<div class="footer">
-    <div class="container">
-        <p class="footerp1">
-            Todos os direitos reservados <span id="footer-year"></span> © - VetZ
-        </p>
+    <!-- Begin footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <!--End footer-->
 
-<script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-<script src="/projeto/vetz/views/js/scripts.js"></script>
-
-<script>
-document.getElementById('footer-year').textContent = new Date().getFullYear();
-</script>
+    <!-- Load JS =============================-->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
 
 </body>
 </html>

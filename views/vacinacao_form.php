@@ -47,37 +47,17 @@ $sugestoesVacinas = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $titulo ?> - VetZ</title>
+    <title>Nova vacinação - VetZ</title>
 
+    <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
 
     <style>
-        .header {
-    position: relative;
-}
-
-.navbar {
-    padding: 15px 0;
-}
-
-.navbar .container {
-    display: flex;
-    align-items: center;
-}
-
-.navbar .navbar-expand-lg {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logomenu {
-    max-height: 50px;
-}
-
 /* Menu principal */
 .left-menu {
     display: flex;
@@ -337,58 +317,10 @@ $sugestoesVacinas = [
     </style>
 </head>
 <body>
-<header class="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar navbar-expand-lg">
-                <a href="/projeto/vetz/" rel="home">
-                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                </a>
 
-                <!-- Menu principal para desktop -->
-                <div class="navbar-collapse collapse d-none d-lg-flex" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto left-menu">
-                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                    </ul>
-                </div>
-
-                <!-- Menu hamburguer do usuário -->
-                <div class="user-menu-wrapper ml-auto">
-                    <?php if ($isLoggedIn): ?>
-                        <button class="btn-user-toggle" type="button" id="userMenuToggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        
-                        <div class="user-dropdown" id="userDropdown">
-                            <div class="user-dropdown-header">
-                                <span class="user-greeting">Olá, <?php echo htmlspecialchars($userName); ?></span>
-                            </div>
-                            <div class="user-dropdown-body">
-                                <a class="user-dropdown-item" href="/projeto/vetz/views/perfil_usuario.php">
-                                    <img src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                                    Acessar Perfil
-                                </a>
-                                <a class="user-dropdown-item logout" href="/projeto/vetz/logout.php">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    Sair
-                                </a>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                            CADASTRO
-                        </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
     <!-- Botão voltar -->
     <a href="/projeto/vetz/listar-vacinas" class="back-btn">
@@ -530,73 +462,24 @@ $sugestoesVacinas = [
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Begin footer-->
     <div class="footer">
         <div class="container">
-            <p class="footerp1">
-                Todos os direitos reservados <span id="footer-year"></span> © - VetZ
-            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
         </div>
     </div>
+    <!--End footer-->
 
+    <!-- Load JS =============================-->
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-    <script src="/projeto/vetz/views/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
 
-        // Validação da data
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const dataInput = document.querySelector('input[name="data"]');
-            const selectedDate = new Date(dataInput.value);
-            const today = new Date();
-            
-            if (selectedDate > today) {
-                e.preventDefault();
-                alert('A data da vacinação não pode ser futura.');
-                dataInput.focus();
-            }
-        });
-
-        // Auto-complete para vacinas
-        const vacinaInput = document.querySelector('input[name="id_vacina"]');
-        const sugestoes = <?= json_encode($sugestoesVacinas) ?>;
-        
-        vacinaInput.addEventListener('input', function() {
-            const valor = this.value.toLowerCase();
-            if (valor.length > 1) {
-                const sugestoesFiltradas = sugestoes.filter(vacina => 
-                    vacina.toLowerCase().includes(valor)
-                );
-                
-                // Se quiser mostrar sugestões em tempo real, pode implementar aqui
-                console.log('Sugestões:', sugestoesFiltradas);
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-    const userMenuToggle = document.getElementById('userMenuToggle');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userMenuToggle && userDropdown) {
-        // Toggle dropdown ao clicar no botão
-        userMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('show');
-        });
-        
-        // Fechar dropdown ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('show');
-            }
-        });
-        
-        // Prevenir que cliques dentro do dropdown o fechem
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
-    </script>
 </body>
 </html>

@@ -11,71 +11,199 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>VetZ</title>
+    <title>Sobre Nós - VetZ</title>
 
     <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
-
     <!-- Favicon -->
-    <link href="images/logoPNG.png" rel="shortcut icon">
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+
+    <!-- HEADER PADRÃO NAVBAR -->
+<header class="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar navbar-expand-lg">
+                <a href="/projeto/vetz/" rel="home">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                </a>
+                <div class="navbar-collapse collapse d-none d-lg-flex" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto left-menu">
+                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
+                    </ul>
+                </div>
+                <div class="user-menu-wrapper ml-auto">
+                    <button class="btn-user-toggle" type="button" id="userMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <span class="user-greeting">Olá, Usuário</span>
+                        </div>
+                        <div class="user-dropdown-body">
+                            <a class="user-dropdown-item" href="/projeto/vetz/views/perfil_usuario.php">
+                                <img src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                Acessar Perfil
+                            </a>
+                            <a class="user-dropdown-item logout" href="/projeto/vetz/logout.php">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <style>
+/* Menu principal */
+.left-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.left-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.left-menu li a:hover {
+    color: #007bff;
+}
+
+/* Menu hamburguer do usuário */
+.user-menu-wrapper {
+    position: relative;
+}
+
+.btn-user-toggle {
+    background: none;
+    border: 2px solid #333;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-user-toggle:hover {
+    background: #333;
+    color: white;
+}
+
+.btn-user-toggle i {
+    font-size: 20px;
+}
+
+/* Dropdown do usuário */
+.user-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 220px;
+    display: none;
+    z-index: 1000;
+}
+
+.user-dropdown.show {
+    display: block;
+    animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-dropdown-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.user-greeting {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+.user-dropdown-body {
+    padding: 10px 0;
+}
+
+.user-dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.3s;
+    gap: 10px;
+}
+
+.user-dropdown-item:hover {
+    background: #f8f9fa;
+}
+
+.user-dropdown-item img {
+    width: 20px;
+    height: 20px;
+}
+
+.user-dropdown-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.user-dropdown-item.logout {
+    color: #dc3545;
+    border-top: 1px solid #eee;
+}
+
+.user-dropdown-item.logout:hover {
+    background: #ffe6e6;
+}
+
+/* Responsivo */
+@media (max-width: 991px) {
+    .d-none {
+        display: none !important;
+    }
+   
+    .left-menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+    </style>
 </head>
 <body>
 
     <!--Begin Header-->
-    <header class="header">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar navbar-expand-lg">
-                    <a href="/projeto/vetz/" rel="home">
-                        <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                    </a>
-
-                    <!-- Menu principal para desktop -->
-                    <div class="navbar-collapse collapse d-none d-lg-flex" id="navbarCollapse">
-                        <ul class="navbar-nav ml-auto left-menu">
-                            <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                            <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                            <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                            <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
-                            <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Menu hamburguer do usuário -->
-                    <div class="user-menu-wrapper ml-auto">
-                        <?php if ($isLoggedIn): ?>
-                            <button class="btn-user-toggle" type="button" id="userMenuToggle">
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            
-                            <div class="user-dropdown" id="userDropdown">
-                                <div class="user-dropdown-header">
-                                    <span class="user-greeting">Olá, <?php echo htmlspecialchars($userName); ?></span>
-                                </div>
-                                <div class="user-dropdown-body">
-                                    <a class="user-dropdown-item" href="/projeto/vetz/views/perfil_usuario.php">
-                                        <img src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                                        Acessar Perfil
-                                    </a>
-                                    <a class="user-dropdown-item logout" href="/projeto/vetz/logout.php">
-                                        <i class="fas fa-sign-out-alt"></i>
-                                        Sair
-                                    </a>
-                                </div>
-                            </div>
-                        <?php else: ?>
-                            <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                                <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                                CADASTRO
-                            </a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php include __DIR__ . '/navbar.php'; ?>
     <!--End Header-->
 
 
@@ -142,25 +270,18 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <p class="footerp1">
                             Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
                     </div>
-
-                    <!-- <div class="col-md-1">
-                        <p class="instagram">
-                            <a><img href="#!" src="images/instagram.svg"></a>
-                    </div>
-                    <div class="col-md-1">
-                        <p class="email">
-                            <a><img href="#!" src="images/email.svg"></a>
-                    </div> -->
                 </div>
             </div>
         </div>
         <!--End footer-->
 
 
-        <!-- Load JS =============================-->
+    <!-- Load JS =============================-->
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
+
+
     </body>
 </html>

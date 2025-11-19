@@ -21,6 +21,48 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <!-- Favicon -->
     <link href="images/logoPNG.png" rel="shortcut icon">
 
+    <!-- HEADER PADRÃO NAVBAR -->
+<header class="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar navbar-expand-lg">
+                <a href="/projeto/vetz/" rel="home">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                </a>
+                <div class="navbar-collapse collapse d-none d-lg-flex" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto left-menu">
+                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
+                    </ul>
+                </div>
+                <div class="user-menu-wrapper ml-auto">
+                    <button class="btn-user-toggle" type="button" id="userMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <span class="user-greeting">Olá, Usuário</span>
+                        </div>
+                        <div class="user-dropdown-body">
+                            <a class="user-dropdown-item" href="/projeto/vetz/views/perfil_usuario.php">
+                                <img src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                Acessar Perfil
+                            </a>
+                            <a class="user-dropdown-item logout" href="/projeto/vetz/logout.php">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
     <style>
         .header {
     position: relative;
@@ -272,5 +314,26 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
+    <!-- JS NAVBAR -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userMenuToggle = document.getElementById('userMenuToggle');
+    const userDropdown = document.getElementById('userDropdown');
+    if (userMenuToggle && userDropdown) {
+        userMenuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+        document.addEventListener('click', function(e) {
+            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+        userDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});
+</script>
     </body>
 </html>

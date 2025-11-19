@@ -15,7 +15,7 @@
   <header class="topo">
     <div class="logo-box">
       <img src="views/images/logo_vetz.svg" alt="Logo">
-      <span class="titulo">Vetz</span>
+      <span class="titulo">VetZ</span>
     </div>
     <button class="voltar" onclick="history.back()">VOLTAR</button>
   </header>

@@ -1,865 +1,129 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
     <title>VetZ</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
+    <!-- CSS -->
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
 
-        .back-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            background: white;
-            border: 2px solid #90EE90;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 24px;
-            color: #4a7c23;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .back-button:hover {
-            background: linear-gradient(135deg, #90EE90, #98FB98);
-            color: #2d5016;
-            transform: translateX(-5px);
-            box-shadow: 0 4px 12px rgba(144, 238, 144, 0.3);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-
-        .main-profile {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .profile-header {
-            background: linear-gradient(135deg, #90EE90, #98FB98);
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .profile-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(144, 238, 144, 0.85), rgba(152, 251, 152, 0.85));
-            z-index: 1;
-        }
-
-        .profile-header > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .banner-upload {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 20px;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #4a7c23;
-            transition: all 0.3s ease;
-            z-index: 3;
-        }
-
-        .banner-upload:hover {
-            background: white;
-            transform: scale(1.05);
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: #555;
-            margin: 0 auto 20px;
-            border: 4px solid white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-avatar:hover {
-            transform: scale(1.05);
-        }
-
-        .avatar-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            color: white;
-            font-size: 24px;
-            background: #555;
-        }
-
-        .avatar-upload-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 5px;
-            font-size: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .profile-avatar:hover .avatar-upload-overlay {
-            opacity: 1;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .add-reminder-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #90EE90, #98FB98);
-            border: none;
-            color: #2d5016;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .add-reminder-btn:hover {
-            background: linear-gradient(135deg, #7dd87d, #90EE90);
-            transform: rotate(90deg) scale(1.1);
-            box-shadow: 0 4px 8px rgba(144, 238, 144, 0.3);
-        }
-
-        .reminder-item {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .reminder-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background: white;
-            margin: 10% auto;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 500px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            animation: slideUp 0.3s ease;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #90EE90;
-        }
-
-        .modal-title {
-            font-size: 22px;
-            color: #2d5016;
-            font-weight: 600;
-        }
-
-        .close-modal {
-            font-size: 28px;
-            color: #666;
-            cursor: pointer;
-            border: none;
-            background: none;
-            line-height: 1;
-        }
-
-        .close-modal:hover {
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: #4a7c23;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #90EE90;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .pet-name {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2d5016;
-            margin-bottom: 5px;
-        }
-
-        .pet-breed {
-            color: #4a7c23;
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .profile-content {
-            padding: 30px;
-        }
-
-        .info-section {
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2d5016;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #90EE90;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .info-item {
-            background: #f8fdf8;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #90EE90;
-            transition: transform 0.2s ease;
-        }
-
-        .info-item:hover {
-            transform: translateX(5px);
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #4a7c23;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .info-value {
-            font-size: 16px;
-            color: #333;
-            margin-top: 5px;
-        }
-
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .sidebar-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .quick-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #90EE90, #98FB98);
-            color: #2d5016;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #7dd87d, #90EE90);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(144, 238, 144, 0.3);
-        }
-
-        .btn-secondary {
-            background: #f8f9fa;
-            color: #4a7c23;
-            border: 2px solid #90EE90;
-        }
-
-        .btn-secondary:hover {
-            background: #90EE90;
-            color: white;
-        }
-
-        .vaccination-preview {
-            background: linear-gradient(45deg, #f0fff0, #f8fff8);
-            border: 2px dashed #90EE90;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .vaccination-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        .edit-mode {
-            background: #fff3cd;
-            border-color: #ffc107;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e9ecef;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: #90EE90;
-        }
-
-        .floating-edit {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #90EE90, #98FB98);
-            border: none;
-            box-shadow: 0 4px 12px rgba(144, 238, 144, 0.4);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #2d5016;
-            transition: all 0.3s ease;
-        }
-
-        .floating-edit:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(144, 238, 144, 0.6);
-        }
-
-        .health-status {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-healthy {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-attention {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-                padding: 10px;
-            }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-header {
-                padding: 20px;
-            }
-            
-            .profile-content {
-                padding: 20px;
-            }
-        }
-    </style>
+    <!-- Favicon -->
+    <link href="images/logoPNG.png" rel="shortcut icon">
 </head>
+
 <body>
-    <button class="back-button" onclick="goBack()" title="Voltar">
-        ←
-    </button>
-    
-    <div class="container">
-        <div class="main-profile">
-            <div class="profile-header" id="profileHeader">
-                <button class="banner-upload" onclick="document.getElementById('bannerInput').click()">
-                    📷 Alterar Banner
+
+<header class="header">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+
+            <div class="navbar navbar-expand-lg">
+
+                <a href="/projeto/vetz/" rel="home">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                </a>
+
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-bars"></i>
+                    </span>
                 </button>
-                <input type="file" id="bannerInput" class="file-input" accept="image/*" onchange="changeBanner(event)">
-                
-                <div class="profile-avatar" onclick="document.getElementById('avatarInput').click()">
-                    <div class="avatar-placeholder" id="avatarPlaceholder">🐕</div>
-                    <div class="avatar-upload-overlay">Clique para alterar</div>
-                </div>
-                <input type="file" id="avatarInput" class="file-input" accept="image/*" onchange="changeAvatar(event)">
-                
-                <div class="pet-name" id="petName">Max</div>
-                <div class="pet-breed" id="petBreed">Golden Retriever • 3 anos</div>
-            </div>
 
-            <div class="profile-content">
-                <div class="info-section">
-                    <h3 class="section-title">Informações Básicas</h3>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Nome</div>
-                            <div class="info-value" id="name">Max</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Idade</div>
-                            <div class="info-value" id="age">3 anos</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Raça</div>
-                            <div class="info-value" id="breed">Golden Retriever</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Peso</div>
-                            <div class="info-value" id="weight">28 kg</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Cor</div>
-                            <div class="info-value" id="color">Dourado</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Sexo</div>
-                            <div class="info-value" id="gender">Macho</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="navbar-collapse collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto left-menu">
 
-                <div class="info-section">
-                    <h3 class="section-title">Saúde</h3>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Status Geral</div>
-                            <div class="info-value">
-                                <span class="health-status status-healthy">Saudável</span>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Última Consulta</div>
-                            <div class="info-value" id="lastVisit">15/08/2024</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Próxima Vacina</div>
-                            <div class="info-value" id="nextVaccine">20/10/2024</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Veterinário</div>
-                            <div class="info-value" id="vet">Dr. Ana Silva</div>
-                        </div>
-                    </div>
-                </div>
+                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
 
-                <div class="info-section">
-                    <h3 class="section-title">Contato do Tutor</h3>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Nome</div>
-                            <div class="info-value" id="ownerName">João Santos</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Telefone</div>
-                            <div class="info-value" id="ownerPhone">(11) 99999-9999</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Email</div>
-                            <div class="info-value" id="ownerEmail">joao@email.com</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">Endereço</div>
-                            <div class="info-value" id="address">São Paulo, SP</div>
-                        </div>
-                    </div>
+                        <?php if ($isLoggedIn): ?>
+    <!-- Usuário LOGADO -->
+    <li>
+        <a class="btn btn-menu" href="/projeto/vetz/perfil-usuario?id=<?php echo $_SESSION['user_id']; ?>" role="button">
+            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+            PERFIL
+        </a>
+    </li>
+<?php else: ?>
+    <!-- Usuário NÃO LOGADO -->
+    <li>
+        <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
+            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+            CADASTRO
+        </a>
+    </li>
+<?php endif; ?>
+
+                    </ul>
                 </div>
             </div>
         </div>
+    </nav>
+</header>
+    <!--End Header-->
 
-        <div class="sidebar">
+    <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
 
-            <div class="sidebar-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h4 style="color: #2d5016; margin: 0;">Lembretes</h4>
-                    <button class="add-reminder-btn" onclick="addReminder()" title="Adicionar lembrete">
-                        +
-                    </button>
-                </div>
-                <div style="text-align: left;" id="remindersList">
-                    <div class="reminder-item" style="padding: 10px; background: #f8fdf8; border-radius: 6px; margin-bottom: 10px; border-left: 3px solid #90EE90;">
-                        <strong>Vermifugação</strong><br>
-                        <small style="color: #666;">Em 5 dias</small>
-                    </div>
-                    <div class="reminder-item" style="padding: 10px; background: #f8fdf8; border-radius: 6px; border-left: 3px solid #ffc107;">
-                        <strong>Check-up Anual</strong><br>
-                        <small style="color: #666;">Em 15 dias</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar-card vaccination-preview">
-                <div class="vaccination-icon">💉</div>
-                <h4 style="color: #2d5016; margin-bottom: 10px;">Carteirinha Digital</h4>
-                <p style="color: #4a7c23; font-size: 14px; margin-bottom: 15px;">
-                    Todas as vacinas em dia! Próxima dose em 30 dias.
-                </p>
-                <button class="btn btn-primary" onclick="openVaccinationCard()">
-                    Ver Carteirinha
-                </button>
-            </div>
-
+<div class="profile-container">
+    <?php if (!isset($pet) || empty($pet)): ?>
+        <div class="text-center">
+            <h3>Pet não encontrado</h3>
+            <p>O pet solicitado não foi encontrado ou o identificador não foi informado.</p>
+            <a href="/projeto/vetz/list-pet" class="btn btn-secondary">Voltar</a>
+        </div>
+    <?php else: ?>
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="m-0">Perfil do Pet</h2>
+            <div class="back-btn">
+                <a href="/projeto/vetz/list-pet" class="btn btn-secondary">Voltar</a>
             </div>
         </div>
-    </div>
 
-    <button class="floating-edit" onclick="toggleEditMode()" id="editBtn">
-        ✏️
-    </button>
-
-    <!-- Modal para adicionar lembrete -->
-    <div id="reminderModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Novo Lembrete</h3>
-                <button class="close-modal" onclick="closeReminderModal()">&times;</button>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <?php
+                    $imagem = !empty($pet['imagem']) ? $pet['imagem'] : 'default.png';
+                    $imagemPath = "/projeto/vetz/uploads/" . htmlspecialchars($imagem);
+                ?>
+                <img src="<?= $imagemPath ?>" alt="Foto de <?= htmlspecialchars($pet['nome'] ?? 'Pet') ?>" class="pet-img">
             </div>
-            <form onsubmit="saveReminder(event)">
-                <div class="form-group">
-                    <label class="form-label">Título do Lembrete</label>
-                    <input type="text" id="reminderTitle" class="form-control" placeholder="Ex: Banho, Consulta veterinária..." required>
+
+            <div class="col-md-8">
+                <div class="info-box">
+                    <div class="info-title">Informações do Pet</div>
+                    <p><strong>Nome:</strong> <?= htmlspecialchars($pet['nome'] ?? 'N/A') ?></p>
+                    <p><strong>Raça:</strong> <?= htmlspecialchars($pet['raca'] ?? 'N/A') ?></p>
+                    <p><strong>Idade:</strong> <?= htmlspecialchars($pet['idade'] ?? 'N/A') ?> <?= isset($pet['idade']) ? 'anos' : '' ?></p>
+                    <p><strong>Porte:</strong> <?= htmlspecialchars($pet['porte'] ?? 'N/A') ?></p>
+                    <p><strong>Peso:</strong> <?= htmlspecialchars($pet['peso'] ?? 'N/A') ?> <?= isset($pet['peso']) ? 'kg' : '' ?></p>
+                    <p><strong>Sexo:</strong> <?= htmlspecialchars($pet['sexo'] ?? 'N/A') ?></p>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Data</label>
-                    <input type="date" id="reminderDate" class="form-control" required>
+
+                <div class="info-box">
+                    <div class="info-title">Tutor</div>
+                    <p><strong>Nome:</strong> <?= htmlspecialchars($pet['user_name'] ?? 'N/A') ?></p>
+                    <p><strong>Email:</strong> <?= htmlspecialchars($pet['user_email'] ?? 'N/A') ?></p>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Prioridade</label>
-                    <select id="reminderPriority" class="form-control">
-                        <option value="normal">Normal</option>
-                        <option value="high">Alta</option>
-                        <option value="low">Baixa</option>
-                    </select>
+
+                <div class="mt-4">
+                    <a href="/projeto/vetz/update-pet?id=<?= htmlspecialchars($pet['id']) ?>" class="btn btn-primary">Editar Pet</a>
+                    <a href="/projeto/vetz/delete-pet?id=<?= htmlspecialchars($pet['id']) ?>" class="btn btn-danger"
+                       onclick="return confirm('Tem certeza que deseja excluir?')">Excluir Pet</a>
                 </div>
-                <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    <button type="button" class="btn btn-secondary" onclick="closeReminderModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar Lembrete</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
+</div>
 
-    <script>
-        let editMode = false;
-
-        function goBack() {
-            // Volta para a página anterior
-            window.history.back();
-        }
-
-        function changeAvatar(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const avatarPlaceholder = document.getElementById('avatarPlaceholder');
-                    avatarPlaceholder.style.backgroundImage = `url(${e.target.result})`;
-                    avatarPlaceholder.style.backgroundSize = 'cover';
-                    avatarPlaceholder.style.backgroundPosition = 'center';
-                    avatarPlaceholder.textContent = '';
-                    showNotification('Foto do pet atualizada!', 'success');
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function changeBanner(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const profileHeader = document.getElementById('profileHeader');
-                    profileHeader.style.backgroundImage = `url(${e.target.result})`;
-                    showNotification('Banner atualizado!', 'success');
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function changePhoto() {
-            // Função antiga mantida para compatibilidade
-            document.getElementById('avatarInput').click();
-        }
-
-        function toggleEditMode() {
-            editMode = !editMode;
-            const editBtn = document.getElementById('editBtn');
-            const infoItems = document.querySelectorAll('.info-item');
-            
-            if (editMode) {
-                editBtn.textContent = '💾';
-                editBtn.title = 'Salvar alterações';
-                enableEditMode();
-            } else {
-                editBtn.textContent = '✏️';
-                editBtn.title = 'Editar perfil';
-                saveChanges();
-                disableEditMode();
-            }
-        }
-
-        function enableEditMode() {
-            const editableFields = ['name', 'age', 'breed', 'weight', 'color', 'gender', 'lastVisit', 'nextVaccine', 'vet', 'ownerName', 'ownerPhone', 'ownerEmail', 'address'];
-            
-            editableFields.forEach(fieldId => {
-                const element = document.getElementById(fieldId);
-                if (element) {
-                    const currentValue = element.textContent;
-                    element.innerHTML = `<input type="text" class="input-field" value="${currentValue}" onblur="updateField('${fieldId}', this.value)">`;
-                }
-            });
-
-            document.querySelectorAll('.info-item').forEach(item => {
-                item.classList.add('edit-mode');
-            });
-        }
-
-        function disableEditMode() {
-            document.querySelectorAll('.info-item').forEach(item => {
-                item.classList.remove('edit-mode');
-            });
-        }
-
-        function updateField(fieldId, value) {
-            const element = document.getElementById(fieldId);
-            if (element) {
-                element.textContent = value;
-            }
-            
-            // Atualizar campos relacionados
-            if (fieldId === 'name') {
-                document.getElementById('petName').textContent = value;
-            }
-        }
-
-        function saveChanges() {
-            // Aqui você salvaria os dados no backend/banco de dados
-            showNotification('Perfil atualizado com sucesso!', 'success');
-        }
-
-        function openVaccinationCard() {
-            showNotification('Abrindo carteirinha de vacinação digital...', 'info');
-            // Aqui você abriria a página da carteirinha
-        }
-
-        function scheduleAppointment() {
-            showNotification('Redirecionando para agendamento...', 'info');
-        }
-
-        function addMedication() {
-            showNotification('Abrindo formulário de medicação...', 'info');
-        }
-
-        function viewHistory() {
-            showNotification('Carregando histórico médico...', 'info');
-        }
-
-        function addReminder() {
-            document.getElementById('reminderModal').style.display = 'block';
-            // Define data mínima como hoje
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('reminderDate').setAttribute('min', today);
-        }
-
-        function closeReminderModal() {
-            document.getElementById('reminderModal').style.display = 'none';
-            // Limpa os campos
-            document.getElementById('reminderTitle').value = '';
-            document.getElementById('reminderDate').value = '';
-            document.getElementById('reminderPriority').value = 'normal';
-        }
-
-        function saveReminder(event) {
-            event.preventDefault();
-            
-            const title = document.getElementById('reminderTitle').value;
-            const date = new Date(document.getElementById('reminderDate').value);
-            const priority = document.getElementById('reminderPriority').value;
-            
-            // Calcula dias restantes
-            const today = new Date();
-            const diffTime = date - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            let timeText = '';
-            if (diffDays === 0) {
-                timeText = 'Hoje';
-            } else if (diffDays === 1) {
-                timeText = 'Amanhã';
-            } else if (diffDays < 0) {
-                timeText = `Atrasado ${Math.abs(diffDays)} dias`;
-            } else {
-                timeText = `Em ${diffDays} dias`;
-            }
-            
-            // Define cor baseada na prioridade
-            let borderColor = '#90EE90';
-            if (priority === 'high') {
-                borderColor = '#ff6b6b';
-            } else if (priority === 'low') {
-                borderColor = '#4ecdc4';
-            } else {
-                borderColor = '#ffc107';
-            }
-            
-            // Adiciona o lembrete à lista
-            const remindersList = document.getElementById('remindersList');
-            const newReminder = document.createElement('div');
-            newReminder.className = 'reminder-item';
-            newReminder.style.cssText = `padding: 10px; background: #f8fdf8; border-radius: 6px; margin-bottom: 10px; border-left: 3px solid ${borderColor};`;
-            newReminder.innerHTML = `
-                <strong>${title}</strong><br>
-                <small style="color: #666;">${timeText}</small>
-            `;
-            
-            remindersList.appendChild(newReminder);
-            
-            closeReminderModal();
-            showNotification('Lembrete adicionado com sucesso!', 'success');
-        }
-
-        // Fechar modal ao clicar fora
-        window.onclick = function(event) {
-            const modal = document.getElementById('reminderModal');
-            if (event.target === modal) {
-                closeReminderModal();
-            }
-        }
+</body>
 </script>
         <!-- Load JS =============================-->
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
@@ -868,4 +132,3 @@
     <script src="/projeto/vetz/views/js/scripts.js"></script>
     </body>
 </html>
-        

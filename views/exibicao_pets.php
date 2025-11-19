@@ -159,6 +159,11 @@ $userName = $_SESSION['user_name'] ?? '';
     box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
     width: 300px; 
     padding: 10px; 
+    cursor: pointer; /* 🔹 AGORA É CLICÁVEL */
+    transition: transform .2s;
+  }
+  #vitdogs-container .card:hover {
+    transform: scale(1.03);
   }
   #vitdogs-container .card img { 
     width: 100%; 
@@ -243,12 +248,20 @@ $userName = $_SESSION['user_name'] ?? '';
     pets.forEach(pet => {
       const card = document.createElement("div");
       card.className = "card";
+      /* 🔹 Torna o card clicável para o link do PetFinder */
+      card.onclick = () => {
+        if (pet.url) {
+          window.open(pet.url, "_blank");
+        }
+      };
+
       card.innerHTML = `
         <img src="${pet.photos[0]?.medium || 'https://via.placeholder.com/300x200?text=Sem+foto'}" alt="${pet.name}">
         <h3>${pet.name}</h3>
         <p>${pet.description ? pet.description.substring(0,100) + "..." : "Sem descrição."}</p>
         <p><strong>Localização:</strong> ${pet.contact.address.city || ""}</p>
       `;
+
       petList.appendChild(card);
     });
   }

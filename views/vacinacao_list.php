@@ -39,9 +39,9 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <!-- Exibe os dados de cada vacinação de forma segura -->
                         <td><?= htmlspecialchars($vacina['data']) ?></td> <!-- Data da vacinação -->
                         <td><?= htmlspecialchars($vacina['doses']) ?></td> <!-- Quantidade de doses aplicadas -->
-                        <td><?= htmlspecialchars($vacina['vacina']) ?></td> <!-- Nome da vacina aplicada -->
+                        <td><?= htmlspecialchars($vacina['nome_vacina']) ?></td> <!-- Nome da vacina aplicada -->
                         <td><?= htmlspecialchars($vacina['nome_pet']) ?></td> <!-- Nome do pet que recebeu a vacina -->
-                        <td><?= htmlspecialchars($vacina['nome_tutor']) ?></td> <!-- Nome do pet que recebeu a vacina -->
+                        <td><?= htmlspecialchars($vacina['nome_tutor']) ?></td> <!-- Nome do tutor -->
                         <td>
                             <!-- Link para editar a vacinação selecionada, passando o ID da vacina pela URL -->
                             <a href="/projeto/vetz/editar-vacina/<?= $vacina['id'] ?>">Editar</a> |

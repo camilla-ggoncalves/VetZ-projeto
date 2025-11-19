@@ -37,7 +37,7 @@
 
         <label for="senha" class="senhaLabel">Senha:</label>
 
-        <!-- Campo de senha com botão olhinho -->
+        <!-- Campo de senha com botão para visualizar a senha -->
         <div class="senha-container">
           <input type="password" id="senha" name="senha" required placeholder="********">
           <button type="button" id="toggleSenha" class="toggle-senha">🐵</button>

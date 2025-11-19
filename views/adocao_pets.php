@@ -23,10 +23,115 @@ $userName = $_SESSION['user_name'] ?? '';
     <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
     <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
 
+                        
+<style>
+  /* Container específico para VITdogs */
+  #vitdogs-container {
+    font-family: Arial, sans-serif;
+    background: #f3faed;
+    padding: 20px;
+    margin: 39px 0 0 0;
+    border-radius: 8px;
+  }
+  #vitdogs-container h1 {
+    text-align: center;
+    color: #ff6f61;
+    margin-bottom: 15px;
+  }
+  #vitdogs-container .filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  #vitdogs-container select {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  /* estilos para deixar os selects com visual de botão */
+  #vitdogs-container .filters .filter-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  text-align: center; /* Centraliza o texto */
+  border-radius:11,5px; /* 🔹 Bordas menos arredondadas */
+  border: 2px solid #038654;
+  background: #FEFFEF;
+  color: #000;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: 'Poppins-Regular', Arial, sans-serif;
+  margin: 0 8px;
+  position: relative;
+  min-width: 180px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding-left: 24px;
+  padding-right: 24px;
+}
 
 
-    <style>
-/* Menu principal */
+
+  #vitdogs-container .filters .filter-btn:hover {
+    border-color: #66bb6a;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+  }
+
+  /* remove seta padrão no IE/Edge */
+  #vitdogs-container .filters .filter-btn::-ms-expand {
+    display: none;
+  }
+
+  /* Scrollbox para os pets */
+  #vitdogs-container .pet-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-height: 500px;
+    overflow-y: scroll;   /* alterado de auto para scroll */
+    padding-right: 10px;
+    -ms-overflow-style: none;  /* esconde scrollbar no IE e Edge */
+    scrollbar-width: none;     /* esconde scrollbar no Firefox */
+  }
+
+  /* Esconde a barra de rolagem no Chrome, Safari e Opera */
+  #vitdogs-container .pet-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  #vitdogs-container .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    width: 300px;
+    padding: 10px;
+    cursor: pointer; /* 🔹 AGORA É CLICÁVEL */
+    transition: transform .2s;
+  }
+  #vitdogs-container .card:hover {
+    transform: scale(1.03);
+  }
+  #vitdogs-container .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  #vitdogs-container .card h3 {
+    margin: 10px 0 5px 0;
+  }
+  #vitdogs-container .card p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+  /* Menu principal */
 .left-menu {
     display: flex;
     list-style: none;
@@ -160,157 +265,48 @@ $userName = $_SESSION['user_name'] ?? '';
         gap: 10px;
     }
 }
-    </style>
+</style>
+
 </head>
     <body>
 
-  <!--Begin Header-->
-  <?php include __DIR__ . '/navbar.php'; ?>
-  <!--End Header-->
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
 
-
-  <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
-  <!-- Conteúdo Principal -->
-    <section class="section08" id="sec08">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                        
-<style>
-  /* Container específico para VITdogs */
-  #vitdogs-container { 
-    font-family: Arial, sans-serif; 
-    background: #f3faed; 
-    padding: 20px; 
-    border-radius: 8px; 
-  }
-  #vitdogs-container h1 { 
-    text-align: center; 
-    color: #ff6f61; 
-    margin-bottom: 15px; 
-  }
-  #vitdogs-container .filters { 
-    display: flex; 
-    justify-content: center; 
-    gap: 10px; 
-    flex-wrap: wrap; 
-    margin-bottom: 20px; 
-  }
-  #vitdogs-container select { 
-    padding: 5px; 
-    font-size: 14px; 
-  }
-
-  /* estilos para deixar os selects com visual de botão */
-  #vitdogs-container .filters .filter-btn {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 12px 24px;
-  font-size: 15px;
-  text-align: center; /* Centraliza o texto */
-  border-radius:11,5px; /* 🔹 Bordas menos arredondadas */
-  border: 2px solid #038654;
-  background: #FEFFEF;
-  color: #000;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-family: 'Poppins-Regular', Arial, sans-serif;
-  margin: 0 8px;
-  position: relative;
-  min-width: 180px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding-left: 24px;
-  padding-right: 24px;
-}
-
-
-
-  #vitdogs-container .filters .filter-btn:hover {
-    border-color: #66bb6a;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    transform: translateY(-1px);
-  }
-
-  /* remove seta padrão no IE/Edge */
-  #vitdogs-container .filters .filter-btn::-ms-expand {
-    display: none;
-  }
-
-  /* Scrollbox para os pets */
-  #vitdogs-container .pet-list { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 20px; 
-    justify-content: center; 
-    max-height: 500px;
-    overflow-y: scroll;   /* alterado de auto para scroll */
-    padding-right: 10px;
-    -ms-overflow-style: none;  /* esconde scrollbar no IE e Edge */
-    scrollbar-width: none;     /* esconde scrollbar no Firefox */
-  }
-
-  /* Esconde a barra de rolagem no Chrome, Safari e Opera */
-  #vitdogs-container .pet-list::-webkit-scrollbar {
-    display: none;
-  }
-
-  #vitdogs-container .card { 
-    background: #fff; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
-    width: 300px; 
-    padding: 10px; 
-    cursor: pointer; /* 🔹 AGORA É CLICÁVEL */
-    transition: transform .2s;
-  }
-  #vitdogs-container .card:hover {
-    transform: scale(1.03);
-  }
-  #vitdogs-container .card img { 
-    width: 100%; 
-    height: 200px; 
-    object-fit: cover; 
-    border-radius: 5px; 
-  }
-  #vitdogs-container .card h3 { 
-    margin: 10px 0 5px 0; 
-  }
-  #vitdogs-container .card p { 
-    margin: 5px 0; 
-    font-size: 14px; 
-  }
-</style>
-
-                        <!-- ================== CONTEÚDO VITdogs ================== -->
-                        <div id="vitdogs-container">
-                          <div class="filters">
-                            <select id="speciesFilter" class="filter-btn btn-menu">
-                              <option value="">Todas as espécies</option>
-                              <option value="dog">Cachorro</option>
-                              <option value="cat">Gato</option>
-                            </select>
-                            <select id="ageFilter" class="filter-btn btn-menu">
-                              <option value="">Todas as idades</option>
-                              <option value="baby">Filhote</option>
-                              <option value="young">Jovem</option>
-                              <option value="adult">Adulto</option>
-                              <option value="senior">Idoso</option>
-                            </select>
-                            <select id="genderFilter" class="filter-btn btn-menu">
-                              <option value="">Todos os sexos</option>
-                              <option value="male">Macho</option>
-                              <option value="female">Fêmea</option>
-                            </select>
-                          </div>
-                          <div class="pet-list" id="petList"></div>
-                        </div>
-                    </div>
+ <!-- --------------- CONTEÚDO DA PÁGINA ----------------->
+ <!-- Conteúdo Principal -->
+  <section class="section08" id="sec08">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="vitdogs-container">
+                  <div class="filters">
+                    <select id="speciesFilter" class="filter-btn btn-menu">
+                      <option value="">Todas as espécies</option>
+                      <option value="dog">Cachorro</option>
+                      <option value="cat">Gato</option>
+                    </select>
+                    <select id="ageFilter" class="filter-btn btn-menu">
+                      <option value="">Todas as idades</option>
+                      <option value="baby">Filhote</option>
+                      <option value="young">Jovem</option>
+                      <option value="adult">Adulto</option>
+                      <option value="senior">Idoso</option>
+                    </select>
+                    <select id="genderFilter" class="filter-btn btn-menu">
+                      <option value="">Todos os sexos</option>
+                      <option value="male">Macho</option>
+                      <option value="female">Fêmea</option>
+                    </select>
+                  </div>
+                  <div class="pet-list" id="petList"></div>
                 </div>
             </div>
-        </section>
-    
+        </div>
+    </div>
+  </section>
+   
         <!-- Begin footer-->
         <div class="footer">
             <div class="container">
@@ -325,41 +321,79 @@ $userName = $_SESSION['user_name'] ?? '';
         <!--End footer-->
 
 
-        <!-- Load JS =============================-->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/jquery.scrollTo-min.js"></script>
-        <script src="js/jquery.nav.js"></script>
-        <script src="js/scripts.js"></script>
-
-        <!-- JS NAVBAR -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const userMenuToggle = document.getElementById('userMenuToggle');
-    const userDropdown = document.getElementById('userDropdown');
-    if (userMenuToggle && userDropdown) {
-        userMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('show');
-        });
-        document.addEventListener('click', function(e) {
-            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('show');
-            }
-        });
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
-</script>
-    </body>
   <!-- Load JS =============================-->
-  <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-  <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
-  <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
-  <script src="/projeto/vetz/views/js/scripts.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery.scrollTo-min.js"></script>
+  <script src="js/jquery.nav.js"></script>
+  <script src="js/scripts.js"></script>
 
- 
+  <script>
+    const apiKey = "sqpSErXDTZWxVyY11lPnEQTZOOJbAfFAKAPYEQ09OAdkHj13qh";
+    const apiSecret = "KfyWu5xbjrLbnr61dx2VdZBVSC6HfgiaNs8khIJW";
+    let token = "";
+
+    async function getToken() {
+      const res = await fetch("https://api.petfinder.com/v2/oauth2/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`
+      });
+      const data = await res.json();
+      token = data.access_token;
+      loadPets();
+    }
+
+    async function loadPets() {
+      const species = document.getElementById("speciesFilter").value;
+      const age = document.getElementById("ageFilter").value;
+      const gender = document.getElementById("genderFilter").value;
+
+      let url = "https://api.petfinder.com/v2/animals?limit=21";
+      if (species) url += `&type=${species}`;
+      if (age) url += `&age=${age}`;
+      if (gender) url += `&gender=${gender}`;
+
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+      const data = await res.json();
+      displayPets(data.animals);
+    }
+
+    function displayPets(pets) {
+      const petList = document.getElementById("petList");
+      petList.innerHTML = "";
+
+      if (!pets || pets.length === 0) {
+        petList.innerHTML = "<p>Nenhum pet encontrado.</p>";
+        return;
+      }
+
+      pets.forEach(pet => {
+        const card = document.createElement("div");
+        card.className = "card";
+        /* 🔹 Torna o card clicável para o link do PetFinder */
+        card.onclick = () => {
+          if (pet.url) {
+            window.open(pet.url, "_blank");
+          }
+        };
+
+        card.innerHTML = `
+          <img src="${pet.photos[0]?.medium || 'https://via.placeholder.com/300x200?text=Sem+foto'}" alt="${pet.name}">
+          <h3>${pet.name}</h3>
+          <p>${pet.description ? pet.description.substring(0,100) + "..." : "Sem descrição."}</p>
+          <p><strong>Localização:</strong> ${pet.contact.address.city || ""}</p>
+        `;
+
+        petList.appendChild(card);
+      });
+    }
+
+    document.getElementById("speciesFilter").addEventListener("change", loadPets);
+    document.getElementById("ageFilter").addEventListener("change", loadPets);
+    document.getElementById("genderFilter").addEventListener("change", loadPets);
+
+    getToken();
+  </script>
 
 </body>
 </html>

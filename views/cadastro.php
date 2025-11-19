@@ -53,6 +53,26 @@
     .left-menu li a:hover {
       color: #007bff;
     }
+    .btn-avancar-login {
+      display: block;
+      margin: 25px auto 0 auto;
+      padding: 9px 29px;
+      background: #fff;
+      color: #038654;
+      border: 2px solid #038654;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Poppins-SemiBold', Arial, sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(3,134,84,0.08);
+    }
+    .btn-avancar-login:hover {
+      background: #038654;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(3,134,84,0.15);
+      transform: translateY(-2px);
+    }
   </style>
 
   <!-- JS NAVBAR -->
@@ -120,6 +140,7 @@
 
         <button type="submit" class="cadastrar">Cadastrar</button>
       </form>
+      <button type="button" class="btn-avancar-login" onclick="window.location.href='/projeto/vetz/views/login.php'">Já tenho conta</button>
     </div>
   </main>
 

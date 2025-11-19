@@ -51,14 +51,13 @@ class Pet {
     }
 
     public function update() {
-        $query = "UPDATE pets 
-                  SET nome = :nome, raca = :raca, idade = :idade, porte = :porte, 
-                      peso = :peso, sexo = :sexo";
         $query = "UPDATE " . $this->table_name . " 
                   SET nome = :nome, raca = :raca, idade = :idade, 
-                      porte = :porte, peso = :peso, sexo = :sexo;
+                      porte = :porte, peso = :peso, sexo = :sexo";
 
-        if (!empty($this->imagem)) $query .= ", imagem = :imagem";
+        if (!empty($this->imagem)) {
+            $query .= ", imagem = :imagem";
+        }
 
         $query .= " WHERE id = :id";
 
@@ -69,8 +68,7 @@ class Pet {
         $stmt->bindParam(':porte', $this->porte);
         $stmt->bindParam(':peso', $this->peso);
         $stmt->bindParam(':sexo', $this->sexo);
-        if (!empty($this->imagem)) $stmt->bindParam(':imagem', $this->imagem);
-
+        
         if (!empty($this->imagem)) {
             $stmt->bindParam(':imagem', $this->imagem);
         }

@@ -20,7 +20,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="images/logoPNG.png" rel="shortcut icon">
+    <link href="images/logo_vetz.svg" rel="shortcut icon">
     <style>
         .header {
     position: relative;

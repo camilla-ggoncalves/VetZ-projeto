@@ -9,7 +9,6 @@ class PetController {
         $this->petModel = new Pet();
     }
 
-    // MÉTODO CORRIGIDO: Listar pets por usuário
     public function listarPorUsuario($usuarioId) {
         try {
             return $this->petModel->getPetsByUsuario($usuarioId);
@@ -19,7 +18,6 @@ class PetController {
         }
     }
 
-    // MÉTODO CORRIGIDO: Buscar pet por ID
     public function buscarPorId($id) {
         try {
             return $this->petModel->getById($id);
@@ -29,7 +27,6 @@ class PetController {
         }
     }
 
-    // MÉTODO CORRIGIDO: Buscar por usuário (alias para listarPorUsuario)
     public function buscarPorUsuario($usuarioId) {
         return $this->listarPorUsuario($usuarioId);
     }
@@ -40,115 +37,55 @@ class PetController {
 
     public function savePet() {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        if (!isset($_SESSION['user_id'])) { echo "Usuário não logado."; return; }
+        if (!isset($_SESSION['user_id'])) {
+            echo "Usuário não logado.";
+            return;
+        }
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
 
         $pet = new Pet();
-        $pet->nome = $_POST['nome'];
-        $pet->raca = $_POST['raca'];
-        $pet->idade = $_POST['idade'];
-        $pet->porte = $_POST['porte'];
-        $pet->peso = $_POST['peso'];
-        $pet->sexo = $_POST['sexo'];
+        $pet->nome = $_POST['nome'] ?? '';
+        $pet->raca = $_POST['raca'] ?? '';
+        $pet->idade = $_POST['idade'] ?? '';
+        $pet->porte = $_POST['porte'] ?? '';
+        $pet->peso = $_POST['peso'] ?? '';
+        $pet->sexo = $_POST['sexo'] ?? '';
         $pet->id_usuario = $_SESSION['user_id'];
 
+        if (empty($pet->nome)) {
+            $_SESSION['error_message'] = 'Preencha todos os campos obrigatórios.';
+            header('Location: /projeto/vetz/cadastrar-pet');
+            exit;
+        }
+
         if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-            $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
-            $nome = uniqid() . "." . $ext;
-            $destino = __DIR__ . '/../uploads/' . $nome;
-            if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
-                $pet->imagem = $nome;
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            session_start();
-            
-            $pet = new Pet();
-            $pet->nome = $_POST['nome'] ?? '';
-            $pet->raca = $_POST['raca'] ?? '';
-            $pet->idade = $_POST['idade'] ?? '';
-            $pet->porte = $_POST['porte'] ?? '';
-            $pet->peso = $_POST['peso'] ?? '';
-            $pet->sexo = $_POST['sexo'] ?? '';
-            $pet->especie = $_POST['especie'] ?? '';
-            $pet->id_usuario = $_SESSION['user_id'] ?? null; // CORREÇÃO: Adicionar usuário
+            $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+            $nomeImagem = uniqid() . '.' . $extensao;
+            $caminhoDestino = __DIR__ . '/../uploads/' . $nomeImagem;
 
-            // Validações básicas
-            if (empty($pet->nome) || empty($pet->especie) || empty($pet->id_usuario)) {
-                $_SESSION['error_message'] = 'Preencha todos os campos obrigatórios.';
-                header('Location: /projeto/vetz/cadastrar-pet');
-                exit;
+            if (!is_dir(dirname($caminhoDestino))) {
+                mkdir(dirname($caminhoDestino), 0777, true);
             }
 
-            // Upload de imagem
-            if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-                $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
-                $nomeImagem = uniqid() . '.' . $extensao;
-                $caminhoDestino = __DIR__ . '/../uploads/' . $nomeImagem;
-
-                // Criar diretório se não existir
-                if (!is_dir(dirname($caminhoDestino))) {
-                    mkdir(dirname($caminhoDestino), 0777, true);
-                }
-
-                if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoDestino)) {
-                    $pet->imagem = $nomeImagem;
-                } else {
-                    $_SESSION['error_message'] = 'Erro ao fazer upload da imagem.';
-                    header('Location: /projeto/vetz/cadastrar-pet');
-                    exit;
-                }
-            }
-
-            if ($pet->save()) {
-                $_SESSION['success_message'] = 'Pet cadastrado com sucesso!';
-                header('Location: /projeto/vetz/list-pet');
-                exit;
-            } else {
-                $_SESSION['error_message'] = 'Erro ao cadastrar o pet.';
-                header('Location: /projeto/vetz/cadastrar-pet');
-                exit;
+            if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoDestino)) {
+                $pet->imagem = $nomeImagem;
             }
         }
 
         if ($pet->save()) {
+            $_SESSION['success_message'] = 'Pet cadastrado com sucesso!';
             header('Location: /projeto/vetz/list-pet');
             exit;
-        } else echo "Erro ao cadastrar o pet.";
+        } else {
+            $_SESSION['error_message'] = 'Erro ao cadastrar o pet.';
+            header('Location: /projeto/vetz/cadastrar-pet');
+            exit;
+        }
     }
 
     public function listPet() {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        if (!isset($_SESSION['user_id'])) { echo "Usuário não logado."; return; }
-
-        $pet = new Pet();
-        $pets = $pet->getPetsByUsuario($_SESSION['user_id']);
-        include '../views/pet_list.php';
-    }
-
-    public function showUpdateForm($id) {
-        $petModel = new Pet();
-        $pet = $petModel->getById($id);
-        if ($pet) include '../views/update_pet.php';
-        else echo "Pet não encontrado.";
-    }
-
-    public function updatePet() {
-        $pet = new Pet();
-        $pet->id = $_POST['id'];
-        $pet->nome = $_POST['nome'];
-        $pet->raca = $_POST['raca'];
-        $pet->idade = $_POST['idade'];
-        $pet->porte = $_POST['porte'];
-        $pet->peso = $_POST['peso'];
-        $pet->sexo = $_POST['sexo'];
-
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-            $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
-            $nome = uniqid() . "." . $ext;
-            $destino = __DIR__ . '/../uploads/' . $nome;
-            if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
-                $pet->imagem = $nome;
-        session_start();
         if (!isset($_SESSION['user_id'])) {
             header('Location: /projeto/vetz/login');
             exit;
@@ -164,13 +101,12 @@ class PetController {
     }
 
     public function showUpdateForm($id) {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
             header('Location: /projeto/vetz/login');
             exit;
         }
 
-        // Verificar se o pet pertence ao usuário
         if (!$this->petModel->pertenceAoUsuario($id, $_SESSION['user_id'])) {
             $_SESSION['error_message'] = 'Pet não encontrado ou acesso negado.';
             header('Location: /projeto/vetz/list-pet');
@@ -189,31 +125,61 @@ class PetController {
     }
 
     public function updatePet() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            session_start();
-            
-            $petId = $_POST['id'] ?? '';
-            
-            // Verificar se o pet pertence ao usuário
-            if (!$this->petModel->pertenceAoUsuario($petId, $_SESSION['user_id'])) {
-                $_SESSION['error_message'] = 'Acesso negado.';
-                header('Location: /projeto/vetz/list-pet');
-                exit;
-            }
-          
-        if ($pet->update()) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
+
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        $petId = $_POST['id'] ?? '';
+
+        if (!$this->petModel->pertenceAoUsuario($petId, $_SESSION['user_id'])) {
+            $_SESSION['error_message'] = 'Acesso negado.';
             header('Location: /projeto/vetz/list-pet');
             exit;
-        } else echo "Erro ao atualizar o pet.";
+        }
+
+        $pet = new Pet();
+        $pet->id = $petId;
+        $pet->nome = $_POST['nome'] ?? '';
+        $pet->raca = $_POST['raca'] ?? '';
+        $pet->idade = $_POST['idade'] ?? '';
+        $pet->porte = $_POST['porte'] ?? '';
+        $pet->peso = $_POST['peso'] ?? '';
+        $pet->sexo = $_POST['sexo'] ?? '';
+
+        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+            $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+            $nomeImagem = uniqid() . '.' . $extensao;
+            $caminhoDestino = __DIR__ . '/../uploads/' . $nomeImagem;
+
+            if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoDestino)) {
+                $pet->imagem = $nomeImagem;
+            }
+        }
+
+        if ($pet->update()) {
+            $_SESSION['success_message'] = 'Pet atualizado com sucesso!';
+            header('Location: /projeto/vetz/list-pet');
+            exit;
+        } else {
+            $_SESSION['error_message'] = 'Erro ao atualizar o pet.';
+            header('Location: /projeto/vetz/editar-pet?id=' . $petId);
+            exit;
+        }
     }
 
     public function perfilPet($id) {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        if (!isset($_SESSION['user_id'])) { echo "Usuário não logado."; return; }
+        if (!isset($_SESSION['user_id'])) {
+            echo "Usuário não logado.";
+            return;
+        }
 
         $petModel = new Pet();
         $pet = $petModel->getById($id);
-        if (!$pet) { echo "Pet não encontrado."; return; }
+        if (!$pet) {
+            echo "Pet não encontrado.";
+            return;
+        }
 
         $pet['user_name'] = $_SESSION['user_name'];
         $pet['user_email'] = $_SESSION['user_email'];
@@ -222,57 +188,12 @@ class PetController {
     }
 
     public function deletePetById($id) {
-        $petModel = new Pet();
-        $semVacinas = $petModel->verificarVacinas($id);
-
-        if ($semVacinas) {
-            $petModel->id = $id;
-            $petModel->delete();
-            header('Location: /projeto/vetz/list-pet');
-            exit;
-        } else echo "Erro: este pet possui vacinas e não pode ser excluído.";
-    }
-            $pet = new Pet();
-            $pet->id = $petId;
-            $pet->nome = $_POST['nome'] ?? '';
-            $pet->raca = $_POST['raca'] ?? '';
-            $pet->idade = $_POST['idade'] ?? '';
-            $pet->porte = $_POST['porte'] ?? '';
-            $pet->peso = $_POST['peso'] ?? '';
-            $pet->sexo = $_POST['sexo'] ?? '';
-            $pet->especie = $_POST['especie'] ?? '';
-
-            // Só atualiza a imagem se houver upload
-            if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-                $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
-                $nomeImagem = uniqid() . '.' . $extensao;
-                $caminhoDestino = __DIR__ . '/../uploads/' . $nomeImagem;
-
-                if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoDestino)) {
-                    $pet->imagem = $nomeImagem;
-                }
-            }
-
-            if ($pet->update()) {
-                $_SESSION['success_message'] = 'Pet atualizado com sucesso!';
-                header('Location: /projeto/vetz/list-pet');
-                exit;
-            } else {
-                $_SESSION['error_message'] = 'Erro ao atualizar o pet.';
-                header('Location: /projeto/vetz/editar-pet?id=' . $petId);
-                exit;
-            }
-        }
-    }
-
-    public function deletePetById($id) {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
             header('Location: /projeto/vetz/login');
             exit;
         }
 
-        // Verificar se o pet pertence ao usuário
         if (!$this->petModel->pertenceAoUsuario($id, $_SESSION['user_id'])) {
             $_SESSION['error_message'] = 'Acesso negado.';
             header('Location: /projeto/vetz/list-pet');
@@ -306,8 +227,10 @@ class PetController {
         }
         unset($pet);
         return $pets;
+    }
+
     public function listarPets() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
             return [];
         }

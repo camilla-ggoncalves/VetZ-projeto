@@ -13,6 +13,8 @@ class Pet {
     public $peso;
     public $sexo;
     public $imagem;
+    public $id_usuario; // ADICIONADO: campo importante que estava faltando
+    public $especie; // ADICIONADO: campo necessário para o formulário de vacinação
 
     public function __construct() {
         try {
@@ -31,8 +33,8 @@ class Pet {
 
     public function save() {
         $query = "INSERT INTO " . $this->table_name . " 
-                  (nome, raca, idade, porte, peso, sexo, imagem) 
-                  VALUES (:nome, :raca, :idade, :porte, :peso, :sexo, :imagem)";
+                  (nome, raca, idade, porte, peso, sexo, imagem, id_usuario, especie) 
+                  VALUES (:nome, :raca, :idade, :porte, :peso, :sexo, :imagem, :id_usuario, :especie)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':nome', $this->nome);
@@ -42,6 +44,8 @@ class Pet {
         $stmt->bindParam(':peso', $this->peso);
         $stmt->bindParam(':sexo', $this->sexo);
         $stmt->bindParam(':imagem', $this->imagem);
+        $stmt->bindParam(':id_usuario', $this->id_usuario);
+        $stmt->bindParam(':especie', $this->especie);
 
         return $stmt->execute();
     }
@@ -64,7 +68,7 @@ class Pet {
     public function update() {
         $query = "UPDATE " . $this->table_name . " 
                   SET nome = :nome, raca = :raca, idade = :idade, 
-                      porte = :porte, peso = :peso, sexo = :sexo";
+                      porte = :porte, peso = :peso, sexo = :sexo, especie = :especie";
 
         if (!empty($this->imagem)) {
             $query .= ", imagem = :imagem";
@@ -79,6 +83,7 @@ class Pet {
         $stmt->bindParam(':porte', $this->porte);
         $stmt->bindParam(':peso', $this->peso);
         $stmt->bindParam(':sexo', $this->sexo);
+        $stmt->bindParam(':especie', $this->especie);
 
         if (!empty($this->imagem)) {
             $stmt->bindParam(':imagem', $this->imagem);
@@ -114,6 +119,20 @@ class Pet {
         $stmt->bindParam(':usuario_id', $usuarioId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    }
 
+    // NOVO MÉTODO: Buscar pets por usuário com informações básicas
+    public function buscarPorUsuario($usuarioId) {
+        return $this->getPetsByUsuario($usuarioId);
+    }
+
+    // NOVO MÉTODO: Verificar se pet pertence ao usuário
+    public function pertenceAoUsuario($petId, $usuarioId) {
+        $query = "SELECT COUNT(*) FROM " . $this->table_name . " WHERE id = :pet_id AND id_usuario = :usuario_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':pet_id', $petId);
+        $stmt->bindParam(':usuario_id', $usuarioId);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
 }

@@ -1,352 +1,298 @@
 <?php
 require_once '../controllers/VacinacaoController.php';
 require_once '../controllers/PetController.php';
-require_once '../controllers/UsuarioController.php';
 
 session_start();
-$isLoggedIn = isset($_SESSION['user_id']);
-$userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 
-$vacinacaoController = new VacinacaoController(); // você tinha esquecido de instanciar!
+// Proteção
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /projeto/vetz/login');
+    exit;
+}
+
+$vacinacaoController = new VacinacaoController();
 $petController = new PetController();
 
-
 $id = $_GET['id'] ?? null;
-$vacinacao = null;
+$vacinacao = $id ? $vacinacaoController->buscarPorId($id) : null;
 
-if ($id && $isLoggedIn) {
-    $vacinacao = $vacinacaoController->buscarPorId($id);
-}
+// CORREÇÃO: Usando o método correto do PetController
+$pets = $petController->listarPorUsuario($_SESSION['user_id']);
+
+// Variáveis para o header
+$isLoggedIn = isset($_SESSION['user_id']);
+$userName = $_SESSION['user_name'] ?? 'Usuário';
+
+$titulo = $id ? "Editar Vacinação" : "Cadastrar Nova Vacinação";
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $id ? "Editar Vacinação" : "Cadastrar Vacinação" ?> - VetZ</title>
+    <title><?= $titulo ?> - VetZ</title>
 
-    <!-- Bootstrap 4 (você já usa) + Font Awesome -->
+    <!-- Seus CSS originais -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/images/logo_vetz.svg" rel="shortcut icon">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
 
     <style>
-        @font-face {
-            font-family: 'Poppins-Regular';
-            src: url("/projeto/vetz/views/webfonts/Poppins-Regular.ttf");
-        }
-        @font-face {
-            font-family: 'Poppins-Medium';
-            src: url("/projeto/vetz/views/webfonts/Poppins-Medium.ttf");
-        }
-        @font-face {
+        .page-title {
             font-family: 'Poppins-Bold';
-            src: url("/projeto/vetz/views/webfonts/Poppins-Bold.ttf");
+            color: #038654;
+            text-align: center;
+            margin: 30px 0 10px;
+            font-size: 28px;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Poppins-Regular', sans-serif;
-            background: #FEFFEF;
-            min-height: 100vh;
-            padding-top: 100px;
-        }
-
-        /* ==================== NAVBAR PERFEITA ==================== */
-        .navbar {
-            background: #FEFFEF;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            padding: 12px 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 9999;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-brand img {
-            height: 85px;
-            transition: all 0.3s;
-        }
-
-        .nav-link {
-            color: #000 !important;
-            font-family: 'Poppins-Medium';
+        .page-subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 40px;
             font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            padding: 10px 18px !important;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            margin: 0 5px;
         }
-
-        .nav-link:hover {
-            color: #038654 !important;
-            background: rgba(3, 134, 84, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            color: #038654 !important;
-            background: rgba(3, 134, 84, 0.15);
-            font-weight: bold;
-        }
-
-        /* Botão de perfil lindo */
-        .btn-perfil {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #f8fdf8;
-            border: 2px solid #B5E7A0;
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-family: 'Poppins-Medium';
-            font-size: 15px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .btn-perfil:hover {
-            background: #038654;
-            color: white !important;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(3,134,84,0.3);
-        }
-
-        .img-perfil {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #B5E7A0;
-        }
-
-        /* Responsivo mobile */
-        @media (max-width: 991.98px) {
-            .navbar-collapse {
-                background: #FEFFEF;
-                margin-top: 15px;
-                padding: 20px;
-                border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            }
-            .navbar-brand img {
-                height: 70px;
-            }
-            body { padding-top: 90px; }
-        }
-
-        @media (max-width: 576px) {
-            .navbar-brand img { height: 60px; }
-            .btn-perfil { padding: 10px 15px; font-size: 14px; }
-            .img-perfil { width: 35px; height: 35px; }
-        }
-
-        /* ==================== FIM NAVBAR ==================== */
-
-        .form-container {
+        .form-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            padding: 45px;
-            max-width: 650px;
-            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            margin: 20px auto;
         }
-
-        .form-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 4px solid #B5E7A0;
+        .form-control {
+            border: 2px solid #B5E7A0 !important;
+            border-radius: 12px !important;
+            padding: 12px 16px !important;
+            background: #f8fdf8 !important;
+            font-size: 15px;
         }
-
-        .form-header i {
-            font-size: 60px;
-            color: #038654;
+        .form-control:focus {
+            border-color: #038654 !important;
+            box-shadow: 0 0 0 4px rgba(3,134,84,0.15) !important;
+            background: white !important;
         }
-
-        h1 {
-            color: #038654;
-            font-family: 'Poppins-Bold';
-            font-size: 32px;
-            margin: 15px 0 8px;
-        }
-
         label {
             color: #038654;
-            font-family: 'Poppins-Medium';
-            font-size: 15px;
+            font-weight: 600;
             margin-bottom: 8px;
+            font-size: 15px;
         }
-
-        input, select {
-            border: 2px solid #B5E7A0;
-            border-radius: 12px;
-            padding: 14px 18px;
-            background: #f8fdf8;
-            transition: all 0.3s;
-        }
-
-        input:focus, select:focus {
-            border-color: #038654;
-            box-shadow: 0 0 0 4px rgba(3,134,84,0.15);
-            background: white;
-        }
-
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12'%3E%3Cpath fill='%23038654' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            padding-right: 50px;
-        }
-
-        button[type="submit"] {
-            background: linear-gradient(135deg, #038654 0%, #55974A 100%);
+        .btn-submit {
+            background: linear-gradient(135deg, #038654, #55974A);
             color: white;
             border: none;
+            padding: 14px 30px;
             border-radius: 12px;
-            padding: 16px;
             font-family: 'Poppins-Bold';
             font-size: 17px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-top: 15px;
+            width: 100%;
+            margin-top: 20px;
             transition: all 0.3s;
         }
-
-        button[type="submit"]:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px rgba(3,134,84,0.4);
-            background: linear-gradient(135deg, #026d47 0%, #038654 100%);
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(3,134,84,0.4);
         }
-
-        .footer {
-            background: #B5E7A0;
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 120px;
+            background: white;
+            border: 2px solid #B5E7A0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #038654;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: #038654;
             color: white;
-            text-align: center;
-            padding: 18px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            font-size: 13px;
-            letter-spacing: 1px;
+            transform: scale(1.1);
+        }
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #17a2b8;
+        }
+        @media (max-width: 768px) {
+            .form-card { padding: 30px 20px; margin: 10px; }
+            .back-btn { top: 100px; left: 15px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- NAVBAR BONITONA -->
-    <nav class="navbar navbar-expand-lg">
+    <header class="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/projeto/vetz/homepage">
-                <img src="/projeto/vetz/views/images/logo_vetz.svg" alt="VetZ">
-            </a>
+            <div class="navbar navbar-expand-lg">
+                <a href="/projeto/vetz/" rel="home">
+                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
+                </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <i class="fas fa-bars fa-lg" style="color:#038654;"></i>
-            </button>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-bars"></i>
+                    </span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="/projeto/vetz/homepage">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/projeto/vetz/sobre-nos">Sobre Nós</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/projeto/vetz/curiosidades">Curiosidades</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/projeto/vetz/recomendacoes">Recomendações</a></li>
+                <div class="navbar-collapse collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto left-menu">
+                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
+                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
+                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
+                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
 
-                    <?php if ($isLoggedIn): ?>
-                        <li class="nav-item">
-                            <a href="/projeto/vetz/perfil" class="btn-perfil">
-                                <img src="/projeto/vetz/views/images/perfil.png" class="img-perfil" alt="Perfil">
-                                <span class="d-none d-lg-inline"><?= htmlspecialchars($userName) ?></span>
-                            </a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a href="/projeto/vetz/login" class="btn-perfil">Login</a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
+                        <?php if ($isLoggedIn): ?>
+                            <!-- Usuário LOGADO -->
+                            <li>
+                                <div class="user-logged-menu">
+                                    <span class="user-name">Olá, <?php echo htmlspecialchars($userName); ?></span>
+
+                                    <a class="btn btn-menu btn-perfil" href="/projeto/vetz/views/perfil_usuario.php" role="button">
+                                        <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                        PERFIL
+                                    </a>
+
+                                    <a class="btn btn-menu btn-logout" href="/projeto/vetz/logout.php" role="button">
+                                        SAIR
+                                    </a>
+                                </div>
+                            </li>
+
+                        <?php else: ?>
+                            <!-- Usuário NÃO LOGADO -->
+                            <li>
+                                <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
+                                    <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                    CADASTRO
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
+</header>
 
-    <!-- FORMULÁRIO -->
+    <!-- Botão voltar -->
+    <a href="/projeto/vetz/listar-vacinas" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
     <div class="container">
-        <div class="form-container">
-            <div class="form-header">
-                <i class="fas fa-syringe"></i>
-                <h1><?= $id ? "Editar Vacinação" : "Cadastrar Vacinação" ?></h1>
-                <p style="color:#666; font-size:15px;">Preencha todos os campos com atenção</p>
-            </div>
+        <h1 class="page-title">
+            <i class="fas fa-syringe"></i> <?= $titulo ?>
+        </h1>
+        <p class="page-subtitle">Preencha os dados da vacinação com atenção</p>
 
-            <form action="/projeto/vetz/salvar-vacina<?= $id ? '?id=' . $id : '' ?>" method="POST">
+        <?php if (empty($pets)): ?>
+            <div class="alert-info">
+                <i class="fas fa-info-circle"></i> 
+                <strong>Nenhum pet cadastrado!</strong> Você precisa cadastrar um pet antes de registrar vacinações. 
+                <a href="/projeto/vetz/views/pet_form.php" class="btn btn-primary btn-sm ml-2">Cadastrar Pet</a>
+            </div>
+        <?php endif; ?>
+
+        <div class="form-card">
+            <form action="/projeto/vetz/salvar-vacina" method="POST">
                 <?php if ($id): ?>
                     <input type="hidden" name="id" value="<?= $id ?>">
                 <?php endif; ?>
 
                 <div class="form-group mb-4">
                     <label><i class="fas fa-calendar-alt"></i> Data da Aplicação</label>
-                    <input type="date" class="form-control" name="data" value="<?= $vacinacao['data'] ?? '' ?>" required>
+                    <input type="date" class="form-control" name="data" 
+                           value="<?= isset($vacinacao['data']) ? htmlspecialchars($vacinacao['data']) : '' ?>" 
+                           required max="<?= date('Y-m-d') ?>">
                 </div>
 
                 <div class="form-group mb-4">
                     <label><i class="fas fa-prescription-bottle-alt"></i> Número de Doses</label>
-                    <input type="number" class="form-control" name="doses" min="1" value="<?= $vacinacao['doses'] ?? '' ?>" required>
+                    <input type="number" class="form-control" name="doses" min="1" max="10" 
+                           value="<?= isset($vacinacao['doses']) ? htmlspecialchars($vacinacao['doses']) : '1' ?>" 
+                           required>
+                    <small class="form-text text-muted">Número total de doses aplicadas</small>
                 </div>
 
                 <div class="form-group mb-4">
                     <label><i class="fas fa-vial"></i> Tipo de Vacina</label>
                     <select class="form-control" name="id_vacina" required>
                         <option value="">Selecione a vacina</option>
-                        <?php foreach ($vacinas as $v): ?>
-                            <option value="<?= $v['id_vacina'] ?>" <?= ($vacinacao && $vacinacao['id_vacina'] == $v['id_vacina']) ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($v['vacina']) ?>
-                            </option>
-                        <?php endforeach; ?>
+                        <option value="1" <?= (isset($vacinacao['id_vacina']) && $vacinacao['id_vacina'] == 1) ? 'selected' : '' ?>>V8 / V10 (Cães)</option>
+                        <option value="2" <?= (isset($vacinacao['id_vacina']) && $vacinacao['id_vacina'] == 2) ? 'selected' : '' ?>>Antirrábica</option>
+                        <option value="3" <?= (isset($vacinacao['id_vacina']) && $vacinacao['id_vacina'] == 3) ? 'selected' : '' ?>>V5 (Gatos)</option>
+                        <option value="4" <?= (isset($vacinacao['id_vacina']) && $vacinacao['id_vacina'] == 4) ? 'selected' : '' ?>>Giárdia</option>
+                        <option value="5" <?= (isset($vacinacao['id_vacina']) && $vacinacao['id_vacina'] == 5) ? 'selected' : '' ?>>Tosse dos Canis</option>
+                        <option value="6" <?= (isset($vacinacao['id_vacina']) && $vacinacao['id_vacina'] == 6) ? 'selected' : '' ?>>Leishmaniose</option>
                     </select>
                 </div>
 
                 <div class="form-group mb-5">
                     <label><i class="fas fa-paw"></i> Pet</label>
-                    <select class="form-control" name="id_pet" required>
+                    <select class="form-control" name="id_pet" required <?= empty($pets) ? 'disabled' : '' ?>>
                         <option value="">Selecione o pet</option>
-                        <?php foreach ($pets as $pet): ?>
-                            <option value="<?= $pet['id'] ?>" <?= ($vacinacao && $vacinacao['id_pet'] == $pet['id']) ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($pet['nome']) ?>
-                            </option>
-                        <?php endforeach; ?>
+                        <?php if (!empty($pets)): ?>
+                            <?php foreach ($pets as $pet): ?>
+                                <option value="<?= $pet['id'] ?>" 
+                                    <?= (isset($vacinacao['id_pet']) && $vacinacao['id_pet'] == $pet['id']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($pet['nome']) ?> (<?= htmlspecialchars($pet['especie'] ?? 'N/A') ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="" disabled>Nenhum pet cadastrado</option>
+                        <?php endif; ?>
                     </select>
+                    <?php if (empty($pets)): ?>
+                        <small class="form-text text-danger">
+                            <i class="fas fa-exclamation-triangle"></i> 
+                            Cadastre um pet primeiro para poder registrar vacinações.
+                        </small>
+                    <?php endif; ?>
                 </div>
 
-                <button type="submit" class="btn btn-block">
+                <button type="submit" class="btn-submit" <?= empty($pets) ? 'disabled' : '' ?>>
                     <i class="fas fa-save"></i>
-                    <?= $id ? "Atualizar Vacinação" : "Cadastrar Vacinação" ?>
+                    <?= $id ? "Atualizar Vacinação" : "Salvar Vacinação" ?>
                 </button>
+
+                <?php if (empty($pets)): ?>
+                <div class="text-center mt-3">
+                    <a href="/projeto/vetz/views/pet_form.php" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Cadastrar Pet Primeiro
+                    </a>
+                </div>
+                <?php endif; ?>
             </form>
         </div>
     </div>
 
-<!-- ------------------- FOOTER ----------------------- -->
-
-<div class="footer">
-    <div class="container">
-        <p class="footerp1">
-            Todos os direitos reservados <span id="footer-year"></span> © - VetZ
-        </p>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p class="footerp1">
+                Todos os direitos reservados <span id="footer-year"></span> © - VetZ
+            </p>
+        </div>
     </div>
-</div>
 
-<script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-<script src="/projeto/vetz/views/js/scripts.js"></script>
-
-<script>
-document.getElementById('footer-year').textContent = new Date().getFullYear();
-</script>
-
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

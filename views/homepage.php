@@ -52,22 +52,31 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
 
                         <?php if ($isLoggedIn): ?>
-    <!-- Usuário LOGADO -->
-    <li>
-        <a class="btn btn-menu" href="/projeto/vetz/perfil-usuario?id=<?php echo $_SESSION['user_id']; ?>" role="button">
-            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-            PERFIL
-        </a>
-    </li>
-<?php else: ?>
-    <!-- Usuário NÃO LOGADO -->
-    <li>
-        <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-            CADASTRO
-        </a>
-    </li>
-<?php endif; ?>
+                            <!-- Usuário LOGADO -->
+                            <li>
+                                <div class="user-logged-menu">
+                                    <span class="user-name">Olá, <?php echo htmlspecialchars($userName); ?></span>
+
+                                    <a class="btn btn-menu btn-perfil" href="/projeto/vetz/views/perfil_usuario.php" role="button">
+                                        <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                        PERFIL
+                                    </a>
+
+                                    <a class="btn btn-menu btn-logout" href="/projeto/vetz/logout.php" role="button">
+                                        SAIR
+                                    </a>
+                                </div>
+                            </li>
+
+                        <?php else: ?>
+                            <!-- Usuário NÃO LOGADO -->
+                            <li>
+                                <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
+                                    <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
+                                    CADASTRO
+                                </a>
+                            </li>
+                        <?php endif; ?>
 
                     </ul>
                 </div>

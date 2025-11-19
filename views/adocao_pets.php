@@ -23,6 +23,8 @@ $userName = $_SESSION['user_name'] ?? '';
     <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
     <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
 
+
+
     <style>
 /* Menu principal */
 .left-menu {
@@ -323,6 +325,34 @@ $userName = $_SESSION['user_name'] ?? '';
         <!--End footer-->
 
 
+        <!-- Load JS =============================-->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/jquery.scrollTo-min.js"></script>
+        <script src="js/jquery.nav.js"></script>
+        <script src="js/scripts.js"></script>
+
+        <!-- JS NAVBAR -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userMenuToggle = document.getElementById('userMenuToggle');
+    const userDropdown = document.getElementById('userDropdown');
+    if (userMenuToggle && userDropdown) {
+        userMenuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+        document.addEventListener('click', function(e) {
+            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+        userDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});
+</script>
+    </body>
   <!-- Load JS =============================-->
   <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
   <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>

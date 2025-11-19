@@ -9,15 +9,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <head>
     <meta charset="UTF-8">
     <title>Lista vacinação - VetZ</title>
-    
-    <!-- CSS -->
-    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
-    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
-
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <h1>Vacinações Registradas</h1>

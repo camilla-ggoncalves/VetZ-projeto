@@ -15,8 +15,67 @@
     <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
 
 </head>
+         <!-- #region -->
+  <!-- CSS NAVBAR -->
+  <style>
+    .header {
+      position: relative;
+    }
+    .navbar {
+      padding: 15px 0;
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+    }
+    .navbar .navbar-expand-lg {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logomenu {
+      max-height: 50px;
+    }
+    .left-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+    .left-menu li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .left-menu li a:hover {
+      color: #007bff;
+    }
+  </style>
 
-<body>
+  <!-- JS NAVBAR -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const userMenuToggle = document.getElementById('userMenuToggle');
+      const userDropdown = document.getElementById('userDropdown');
+      if (userMenuToggle && userDropdown) {
+        userMenuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          userDropdown.classList.toggle('show');
+        });
+        document.addEventListener('click', function(e) {
+          if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
+            userDropdown.classList.remove('show');
+          }
+        });
+        userDropdown.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      }
+    });
+  </script>
 
     <!--Begin Header-->
     <?php include __DIR__ . '/navbar.php'; ?>

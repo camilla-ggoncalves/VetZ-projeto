@@ -23,38 +23,6 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
 
     <style>
-/* Menu principal */
-.left-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 20px;
-}
-        <style>
-        .header {
-            position: relative;
-        }
-
-        .navbar {
-            padding: 15px 0;
-        }
-
-        .navbar .container {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .navbar-expand-lg {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logomenu {
-            max-height: 50px;
-        }
 
         /* Menu principal */
         .left-menu {

@@ -30,6 +30,15 @@ if (!$vacina) { // Se nenhuma vacinação for encontrada com o ID informado
 <head>
     <meta charset="UTF-8">
     <title>Atualizar Vacinação - VetZ</title>
+
+    <!-- CSS -->
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    
 </head>
 <body>
     <h1>Atualizar Vacinação</h1>
@@ -67,6 +76,6 @@ if (!$vacina) { // Se nenhuma vacinação for encontrada com o ID informado
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
-    
+
 </body>
 </html>

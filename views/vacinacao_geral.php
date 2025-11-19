@@ -23,9 +23,10 @@ $userName = $_SESSION['user_name'] ?? '';
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
-
     <!-- Favicon -->
-    <link href="images/logoPNG.png" rel="shortcut icon">
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    
 </head>
 
 <body>

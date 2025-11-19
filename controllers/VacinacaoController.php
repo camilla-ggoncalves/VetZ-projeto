@@ -51,19 +51,52 @@ class VacinacaoController {
 
     // Cadastrar vacinação
     public function cadastrarVacina() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $vacinacao = new Vacinacao();
-            $data = $_POST['data'];
-            $doses = $_POST['doses'];
-            $id_vacina = $_POST['id_vacina'];
-            $id_pet = $_POST['id_pet'];
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
 
-            if ($vacinacao->cadastrar($data, $doses, $id_vacina, $id_pet)) {
-                header('Location: ../views/vacinacao_form.php');
-                exit;
-            } else {
-                echo "Erro ao cadastrar a vacina.";
-            }
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['error_message'] = 'Usuário não logado.';
+            header('Location: /projeto/vetz/login'); exit;
+        }
+
+        $data_vacinacao = $_POST['data'] ?? '';
+        $doses = $_POST['doses'] ?? '';
+        $id_vacina = $_POST['id_vacina'] ?? '';
+        $id_pet = $_POST['id_pet'] ?? '';
+
+        // Valida campos obrigatórios
+        if (empty($data) || empty($doses) || empty($id_vacina) || empty($id_pet)) {
+            $_SESSION['error_message'] = 'Preencha todos os campos obrigatórios.';
+            header('Location: /projeto/vetz/cadastrar-vacina'); exit;
+        }
+
+        // Valida que pet pertence ao usuário
+        $petModel = new Pet();
+        if (!$petModel->pertenceAoUsuario($id_pet, $_SESSION['user_id'])) {
+            $_SESSION['error_message'] = 'Pet inválido ou não pertence a este usuário.';
+            header('Location: /projeto/vetz/cadastrar-vacina'); exit;
+        }
+
+        // Valida que vacina existe
+        $vacinacaoModel = new Vacinacao();
+        if (!$vacinacaoModel->vacinaExiste($id_vacina)) {
+            $_SESSION['error_message'] = 'Vacina inválida.';
+            header('Location: /projeto/vetz/cadastrar-vacina'); exit;
+        }
+
+        // Valida data (não futura)
+        if (strtotime($data) > time()) {
+            $_SESSION['error_message'] = 'A data da vacinação não pode ser futura.';
+            header('Location: /projeto/vetz/cadastrar-vacina'); exit;
+        }
+
+        // Insere a vacinação
+        if ($vacinacaoModel->cadastrar($data_vacinacao, $doses, $id_vacina, $id_pet)) {
+            $_SESSION['success_message'] = 'Vacinação cadastrada com sucesso!';
+            header('Location: /projeto/vetz/listar-vacinas'); exit;
+        } else {
+            $_SESSION['error_message'] = 'Erro ao cadastrar a vacinação.';
+            header('Location: /projeto/vetz/cadastrar-vacina'); exit;
         }
     }
 

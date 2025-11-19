@@ -452,21 +452,22 @@ $sugestoesVacinas = [
 
                 <div class="form-group mb-4">
                     <label><i class="fas fa-vial"></i> Tipo de Vacina *</label>
-                    <input type="text" class="form-control" name="id_vacina" 
-                           value="<?= isset($vacinacao['id_vacina']) ? htmlspecialchars($vacinacao['id_vacina']) : '' ?>" 
-                           placeholder="Ex: V8, V10, Antirrábica, V5, etc." 
-                           required
-                           list="sugestoes-vacinas">
-                    
-                    <!-- Lista de sugestões -->
-                    <datalist id="sugestoes-vacinas">
-                        <?php foreach ($sugestoesVacinas as $vacina): ?>
-                            <option value="<?= htmlspecialchars($vacina) ?>">
-                        <?php endforeach; ?>
-                    </datalist>
+                    <select class="form-control" name="id_vacina" required>
+                        <option value="">Selecione a vacina</option>
+                        <?php if (isset($vacinas) && !empty($vacinas)): ?>
+                            <?php foreach ($vacinas as $vac): ?>
+                                <option value="<?= $vac['id_vacina'] ?>" 
+                                    <?= (isset($vacinacao['id_vacina']) && $vacinacao['id_vacina'] == $vac['id_vacina']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($vac['nome_vacina']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="" disabled>Nenhuma vacina disponível</option>
+                        <?php endif; ?>
+                    </select>
                     
                     <small class="form-text text-muted">
-                        Digite o nome da vacina. Sugestões: V8, V10, Antirrábica, V5, Giárdia, etc.
+                        Selecione o tipo de vacina a aplicar
                     </small>
                 </div>
 
@@ -512,7 +513,8 @@ $sugestoesVacinas = [
                               placeholder="Observações adicionais sobre a vacinação"><?= isset($vacinacao['observacoes']) ? htmlspecialchars($vacinacao['observacoes']) : '' ?></textarea>
                 </div>
 
-                <button type="submit" class="btn-submit" <?= empty($pets) ? 'disabled' : '' ?>>
+                <button type="submit" class="btn-submit" <?= empty($pets) ? 'disabled' : '' ?>
+                    href="/projeto/vetz/views/perfil-pet">
                     <i class="fas fa-save"></i>
                     <?= $id ? "Atualizar Vacinação" : "Salvar Vacinação" ?>
                 </button>

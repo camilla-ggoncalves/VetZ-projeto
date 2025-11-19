@@ -20,7 +20,7 @@ class Vacinacao {
     }
 
     public function cadastrar($data, $doses, $id_vacina, $id_pet) {
-        $query = "INSERT INTO vacinacao (data, doses, id_vacina, id_pet)
+        $query = "INSERT INTO vacinacao (data_vacinacao, doses, id_vacina, id_pet)
                   VALUES (:data, :doses, :id_vacina, :id_pet)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':data', $data);
@@ -118,6 +118,14 @@ class Vacinacao {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'] > 0;
+    }
+
+    public function vacinaExiste($id_vacina) {
+        $sql = "SELECT id_vacina FROM registro_vacina WHERE id_vacina = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id_vacina);
+        $stmt->execute();
+        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 }

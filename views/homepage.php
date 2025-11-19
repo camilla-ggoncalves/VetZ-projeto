@@ -210,7 +210,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                                     <span class="user-greeting">Olá, <?php echo htmlspecialchars($userName); ?></span>
                                 </div>
                                 <div class="user-dropdown-body">
-                                    <a class="user-dropdown-item" href="/projeto/vetz/views/perfil_usuario.php">
+                                    <a class="user-dropdown-item" href="/projeto/vetz/views/perfil-usuario">
                                         <img src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
                                         Acessar Perfil
                                     </a>

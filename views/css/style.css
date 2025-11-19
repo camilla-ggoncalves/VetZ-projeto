@@ -26,16 +26,14 @@ Sequência do CSS Da Página: (use esses nomes a pesquisa rápida no código.)
     01. Section 08
 10. BEGIN PAGE TERMOS DE USO
     01. Section 09
-11. BEGIN PAGE REGISTRAR
+11. BEGIN PAGE CADASTRO
     01. Section 10
-12. BEGIN PAGE CADASTRO
+12. BEGIN PAGE LOGIN
     01. Section 11
-13. BEGIN PAGE LOGIN
+13. BEGIN PAGE PERFIL PET
     01. Section 12
-14. BEGIN PAGE PERFIL PET
-    01. Section 13
-15. Footer
-16. Media Queries
+14. Footer
+15. Media Queries
 
 
 
@@ -1343,9 +1341,9 @@ R .left-menu {
 .header-info {
   background: linear-gradient(135deg, #038654 0%, rgb(96, 193, 101) 100%);
   padding: 30px;
-  margin: 110px 0 0 0;
+  margin: 127px 0 0 0;
   border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   gap: 25px;
@@ -1780,22 +1778,17 @@ R .left-menu {
  /* 		           09. BEGIN PAGE RECOMENDAÇÕES                */
  /* ========================================================== */
  /*Begin Section 08*/
-
-/* Centralizar o cachorro animado na seção de recomendações */
 .section08 {
   position: relative;
   padding-top: 115px;
   padding-bottom: 562px;
-  background: #e9f8da;
-  background: url(../images/cena-de-uma-fazenda-de-galinhas-com-aves-e-pessoas.jpg) top center no-repeat;
+  background-color: #f3faed;
   background-size: cover;
   z-index: 10;
   overflow: hidden;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Mantém o conteúdo centralizado horizontalmente */
 }
 
 .dog {
@@ -2024,18 +2017,9 @@ h1 {
 /* ========================================================== */
 /* 		             10. END PAGE TERMOS DE USO                */
 /* ========================================================== */
-
 /* ========================================================== */
-/* 		           11. BEGIN PAGE REGISTRAR                    */
+/* 		           11. BEGIN PAGE CADASTRO                      */
 /* ========================================================== */
-/* ========================================================== */
-/* 		             11. END PAGE REGISTRAR                    */
-/* ========================================================== */
-
-/* ========================================================== */
-/* 		           12. BEGIN PAGE CADASTRO                     */
-/* ========================================================== */
-
 /* Reset e base */
 html,
 body {
@@ -2242,12 +2226,6 @@ input {
   color: #ff4d4d;
 }
 
- /* ========================================================== */
- /* 		             12. END PAGE CADASTRO                     */
- /* ========================================================== */
- /* ========================================================== */
- /* 		           12. BEGIN PAGE CADASTRO                     */
- /* ========================================================== */
  /*Begin Section 11*/
  /* Reset e base */
 html, body {
@@ -2365,16 +2343,10 @@ html, body {
 
  /*End Section 11*/
  /* ========================================================== */
- /* 		             12. END PAGE CADASTRO                     */
+ /* 		             11. END PAGE CADASTRO                     */
  /* ========================================================== */
-
-/* ========================================================== */
-/* 		            13. BEGIN PAGE LOGIN                        */
-/* ========================================================== */
-/* Reset e base */
-html,
  /* ========================================================== */
- /* 		            13. BEGIN PAGE LOGIN                       */
+ /* 		            12. BEGIN PAGE LOGIN                       */
  /* ========================================================== */
 /*Begin Section 12*/
 
@@ -2593,10 +2565,10 @@ input[type="password"] {
 }
 /*End Section 12*/
  /* ========================================================== */
- /*                     13. END PAGE LOGIN                     */
+ /*                     12. END PAGE LOGIN                     */
  /* ========================================================== */
  /* ========================================================== */
- /*                  14. BEGIN PAGE PERFIL PET                 */
+ /*                  13. BEGIN PAGE PERFIL PET                 */
  /* ========================================================== */
 * {
     margin: 0;
@@ -3089,11 +3061,11 @@ body {
     }
 }
  /* ========================================================== */
- /* 			            14. END PERFIL PET                       */
+ /* 			            13. END PERFIL PET                       */
  /* ========================================================== */
 
  /* ========================================================== */
- /* 			             15. BEGIN FOOTER                        */
+ /* 			             14. BEGIN FOOTER                        */
  /* ========================================================== */
  .footer{
   padding: 12px 0 10px 0;
@@ -3120,11 +3092,11 @@ body {
 }
 
 /* ========================================================== */
-/*                     15. END FOOTER                         */
+/*                     14. END FOOTER                         */
 /* ========================================================== */
 
 /* ========================================================== */
-/* 			         16. BEGIN MEDIA QUERIES                      */
+/* 			         15. BEGIN MEDIA QUERIES                      */
 /* ========================================================== */
 
 /*Dispositivos small*/
@@ -3205,5 +3177,5 @@ body {
 }
 
 /* ========================================================== */
-/*                     16. END MEDIA QUERIES                  */
+/*                     15. END MEDIA QUERIES                  */
 /* ========================================================== */

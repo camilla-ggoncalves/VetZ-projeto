@@ -25,14 +25,24 @@ $userName = $_SESSION['user_name'] ?? '';
 
                         
 <style>
-  /* Container específico para VITdogs */
+  .section08{
+  position: relative;
+  padding-top: 115px;
+  padding-bottom: 562px;
+  background-color: #f3faed;
+  background-size: cover;
+  z-index: 10;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  }
   #vitdogs-container {
     font-family: Arial, sans-serif;
     background: #f3faed;
-    padding: 20px;
-    margin: 39px 0 0 0;
     border-radius: 8px;
   }
+
   #vitdogs-container h1 {
     text-align: center;
     color: #ff6f61;

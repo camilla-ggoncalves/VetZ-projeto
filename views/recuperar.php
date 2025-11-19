@@ -15,6 +15,31 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
       padding: 0;
       font-family: 'Arial', sans-serif;
     }
+    .topo {
+  background-color: #ffffff;
+  border-bottom: 2px solid #d8e8cc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-box img {
+  width: 40px;
+  height: 40px;
+}
+
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4b7942;
+}
 
     body {
       background-color: #fdfcea;
@@ -35,21 +60,23 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     .logo {
       height: 60px;
     }
+.voltar {
+  background-color: #d4f1c5;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #2d5c24;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-    .btn-voltar {
-      background-color: #b0e8a4;
-      color: #000;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+.voltar:hover {
+  background-color: #bde9ad;
+}
 
-    .btn-voltar:hover {
-      background-color: #9bd68f;
-    }
+   
+  
 
     main {
       display: flex;
@@ -116,6 +143,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
   border-top: 1px solid #cfe8b6;
 }
 
+
     .icons {
       position: absolute;
       right: 20px;
@@ -125,6 +153,16 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     .icons img {
       width: 24px;
       margin-left: 10px;
+    }
+    .envcod {
+      background-color: #7ADEA7;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
     }
 
     @media (max-width: 480px) {
@@ -137,9 +175,12 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 </head>
 <body>
 
-  <header>
-    <img src="views/images/logo_vetz.svg" alt="Logo VetZ" class="logo">
-    <button class="btn-voltar" onclick="window.history.back()">VOLTAR</button>
+ <header class="topo">
+    <div class="logo-box">
+      <img src="views/images/logo_vetz.svg" alt="Logo da Clínica" />
+      <span class="titulo">VetZ</span>
+    </div>
+    <button class="voltar" onclick="history.back()">VOLTAR</button>
   </header>
 
   <main>
@@ -149,7 +190,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 
       <form id="form-email" action="/projeto/vetz/enviarCodigo" method="POST">
         <input name="email" id="email" type="email" placeholder="Digite seu e-mail" required>
-        <button type="submit">Enviar código</button>
+        <button class= "envcod" >Enviar código</button>
       </form>
 
       <div id="popup-codigo" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">

@@ -15,7 +15,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
                         <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
                         <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                        <li><a href="/projeto/vetz/recomendacoes">RECOMENDAÇÕES</a></li>
+                        <li><a href="/projeto/vetz/recomendacoes">ADOÇÃO</a></li>
                         <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
                     </ul>
                 </div>

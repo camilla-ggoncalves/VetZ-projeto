@@ -282,27 +282,6 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
 
-    <!-- JS NAVBAR -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const userMenuToggle = document.getElementById('userMenuToggle');
-    const userDropdown = document.getElementById('userDropdown');
-    if (userMenuToggle && userDropdown) {
-        userMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('show');
-        });
-        document.addEventListener('click', function(e) {
-            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('show');
-            }
-        });
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
-</script>
 
     </body>
 </html>

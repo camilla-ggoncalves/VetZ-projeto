@@ -202,8 +202,8 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 
     <!-- Scripts -->
     <script src="https://apis.google.com/js/api.js"></script> <!-- API do YouTube -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-    <script src="/projeto/vetz/views/js/bootstrap.min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>

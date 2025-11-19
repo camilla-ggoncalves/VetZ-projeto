@@ -4,7 +4,6 @@ require_once '../config/database_site.php';
 class Pet {
     private $conn;
     private $table_name = "pets";
-
     public $id;
     public $nome;
     public $raca;
@@ -23,6 +22,9 @@ class Pet {
     public function save() {
         $query = "INSERT INTO pets (nome, raca, idade, porte, peso, sexo, imagem, id_usuario)
                   VALUES (:nome, :raca, :idade, :porte, :peso, :sexo, :imagem, :id_usuario)";
+        $query = "INSERT INTO " . $this->table_name . " 
+                  (nome, raca, idade, porte, peso, sexo, imagem, id_usuario, especie) 
+                  VALUES (:nome, :raca, :idade, :porte, :peso, :sexo, :imagem, :id_usuario, :especie)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':nome', $this->nome);
@@ -33,7 +35,6 @@ class Pet {
         $stmt->bindParam(':sexo', $this->sexo);
         $stmt->bindParam(':imagem', $this->imagem);
         $stmt->bindParam(':id_usuario', $this->id_usuario);
-
         return $stmt->execute();
     }
 
@@ -53,6 +54,9 @@ class Pet {
         $query = "UPDATE pets 
                   SET nome = :nome, raca = :raca, idade = :idade, porte = :porte, 
                       peso = :peso, sexo = :sexo";
+        $query = "UPDATE " . $this->table_name . " 
+                  SET nome = :nome, raca = :raca, idade = :idade, 
+                      porte = :porte, peso = :peso, sexo = :sexo;
 
         if (!empty($this->imagem)) $query .= ", imagem = :imagem";
 
@@ -66,6 +70,11 @@ class Pet {
         $stmt->bindParam(':peso', $this->peso);
         $stmt->bindParam(':sexo', $this->sexo);
         if (!empty($this->imagem)) $stmt->bindParam(':imagem', $this->imagem);
+
+        if (!empty($this->imagem)) {
+            $stmt->bindParam(':imagem', $this->imagem);
+        }
+        
         $stmt->bindParam(':id', $this->id);
 
         return $stmt->execute();
@@ -93,5 +102,20 @@ class Pet {
         $stmt->bindParam(':id_usuario', $usuarioId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Buscar pets por usuário com informações básicas
+    public function buscarPorUsuario($usuarioId) {
+        return $this->getPetsByUsuario($usuarioId);
+    }
+
+    // Verificar se pet pertence ao usuário
+    public function pertenceAoUsuario($petId, $usuarioId) {
+        $query = "SELECT COUNT(*) FROM " . $this->table_name . " WHERE id = :pet_id AND id_usuario = :usuario_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':pet_id', $petId);
+        $stmt->bindParam(':usuario_id', $usuarioId);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
     }
 }

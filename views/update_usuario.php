@@ -7,7 +7,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>VetZ</title>
+    <title>Atualizar Usuário - VetZ</title>
 </head>
 <body>
     <h1>Atualizar Usuário</h1>

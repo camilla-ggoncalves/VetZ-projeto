@@ -13,7 +13,7 @@ $userName = $_SESSION['user_name'] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>VetZ</title>
+    <title>Adoção - VetZ</title>
 
     <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
@@ -180,100 +180,29 @@ $userName = $_SESSION['user_name'] ?? '';
   }
 </style>
 
-<!-- ================== CONTEÚDO VITdogs ================== -->
-<div id="vitdogs-container">
-  <div class="filters">
-    <select id="speciesFilter" class="filter-btn btn-menu">
-      <option value="">Todas as espécies</option>
-      <option value="dog">Cachorro</option>
-      <option value="cat">Gato</option>
-    </select>
-    <select id="ageFilter" class="filter-btn btn-menu">
-      <option value="">Todas as idades</option>
-      <option value="baby">Filhote</option>
-      <option value="young">Jovem</option>
-      <option value="adult">Adulto</option>
-      <option value="senior">Idoso</option>
-    </select>
-    <select id="genderFilter" class="filter-btn btn-menu">
-      <option value="">Todos os sexos</option>
-      <option value="male">Macho</option>
-      <option value="female">Fêmea</option>
-    </select>
-  </div>
-  <div class="pet-list" id="petList"></div>
-</div>
-
-<!-- ================== SCRIPT VITdogs ================== -->
-<script>
-  const apiKey = "sqpSErXDTZWxVyY11lPnEQTZOOJbAfFAKAPYEQ09OAdkHj13qh";
-  const apiSecret = "KfyWu5xbjrLbnr61dx2VdZBVSC6HfgiaNs8khIJW";
-  let token = "";
-
-  async function getToken() {
-    const res = await fetch("https://api.petfinder.com/v2/oauth2/token", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`
-    });
-    const data = await res.json();
-    token = data.access_token;
-    loadPets();
-  }
-
-  async function loadPets() {
-    const species = document.getElementById("speciesFilter").value;
-    const age = document.getElementById("ageFilter").value;
-    const gender = document.getElementById("genderFilter").value;
-
-    let url = "https://api.petfinder.com/v2/animals?limit=21";
-    if (species) url += `&type=${species}`;
-    if (age) url += `&age=${age}`;
-    if (gender) url += `&gender=${gender}`;
-
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    const data = await res.json();
-    displayPets(data.animals);
-  }
-
-  function displayPets(pets) {
-    const petList = document.getElementById("petList");
-    petList.innerHTML = "";
-
-    if (!pets || pets.length === 0) {
-      petList.innerHTML = "<p>Nenhum pet encontrado.</p>";
-      return;
-    }
-
-    pets.forEach(pet => {
-      const card = document.createElement("div");
-      card.className = "card";
-      /* 🔹 Torna o card clicável para o link do PetFinder */
-      card.onclick = () => {
-        if (pet.url) {
-          window.open(pet.url, "_blank");
-        }
-      };
-
-      card.innerHTML = `
-        <img src="${pet.photos[0]?.medium || 'https://via.placeholder.com/300x200?text=Sem+foto'}" alt="${pet.name}">
-        <h3>${pet.name}</h3>
-        <p>${pet.description ? pet.description.substring(0,100) + "..." : "Sem descrição."}</p>
-        <p><strong>Localização:</strong> ${pet.contact.address.city || ""}</p>
-      `;
-
-      petList.appendChild(card);
-    });
-  }
-
-  document.getElementById("speciesFilter").addEventListener("change", loadPets);
-  document.getElementById("ageFilter").addEventListener("change", loadPets);
-  document.getElementById("genderFilter").addEventListener("change", loadPets);
-
-  getToken();
-</script>
-     
-
+                        <!-- ================== CONTEÚDO VITdogs ================== -->
+                        <div id="vitdogs-container">
+                          <div class="filters">
+                            <select id="speciesFilter" class="filter-btn btn-menu">
+                              <option value="">Todas as espécies</option>
+                              <option value="dog">Cachorro</option>
+                              <option value="cat">Gato</option>
+                            </select>
+                            <select id="ageFilter" class="filter-btn btn-menu">
+                              <option value="">Todas as idades</option>
+                              <option value="baby">Filhote</option>
+                              <option value="young">Jovem</option>
+                              <option value="adult">Adulto</option>
+                              <option value="senior">Idoso</option>
+                            </select>
+                            <select id="genderFilter" class="filter-btn btn-menu">
+                              <option value="">Todos os sexos</option>
+                              <option value="male">Macho</option>
+                              <option value="female">Fêmea</option>
+                            </select>
+                          </div>
+                          <div class="pet-list" id="petList"></div>
+                        </div>
                     </div>
                 </div>
             </div>

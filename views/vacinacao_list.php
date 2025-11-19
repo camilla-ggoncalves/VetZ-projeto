@@ -8,7 +8,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>VetZ</title>
+    <title>Lista vacinação - VetZ</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>

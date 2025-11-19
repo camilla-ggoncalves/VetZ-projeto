@@ -109,8 +109,4 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script> <!-- Seu script com a API -->
     
-    <script>
-        // Atualiza o ano no rodapé automaticamente
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
-    </script>
 </body>

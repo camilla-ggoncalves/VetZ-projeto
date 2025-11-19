@@ -8,7 +8,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VetZ</title>
+  <title>Cadastrar Pet - VetZ</title>
   <link rel="stylesheet" href="views\css\style.css" />
 </head>
 <body>    

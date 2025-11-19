@@ -11,7 +11,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>VetZ</title>
+    <title>Sobre Nós - VetZ</title>
 
     <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">

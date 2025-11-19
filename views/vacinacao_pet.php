@@ -21,7 +21,7 @@ function safe($value) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carteira de Vacinação - <?= safe($pet['nome'] ?? 'Pet Desconhecido') ?></title>
+    <title>Carteirinha - <?= safe($pet['nome'] ?? 'Pet Desconhecido') ?></title>
 
     <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">

@@ -29,7 +29,7 @@ if (!$vacina) { // Se nenhuma vacinação for encontrada com o ID informado
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>VetZ</title>
+    <title>Atualizar Vacinação - VetZ</title>
 </head>
 <body>
     <h1>Atualizar Vacinação</h1>

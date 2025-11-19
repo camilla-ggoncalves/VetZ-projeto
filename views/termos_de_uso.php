@@ -7,7 +7,7 @@
         <meta name="keywords" content="">
         <meta name="description" content="">
 
-        <title>VetZ</title>
+        <title>Termos de Uso - VetZ</title>
         
         <!-- Loading Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">

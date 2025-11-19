@@ -12,7 +12,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>VetZ</title>
+    <title>Home Page - VetZ</title>
 
     <!-- CSS -->
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
@@ -390,31 +390,6 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
     <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
     <script src="/projeto/vetz/views/js/scripts.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const userMenuToggle = document.getElementById('userMenuToggle');
-    const userDropdown = document.getElementById('userDropdown');
     
-    if (userMenuToggle && userDropdown) {
-        // Toggle dropdown ao clicar no botão
-        userMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('show');
-        });
-        
-        // Fechar dropdown ao clicar fora
-        document.addEventListener('click', function(e) {
-            if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('show');
-            }
-        });
-        
-        // Prevenir que cliques dentro do dropdown o fechem
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
-    </script>
 </body>
 </html>

@@ -47,7 +47,7 @@ $sugestoesVacinas = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $titulo ?> - VetZ</title>
+    <title>Nova vacinação - VetZ</title>
 
     <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
     <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">

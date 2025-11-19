@@ -7,7 +7,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>VetZ</title>
+  <title>Recuperar Senha - VetZ</title>
    <style>
     * {
       box-sizing: border-box;

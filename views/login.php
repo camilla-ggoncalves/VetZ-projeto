@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VetZ</title>
+  <title>Login - VetZ</title>
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="views/css/style.css">
 </head>
@@ -63,18 +63,11 @@
     <p>© 2025 VetZ - Todos os direitos reservados.</p>
   </footer>
 
-  <!-- Script do olhinho -->
-  <script>
-    const senhaInput = document.getElementById('senha');
-    const toggleSenha = document.getElementById('toggleSenha');
-
-    toggleSenha.addEventListener('click', () => {
-      const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
-      senhaInput.setAttribute('type', tipo);
-      toggleSenha.innerHTML = tipo === 'password' ? '🐵' : '🙈';
-    });
-  </script>
-
+    <!-- Load JS =============================-->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
+    
 </body>
-
 </html>

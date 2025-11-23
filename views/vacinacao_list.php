@@ -8,7 +8,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>VetZ</title>
+    <title>Lista vacinação - VetZ</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -39,9 +39,9 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <!-- Exibe os dados de cada vacinação de forma segura -->
                         <td><?= htmlspecialchars($vacina['data']) ?></td> <!-- Data da vacinação -->
                         <td><?= htmlspecialchars($vacina['doses']) ?></td> <!-- Quantidade de doses aplicadas -->
-                        <td><?= htmlspecialchars($vacina['vacina']) ?></td> <!-- Nome da vacina aplicada -->
+                        <td><?= htmlspecialchars($vacina['nome_vacina']) ?></td> <!-- Nome da vacina aplicada -->
                         <td><?= htmlspecialchars($vacina['nome_pet']) ?></td> <!-- Nome do pet que recebeu a vacina -->
-                        <td><?= htmlspecialchars($vacina['nome_tutor']) ?></td> <!-- Nome do pet que recebeu a vacina -->
+                        <td><?= htmlspecialchars($vacina['nome_tutor']) ?></td> <!-- Nome do tutor -->
                         <td>
                             <!-- Link para editar a vacinação selecionada, passando o ID da vacina pela URL -->
                             <a href="/projeto/vetz/editar-vacina/<?= $vacina['id'] ?>">Editar</a> |
@@ -61,13 +61,13 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
             <?php endif; ?>
         </tbody>
     </table>
-<script>
-<!-- Link para excluir a vacinação selecionada, com confirmação de exclusão via JavaScript -->
-<a href="/projeto/vetz/excluir-vacina/<?= $vacina['id'] ?>" 
-   onclick="return confirm('Tem certeza que deseja excluir esta vacinação?');">
-   Excluir
-</a>
-</script>
+
+    <!-- Load JS =============================-->
+    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
+    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
+    <script src="/projeto/vetz/views/js/scripts.js"></script>
+
 </body>
 </html>
 

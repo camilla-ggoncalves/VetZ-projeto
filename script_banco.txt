@@ -1,0 +1,70 @@
+CREATE DATABASE if not exists vetz;
+USE vetz;
+
+-- Tabela de usuários
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+-- Tabela de pets
+CREATE TABLE pets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    raca VARCHAR(255) NOT NULL,
+    idade TINYINT,
+    porte VARCHAR(255) NOT NULL,
+    peso DECIMAL(5,2) NOT NULL,
+    sexo ENUM('Macho', 'Fêmea'),
+    imagem VARCHAR(255),
+    id_usuario INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+-- Tabela ficha técnica de animais (informações gerais)
+CREATE TABLE ficha_tecnica (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_comum VARCHAR(255) NOT NULL,
+    nome_cientifico VARCHAR(255) NOT NULL,
+    habitat VARCHAR(255) NOT NULL,
+    alimentacao VARCHAR(255) NOT NULL,
+    tamanho_peso VARCHAR(100) NOT NULL,
+    curiosidades VARCHAR(255) NOT NULL,
+    descricao VARCHAR(500) NOT NULL,
+    imagem VARCHAR(255) NOT NULL
+);
+
+-- Tabela de registro de vacinas
+CREATE TABLE registro_vacina (
+    id_vacina INT AUTO_INCREMENT PRIMARY KEY,
+    vacina VARCHAR(100) NOT NULL,
+    especie VARCHAR(50) NOT NULL,
+    quantidade_doses TINYINT NOT NULL,
+    tipo_animal ENUM('Cachorro', 'Gato', 'Outro') NOT NULL
+);
+
+-- Tabela de vacinação
+CREATE TABLE vacinacao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data DATE NOT NULL,
+    doses TINYINT NOT NULL,
+    id_vacina INT,
+    id_usuario INT,
+    id_pet INT,
+   
+    FOREIGN KEY (id_vacina) REFERENCES registro_vacina(id_vacina),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_pet) REFERENCES pets(id)
+);
+
+select * from vacinacao;
+
+ALTER TABLE usuarios
+ADD COLUMN codigo_recuperacao VARCHAR(10),
+ADD COLUMN codigo_expira DATETIME;
+
+
+select * from pets;
+select * from usuarios;

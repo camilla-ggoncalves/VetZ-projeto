@@ -7,7 +7,15 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>VetZ</title>
+  <title>Recuperar Senha - VetZ</title>
+    <!-- CSS -->
+    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
+    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
+    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    
    <style>
     * {
       box-sizing: border-box;
@@ -185,6 +193,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 </head>
 <body>
 
+
  <header class="topo">
     <div class="logo-box">
       <img src="views/images/logo_vetz.svg" alt="Logo da Clínica" />
@@ -192,6 +201,11 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     </div>
     <button class="voltar" onclick="history.back()">VOLTAR</button>
   </header>
+
+    <!--Begin Header-->
+    <?php include __DIR__ . '/navbar.php'; ?>
+    <!--End Header-->
+
 
   <main>
     <div class="box">
@@ -243,14 +257,18 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
     </div>
   </main>
         
-  <footer>
-    Todos os direitos reservados 2025 © – VetZ
-    <div class="icons">         
-     
+    <!-- Begin footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="footerp1">
+                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-  </footer>
+    <!--End footer-->
 
   <script>
 function fecharPopup() {

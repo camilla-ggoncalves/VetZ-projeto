@@ -94,30 +94,43 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function atualizar($id, $nome, $email, $senha, $imagem = null) {
-        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+    public function atualizar($id, $nome, $email, $senha = null, $imagem = null, $telefone = null, $endereco = null, $nascimento = null) {
+        $campos = [];
+        $params = [':id' => $id, ':nome' => $nome, ':email' => $email];
 
-        if ($imagem) {
-            $sql = "UPDATE usuarios 
-                       SET nome = :nome, email = :email, senha = :senha, imagem = :imagem 
-                     WHERE id = :id";
-        } else {
-            $sql = "UPDATE usuarios 
-                       SET nome = :nome, email = :email, senha = :senha 
-                     WHERE id = :id";
+        $campos[] = 'nome = :nome';
+        $campos[] = 'email = :email';
+
+        if ($telefone !== null) {
+            $campos[] = 'telefone = :telefone';
+            $params[':telefone'] = $telefone;
         }
+
+        if ($endereco !== null) {
+            $campos[] = 'endereco = :endereco';
+            $params[':endereco'] = $endereco;
+        }
+
+        if ($nascimento !== null) {
+            $campos[] = 'nascimento = :nascimento';
+            $params[':nascimento'] = $nascimento;
+        }
+
+        if ($senha !== null && $senha !== '') {
+            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+            $campos[] = 'senha = :senha';
+            $params[':senha'] = $senhaHash;
+        }
+
+        if ($imagem !== null) {
+            $campos[] = 'imagem = :imagem';
+            $params[':imagem'] = $imagem;
+        }
+
+        $sql = "UPDATE usuarios SET " . implode(', ', $campos) . " WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':senha', $senhaHash);
-
-        if ($imagem) {
-            $stmt->bindParam(':imagem', $imagem);
-        }
-
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
+        return $stmt->execute($params);
     }
 
     public function excluir($id) {

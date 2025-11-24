@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database_site.php';
+require_once __DIR__ . '/../config/database_site.php';
 
 class Pet {
     private $conn;

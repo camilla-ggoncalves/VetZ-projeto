@@ -6,17 +6,47 @@ Este diretorio contem o schema do banco de dados MySQL para o projeto VetZ.
 
 ## Como Usar
 
-### 1. Criar o Banco de Dados
+### 1. Criar o Banco de Dados (RECOMENDADO)
+
+**Use o arquivo consolidado que contem TUDO:**
 
 ```bash
 # Conectar ao MySQL
 mysql -u root -p
 
-# Executar o script
-source /caminho/para/VetZ-projeto/database/schema.sql
+# Executar o script completo
+source /caminho/para/VetZ-projeto/database/schema_completo.sql
 
 # OU via linha de comando direta
+mysql -u root -p < database/schema_completo.sql
+```
+
+**O arquivo `schema_completo.sql` ja inclui:**
+- Estrutura de todas as tabelas
+- Todos os campos (incluindo migrations)
+- Dados iniciais de vacinas
+- Usuario de teste
+- Views
+- Procedures
+- Triggers
+
+### 1.1. Metodo Alternativo (Arquivos Separados)
+
+Se preferir executar em etapas:
+
+```bash
+# 1. Criar estrutura basica
 mysql -u root -p < database/schema.sql
+
+# 2. (OPCIONAL) Aplicar migrations se necessario
+mysql -u root -p < database/migration_add_user_fields.sql
+mysql -u root -p < database/migration_add_proxima_dose.sql
+
+# 3. (OPCIONAL) Adicionar procedures
+mysql -u root -p < database/procedures.sql
+
+# 4. (OPCIONAL) Adicionar triggers
+mysql -u root -p < database/triggers.sql
 ```
 
 ### 2. Configurar Conexao
@@ -50,6 +80,7 @@ Armazena os dados dos pets
 - `nome`: Nome do pet
 - `raca`: Raca do pet
 - `idade`: Idade do pet
+- `data_nascimento`: Data de nascimento do pet
 - `porte`: Pequeno, Medio, Grande
 - `peso`: Peso em kg
 - `sexo`: Macho, Femea
@@ -67,6 +98,7 @@ Catalogo de vacinas disponiveis
 Registro de vacinacoes aplicadas
 - `id`: Chave primaria
 - `data_vacinacao`: Data de aplicacao
+- `proxima_dose`: Data da proxima dose (opcional)
 - `doses`: Numero de doses aplicadas
 - `id_vacina`: Foreign key para registro_vacina
 - `id_pet`: Foreign key para pets

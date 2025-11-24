@@ -7,16 +7,22 @@
  */
 
 // Detecta automaticamente a base URL
-// Se SCRIPT_NAME contem /projeto/vetz/, usa esse prefixo
-// Caso contrario, assume que esta rodando na raiz
+// Extrai o caminho base do diretorio do script
 $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
 $requestUri = $_SERVER['REQUEST_URI'] ?? '';
 
-// Verifica se esta rodando no XAMPP com o path /projeto/vetz/
-if (strpos($scriptName, '/projeto/vetz/') !== false || strpos($requestUri, '/projeto/vetz/') !== false) {
-    define('BASE_URL', '/projeto/vetz');
+// Detecta o diretorio base automaticamente
+// Ex: /VetZ-projeto/public/index.php -> /VetZ-projeto
+if (preg_match('#^(/[^/]+)/#', $scriptName, $matches)) {
+    $baseDir = $matches[1];
+    // Verifica se nao esta na raiz do htdocs
+    if ($baseDir !== '/index.php' && $baseDir !== '/public') {
+        define('BASE_URL', $baseDir);
+    } else {
+        define('BASE_URL', '');
+    }
 } else {
-    // Rodando com php -S localhost:8000 ou similar
+    // Rodando com php -S localhost:8000 ou similar (sem subdiretorio)
     define('BASE_URL', '');
 }
 

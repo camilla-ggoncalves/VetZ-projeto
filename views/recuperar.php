@@ -137,31 +137,6 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
             box-shadow: 0 0 0 4px rgba(3, 134, 84, 0.1);
         }
 
-    .icons img {
-      width: 24px;
-      margin-left: 10px;
-    }
-    .envcod {
-      background-color: #7ADEA7;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-    .bt-trsenha{
-      background-color: #7ADEA7;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(3, 134, 84, 0.4);
@@ -173,6 +148,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
             cursor: not-allowed;
             transform: none;
         }
+
 
         .back-to-login {
             text-align: center;
@@ -332,17 +308,13 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                            required>
                 </div>
 
-      <div id="popup-codigo" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:30px; border-radius:15px; width:300px; margin:auto; text-align:center; position:relative;">
-          <h3>Digite o código recebido</h3>
-          <form id="form-codigo" action="/projeto/vetz/verificarCodigo" method="POST">
-            <input name="email" id="popup-email" type="hidden">
-            <input name="codigo" type="text" placeholder="Código" required style="margin-bottom:10px; width:90%;"><br>
-            <input name="nova_senha" type="password" placeholder="Nova senha" required style="margin-bottom:10px; width:90%;"><br>
-            <button class="bt-trsenha" type="submit">Trocar senha</button>
-          </form>
-          <button onclick="fecharPopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:18px; cursor:pointer;">&times;</button>
-          <div id="msg-codigo" style="margin-top:10px; color:#038654;"></div>
+            <div id="msg-email"></div>
+
+            <div class="back-to-login">
+                <a href="<?php echo url('/loginForm'); ?>">
+                    <i class="fas fa-arrow-left"></i> Voltar para o Login
+                </a>
+            </div>
         </div>
     </div>
 
@@ -402,6 +374,7 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
             <div id="codigo-teste-modal"></div>
         </div>
     </div>
+
 
     <!-- Modal de sucesso -->
     <div id="popup-sucesso" class="modal-overlay">

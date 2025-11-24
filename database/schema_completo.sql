@@ -1,10 +1,11 @@
 -- ================================================
 -- Script Completo de Criacao do Banco de Dados - VetZ
 -- Sistema de Gestao Veterinaria e Vacinacao
--- Versao: 2.0 (Consolidado)
+-- Versao: 2.1 (Com Reset Completo)
 -- Data: 2025-11-24
 -- ================================================
 -- Este script contem TUDO necessario para criar o banco:
+-- - RESET COMPLETO do banco (DROP)
 -- - Estrutura de tabelas
 -- - Dados iniciais
 -- - Views
@@ -12,8 +13,31 @@
 -- - Triggers
 -- ================================================
 
--- Criar banco de dados
-CREATE DATABASE IF NOT EXISTS vetz CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- ================================================
+-- RESET COMPLETO DO BANCO DE DADOS
+-- ATENCAO: Isso vai APAGAR TODOS OS DADOS!
+-- ================================================
+
+-- Remover triggers primeiro (para evitar erros de dependencia)
+DROP TRIGGER IF EXISTS trg_validar_data_vacinacao;
+
+-- Remover procedures
+DROP PROCEDURE IF EXISTS sp_vacinas_pendentes;
+DROP PROCEDURE IF EXISTS sp_relatorio_vacinacao;
+
+-- Remover views
+DROP VIEW IF EXISTS v_historico_vacinacao;
+DROP VIEW IF EXISTS v_vacinacao_por_pet;
+
+-- Remover tabelas na ordem correta (respeitando foreign keys)
+DROP TABLE IF EXISTS vacinacao;
+DROP TABLE IF EXISTS registro_vacina;
+DROP TABLE IF EXISTS pets;
+DROP TABLE IF EXISTS usuarios;
+
+-- Remover e recriar o banco de dados
+DROP DATABASE IF EXISTS vetz;
+CREATE DATABASE vetz CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE vetz;
 
 -- ================================================

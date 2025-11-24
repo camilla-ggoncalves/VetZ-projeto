@@ -90,6 +90,27 @@ $sugestoesVacinas = [
             padding: 12px 16px !important;
             background: #f8fdf8 !important;
             font-size: 15px;
+            height: auto !important;
+            min-height: 48px !important;
+        }
+        .form-control select,
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23038654' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 12px;
+            padding-right: 40px !important;
+        }
+        .form-control option {
+            padding: 10px;
+            background: white;
+            color: #333;
+        }
+        .form-control option:first-child {
+            color: #999;
         }
         .form-control:focus {
             border-color: #038654 !important;
@@ -264,8 +285,8 @@ $sugestoesVacinas = [
 
                 <div class="form-group mb-4">
                     <label><i class="fas fa-vial"></i> Tipo de Vacina *</label>
-                    <select class="form-control" name="id_vacina" required>
-                        <option value="">Selecione a vacina</option>
+                    <select class="form-control" name="id_vacina" required style="color: #999;">
+                        <option value="" disabled selected>Selecione a vacina</option>
                         <?php if (isset($vacinas) && !empty($vacinas)): ?>
                             <?php foreach ($vacinas as $vac): ?>
                                 <option value="<?= $vac['id_vacina'] ?>" 
@@ -285,8 +306,8 @@ $sugestoesVacinas = [
 
                 <div class="form-group mb-4">
                     <label><i class="fas fa-paw"></i> Pet *</label>
-                    <select class="form-control" name="id_pet" required <?= empty($pets) ? 'disabled' : '' ?>>
-                        <option value="">Selecione o pet</option>
+                    <select class="form-control" name="id_pet" required <?= empty($pets) ? 'disabled' : '' ?> style="color: #999;">
+                        <option value="" disabled selected>Selecione o pet</option>
                         <?php if (!empty($pets)): ?>
                             <?php foreach ($pets as $pet): ?>
                                 <?php
@@ -367,6 +388,26 @@ $sugestoesVacinas = [
     <script src="<?php echo url('/views/js/jquery.scrollTo-min.js'); ?>"></script>
     <script src="<?php echo url('/views/js/jquery.nav.js'); ?>"></script>
     <script src="<?php echo url('/views/js/scripts.js'); ?>"></script>
+
+    <script>
+        // Mudar cor do select quando uma opcao for selecionada
+        $(document).ready(function() {
+            $('select.form-control').on('change', function() {
+                if ($(this).val() !== '') {
+                    $(this).css('color', '#333');
+                } else {
+                    $(this).css('color', '#999');
+                }
+            });
+
+            // Definir cor inicial baseado no valor atual
+            $('select.form-control').each(function() {
+                if ($(this).val() !== '' && $(this).val() !== null) {
+                    $(this).css('color', '#333');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

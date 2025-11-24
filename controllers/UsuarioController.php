@@ -25,29 +25,53 @@ class UsuarioController {
     }
 
    public function login() {
-    $email = isset($_POST['email']) ? $_POST['email'] : null;
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $email = isset($_POST['email']) ? trim($_POST['email']) : null;
     $senha = isset($_POST['senha']) ? $_POST['senha'] : null;
 
+    // Validacao de campos vazios
     if (!$email || !$senha) {
-        echo "Por favor, preencha email e senha.";
+        $erro = "Por favor, preencha todos os campos.";
+        include __DIR__ . '/../views/login.php';
+        return;
+    }
+
+    // Validacao de formato de email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erro = "Por favor, insira um e-mail valido.";
+        include __DIR__ . '/../views/login.php';
         return;
     }
 
     $model = new Usuario();
-    $usuario = $model->autenticar($email, $senha);
+    $resultado = $model->autenticar($email, $senha);
 
-    if ($usuario) {
-        session_start();
-        $_SESSION['user_id'] = $usuario['id'];
-        $_SESSION['user_name'] = $usuario['nome'];
-        $_SESSION['user_email'] = $usuario['email']; // ADICIONE ESTA LINHA
-        
-        // Redireciona para homepage apos login
-        redirect('/homepage');
-    } else {
-        $_SESSION['erro'] = "Credenciais invalidas.";
+    // Verifica se houve erro na autenticacao
+    if (isset($resultado['error'])) {
+        switch ($resultado['error']) {
+            case 'usuario_nao_encontrado':
+                $erro = "Usuario nao encontrado. Verifique o e-mail digitado.";
+                break;
+            case 'senha_incorreta':
+                $erro = "Senha incorreta. Tente novamente ou recupere sua senha.";
+                break;
+            default:
+                $erro = "Erro ao realizar login. Tente novamente.";
+        }
         include __DIR__ . '/../views/login.php';
+        return;
     }
+
+    // Login bem-sucedido
+    $_SESSION['user_id'] = $resultado['id'];
+    $_SESSION['user_name'] = $resultado['nome'];
+    $_SESSION['user_email'] = $resultado['email'];
+
+    // Redireciona para homepage apos login
+    redirect('/homepage');
 }
 
     public function enviarCodigo() {

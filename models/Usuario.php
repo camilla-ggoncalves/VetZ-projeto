@@ -32,10 +32,18 @@ class Usuario {
         $stmt->execute([':email' => $email]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
-            return $usuario;
+        // Usuario nao encontrado
+        if (!$usuario) {
+            return ['error' => 'usuario_nao_encontrado'];
         }
-        return false;
+
+        // Senha incorreta
+        if (!password_verify($senha, $usuario['senha'])) {
+            return ['error' => 'senha_incorreta'];
+        }
+
+        // Autenticacao bem-sucedida
+        return $usuario;
     }
 
     public function buscarPorEmail($email) {

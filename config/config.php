@@ -12,11 +12,11 @@ $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
 $requestUri = $_SERVER['REQUEST_URI'] ?? '';
 
 // Detecta o diretorio base automaticamente
-// Ex: /VetZ-projeto/public/index.php -> /VetZ-projeto
-if (preg_match('#^(/[^/]+)/#', $scriptName, $matches)) {
+// Ex: /projeto/vetz/public/index.php -> /projeto/vetz
+if (preg_match('#^(.*)/public/index\.php$#', $scriptName, $matches)) {
     $baseDir = $matches[1];
-    // Verifica se nao esta na raiz do htdocs
-    if ($baseDir !== '/index.php' && $baseDir !== '/public') {
+    // Verifica se nao esta na raiz do servidor
+    if ($baseDir !== '' && $baseDir !== '/') {
         define('BASE_URL', $baseDir);
     } else {
         define('BASE_URL', '');

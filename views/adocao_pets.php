@@ -1,7 +1,10 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/config.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Garante que as variáveis sempre existam
+// Garante que as variaveis sempre existam
 $isLoggedIn = isset($_SESSION['user_id']);
 $userName = $_SESSION['user_name'] ?? '';
 ?>
@@ -13,15 +16,15 @@ $userName = $_SESSION['user_name'] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>Adoção - VetZ</title>
+    <title>Adocao - VetZ</title>
 
     <!-- CSS -->
-    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <link href="<?php echo url('/views/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/all.min.css'); ?>" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
-    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    <link rel="icon" type="image/svg+xml" href="<?php echo url('/views/images/logo_vetz.svg'); ?>">
+    <link rel="alternate icon" type="image/png" href="<?php echo url('/views/images/logoPNG.png'); ?>">
 
                         
 <style>
@@ -139,6 +142,41 @@ $userName = $_SESSION['user_name'] ?? '';
   #vitdogs-container .card p {
     margin: 5px 0;
     font-size: 14px;
+  }
+
+  /* Loader */
+  .loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: 40px;
+  }
+
+  .loader {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #038654;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .loader-text {
+    margin-top: 20px;
+    color: #666;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .content-hidden {
+    display: none !important;
   }
 
   /* Menu principal */
@@ -291,26 +329,35 @@ $userName = $_SESSION['user_name'] ?? '';
         <div class="row">
             <div class="col-md-12">
                 <div id="vitdogs-container">
-                  <div class="filters">
-                    <select id="speciesFilter" class="filter-btn btn-menu">
-                      <option value="">Todas as espécies</option>
-                      <option value="dog">Cachorro</option>
-                      <option value="cat">Gato</option>
-                    </select>
-                    <select id="ageFilter" class="filter-btn btn-menu">
-                      <option value="">Todas as idades</option>
-                      <option value="baby">Filhote</option>
-                      <option value="young">Jovem</option>
-                      <option value="adult">Adulto</option>
-                      <option value="senior">Idoso</option>
-                    </select>
-                    <select id="genderFilter" class="filter-btn btn-menu">
-                      <option value="">Todos os sexos</option>
-                      <option value="male">Macho</option>
-                      <option value="female">Fêmea</option>
-                    </select>
+                  <!-- Loader -->
+                  <div id="pets-loader" class="loader-container">
+                    <div class="loader"></div>
+                    <div class="loader-text">Carregando pets para adocao...</div>
                   </div>
-                  <div class="pet-list" id="petList"></div>
+
+                  <!-- Conteudo (inicialmente oculto) -->
+                  <div id="pets-content" class="content-hidden">
+                    <div class="filters">
+                      <select id="speciesFilter" class="filter-btn btn-menu">
+                        <option value="">Todas as espécies</option>
+                        <option value="dog">Cachorro</option>
+                        <option value="cat">Gato</option>
+                      </select>
+                      <select id="ageFilter" class="filter-btn btn-menu">
+                        <option value="">Todas as idades</option>
+                        <option value="baby">Filhote</option>
+                        <option value="young">Jovem</option>
+                        <option value="adult">Adulto</option>
+                        <option value="senior">Idoso</option>
+                      </select>
+                      <select id="genderFilter" class="filter-btn btn-menu">
+                        <option value="">Todos os sexos</option>
+                        <option value="male">Macho</option>
+                        <option value="female">Fêmea</option>
+                      </select>
+                    </div>
+                    <div class="pet-list" id="petList"></div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -371,6 +418,12 @@ $userName = $_SESSION['user_name'] ?? '';
     function displayPets(pets) {
       const petList = document.getElementById("petList");
       petList.innerHTML = "";
+
+      // Esconder loader e mostrar conteudo
+      const loader = document.getElementById("pets-loader");
+      const content = document.getElementById("pets-content");
+      if (loader) loader.style.display = "none";
+      if (content) content.classList.remove("content-hidden");
 
       if (!pets || pets.length === 0) {
         petList.innerHTML = "<p>Nenhum pet encontrado.</p>";

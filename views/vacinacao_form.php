@@ -1,13 +1,15 @@
 <?php
-require_once '../controllers/VacinacaoController.php';
-require_once '../controllers/PetController.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../controllers/VacinacaoController.php';
+require_once __DIR__ . '/../controllers/PetController.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Proteção
+// Protecao
 if (!isset($_SESSION['user_id'])) {
-    header('Location: /projeto/vetz/login');
-    exit;
+    redirect('/loginForm');
 }
 
 $vacinacaoController = new VacinacaoController();
@@ -15,6 +17,9 @@ $petController = new PetController();
 
 $id = $_GET['id'] ?? null;
 $vacinacao = $id ? $vacinacaoController->buscarPorId($id) : null;
+
+// Pega o pet_id da URL se vier da carteirinha
+$pet_id_url = $_GET['pet_id'] ?? null;
 
 // Carrega pets do usuário logado
 $pets = $petController->listarPorUsuario($_SESSION['user_id']);
@@ -50,148 +55,14 @@ $sugestoesVacinas = [
     <title>Nova vacinação - VetZ</title>
 
     <!-- CSS -->
-    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <link href="<?php echo url('/views/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/all.min.css'); ?>" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
-    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    <link rel="icon" type="image/svg+xml" href="<?php echo url('/views/images/logo_vetz.svg'); ?>">
+    <link rel="alternate icon" type="image/png" href="<?php echo url('/views/images/logoPNG.png'); ?>">
 
     <style>
-/* Menu principal */
-.left-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 20px;
-}
-
-.left-menu li a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-.left-menu li a:hover {
-    color: #007bff;
-}
-
-/* Menu hamburguer do usuário */
-.user-menu-wrapper {
-    position: relative;
-}
-
-.btn-user-toggle {
-    background: none;
-    border: 2px solid #333;
-    border-radius: 5px;
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-user-toggle:hover {
-    background: #333;
-    color: white;
-}
-
-.btn-user-toggle i {
-    font-size: 20px;
-}
-
-/* Dropdown do usuário */
-.user-dropdown {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    min-width: 220px;
-    display: none;
-    z-index: 1000;
-}
-
-.user-dropdown.show {
-    display: block;
-    animation: fadeInDown 0.3s ease;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.user-dropdown-header {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    background: #f8f9fa;
-    border-radius: 8px 8px 0 0;
-}
-
-.user-greeting {
-    font-weight: 600;
-    color: #333;
-    font-size: 16px;
-}
-
-.user-dropdown-body {
-    padding: 10px 0;
-}
-
-.user-dropdown-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #333;
-    transition: background 0.3s;
-    gap: 10px;
-}
-
-.user-dropdown-item:hover {
-    background: #f8f9fa;
-}
-
-.user-dropdown-item img {
-    width: 20px;
-    height: 20px;
-}
-
-.user-dropdown-item i {
-    width: 20px;
-    text-align: center;
-}
-
-.user-dropdown-item.logout {
-    color: #dc3545;
-    border-top: 1px solid #eee;
-}
-
-.user-dropdown-item.logout:hover {
-    background: #ffe6e6;
-}
-
-/* Responsivo */
-@media (max-width: 991px) {
-    .d-none {
-        display: none !important;
-    }
-    
-    .left-menu {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
         .page-title {
             font-family: 'Poppins-Bold';
             color: #038654;
@@ -248,6 +119,7 @@ $sugestoesVacinas = [
         .btn-submit:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(3,134,84,0.4);
+            color: #000;
         }
         .back-btn {
             position: absolute;
@@ -322,8 +194,8 @@ $sugestoesVacinas = [
     <?php include __DIR__ . '/navbar.php'; ?>
     <!--End Header-->
 
-    <!-- Botão voltar -->
-    <a href="/projeto/vetz/listar-vacinas" class="back-btn">
+    <!-- Botao voltar -->
+    <a href="<?php echo url('/list-vacinas'); ?>" class="back-btn">
         <i class="fas fa-arrow-left"></i>
     </a>
 
@@ -352,12 +224,12 @@ $sugestoesVacinas = [
             <div class="alert alert-info">
                 <i class="fas fa-info-circle"></i> 
                 <strong>Nenhum pet cadastrado!</strong> Você precisa cadastrar um pet antes de registrar vacinações. 
-                <a href="/projeto/vetz/formulario" class="btn btn-primary btn-sm ml-2">Cadastrar Pet</a>
+                <a href="<?php echo url('/formulario'); ?>" class="btn btn-primary btn-sm ml-2">Cadastrar Pet</a>
             </div>
         <?php endif; ?>
 
         <div class="form-card">
-            <form action="/projeto/vetz/salvar-vacina" method="POST">
+            <form action="<?php echo url('/salvar-vacina'); ?>" method="POST">
                 <?php if ($id): ?>
                     <input type="hidden" name="id" value="<?= $id ?>">
                 <?php endif; ?>
@@ -366,20 +238,28 @@ $sugestoesVacinas = [
                     <div class="col-md-6">
                         <div class="form-group mb-4">
                             <label><i class="fas fa-calendar-alt"></i> Data da Aplicação *</label>
-                            <input type="date" class="form-control" name="data" 
-                                   value="<?= isset($vacinacao['data']) ? htmlspecialchars($vacinacao['data']) : '' ?>" 
+                            <input type="date" class="form-control" name="data"
+                                   value="<?= isset($vacinacao['data']) ? htmlspecialchars($vacinacao['data']) : '' ?>"
                                    required max="<?= date('Y-m-d') ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-4">
-                            <label><i class="fas fa-prescription-bottle-alt"></i> Número de Doses *</label>
-                            <input type="number" class="form-control" name="doses" min="1" max="10" 
-                                   value="<?= isset($vacinacao['doses']) ? htmlspecialchars($vacinacao['doses']) : '1' ?>" 
-                                   required>
-                            <small class="form-text text-muted">Número total de doses aplicadas</small>
+                            <label><i class="fas fa-calendar-plus"></i> Próxima Dose</label>
+                            <input type="date" class="form-control" name="proxima_dose"
+                                   value="<?= isset($vacinacao['proxima_dose']) ? htmlspecialchars($vacinacao['proxima_dose']) : '' ?>"
+                                   min="<?= date('Y-m-d') ?>">
+                            <small class="form-text text-muted">Data prevista para a próxima dose (opcional)</small>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label><i class="fas fa-prescription-bottle-alt"></i> Número de Doses *</label>
+                    <input type="number" class="form-control" name="doses" min="1" max="10"
+                           value="<?= isset($vacinacao['doses']) ? htmlspecialchars($vacinacao['doses']) : '1' ?>"
+                           required>
+                    <small class="form-text text-muted">Número total de doses aplicadas</small>
                 </div>
 
                 <div class="form-group mb-4">
@@ -409,9 +289,17 @@ $sugestoesVacinas = [
                         <option value="">Selecione o pet</option>
                         <?php if (!empty($pets)): ?>
                             <?php foreach ($pets as $pet): ?>
-                                <option value="<?= $pet['id'] ?>" 
-                                    <?= (isset($vacinacao['id_pet']) && $vacinacao['id_pet'] == $pet['id']) ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($pet['nome']) ?> (<?= htmlspecialchars($pet['especie'] ?? 'N/A') ?>)
+                                <?php
+                                // Pré-seleciona se vier da URL ou se for edição
+                                $selected = false;
+                                if (isset($vacinacao['id_pet']) && $vacinacao['id_pet'] == $pet['id']) {
+                                    $selected = true;
+                                } elseif (isset($pet_id_url) && $pet_id_url == $pet['id']) {
+                                    $selected = true;
+                                }
+                                ?>
+                                <option value="<?= $pet['id'] ?>" <?= $selected ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($pet['nome']) ?> (<?= htmlspecialchars($pet['raca'] ?? 'N/A') ?>)
                                 </option>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -445,15 +333,14 @@ $sugestoesVacinas = [
                               placeholder="Observações adicionais sobre a vacinação"><?= isset($vacinacao['observacoes']) ? htmlspecialchars($vacinacao['observacoes']) : '' ?></textarea>
                 </div>
 
-                <button type="submit" class="btn-submit" <?= empty($pets) ? 'disabled' : '' ?>
-                    href="/projeto/vetz/views/perfil-pet">
+                <button type="submit" class="btn-submit" <?= empty($pets) ? 'disabled' : '' ?>>
                     <i class="fas fa-save"></i>
-                    <?= $id ? "Atualizar Vacinação" : "Salvar Vacinação" ?>
+                    <?= $id ? "Atualizar Vacinacao" : "Salvar Vacinacao" ?>
                 </button>
 
                 <?php if (empty($pets)): ?>
                 <div class="text-center mt-3">
-                    <a href="/projeto/vetz/cadastrar-pet" class="btn btn-primary">
+                    <a href="<?php echo url('/formulario'); ?>" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Cadastrar Pet Primeiro
                     </a>
                 </div>
@@ -476,10 +363,10 @@ $sugestoesVacinas = [
     <!--End footer-->
 
     <!-- Load JS =============================-->
-    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
-    <script src="/projeto/vetz/views/js/scripts.js"></script>
+    <script src="<?php echo url('/views/js/jquery-3.3.1.min.js'); ?>"></script>
+    <script src="<?php echo url('/views/js/jquery.scrollTo-min.js'); ?>"></script>
+    <script src="<?php echo url('/views/js/jquery.nav.js'); ?>"></script>
+    <script src="<?php echo url('/views/js/scripts.js'); ?>"></script>
 
 </body>
 </html>

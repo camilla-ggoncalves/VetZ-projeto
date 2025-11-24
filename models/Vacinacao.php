@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database_site.php';
+require_once __DIR__ . '/../config/database_site.php';
 
 class Vacinacao {
     private $conn;
@@ -19,25 +19,27 @@ class Vacinacao {
         }
     }
 
-    public function cadastrar($data, $doses, $id_vacina, $id_pet) {
-        $query = "INSERT INTO vacinacao (data_vacinacao, doses, id_vacina, id_pet)
-                  VALUES (:data, :doses, :id_vacina, :id_pet)";
+    public function cadastrar($data, $doses, $id_vacina, $id_pet, $proxima_dose = null) {
+        $query = "INSERT INTO vacinacao (data_vacinacao, proxima_dose, doses, id_vacina, id_pet)
+                  VALUES (:data, :proxima_dose, :doses, :id_vacina, :id_pet)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':data', $data);
+        $stmt->bindParam(':proxima_dose', $proxima_dose);
         $stmt->bindParam(':doses', $doses);
         $stmt->bindParam(':id_vacina', $id_vacina);
         $stmt->bindParam(':id_pet', $id_pet);
-        
+
         return $stmt->execute();
     }
 
-    public function editar($id, $data, $doses, $id_vacina, $id_pet) {
-        $query = "UPDATE vacinacao 
-                  SET data = :data, doses = :doses, id_vacina = :id_vacina, id_pet = :id_pet
+    public function editar($id, $data, $doses, $id_vacina, $id_pet, $proxima_dose = null) {
+        $query = "UPDATE vacinacao
+                  SET data_vacinacao = :data, proxima_dose = :proxima_dose, doses = :doses, id_vacina = :id_vacina, id_pet = :id_pet
                   WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':data', $data);
+        $stmt->bindParam(':proxima_dose', $proxima_dose);
         $stmt->bindParam(':doses', $doses);
         $stmt->bindParam(':id_vacina', $id_vacina);
         $stmt->bindParam(':id_pet', $id_pet);
@@ -77,11 +79,11 @@ class Vacinacao {
     }
 
     public function listar() {
-        $sql = "SELECT 
-                v.id, 
-                v.data, 
-                v.doses, 
-                rv.vacina AS nome_vacina, 
+        $sql = "SELECT
+                v.id,
+                v.data_vacinacao,
+                v.doses,
+                rv.vacina AS nome_vacina,
                 p.nome AS nome_pet,
                 u.nome AS nome_tutor
             FROM vacinacao v
@@ -93,10 +95,11 @@ class Vacinacao {
     }
 
     public function listarPorPet($id_pet) {
-        $sql = "SELECT v.id, v.data, v.doses, rv.vacina AS nome_vacina
+        $sql = "SELECT v.id, v.data_vacinacao, v.proxima_dose, v.doses, rv.vacina AS nome_vacina
                 FROM vacinacao v
                 INNER JOIN registro_vacina rv ON v.id_vacina = rv.id_vacina
-                WHERE v.id_pet = :id_pet";
+                WHERE v.id_pet = :id_pet
+                ORDER BY v.data_vacinacao DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id_pet', $id_pet);
         $stmt->execute();
@@ -104,7 +107,7 @@ class Vacinacao {
     }
 
     public function getProximaVacina($id_pet) {
-        $sql = "SELECT * FROM vacinacao WHERE id_pet = :id_pet AND data >= NOW() ORDER BY data ASC LIMIT 1";
+        $sql = "SELECT * FROM vacinacao WHERE id_pet = :id_pet AND data_vacinacao >= NOW() ORDER BY data_vacinacao ASC LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id_pet', $id_pet);
         $stmt->execute();

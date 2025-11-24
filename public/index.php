@@ -4,16 +4,33 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once '../controllers/PetController.php';
-require_once '../controllers/UsuarioController.php';
-require_once '../controllers/VacinacaoController.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../controllers/PetController.php';
+require_once __DIR__ . '/../controllers/UsuarioController.php';
+require_once __DIR__ . '/../controllers/VacinacaoController.php';
 
-$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// ---------------- ROTAS DINÂMICAS ------------------
+// Remove o BASE_URL do request para normalizar as rotas
+// Isso permite que as mesmas rotas funcionem em qualquer ambiente
+if (BASE_URL !== '' && strpos($requestUri, BASE_URL) === 0) {
+    $request = substr($requestUri, strlen(BASE_URL));
+} else {
+    $request = $requestUri;
+}
 
-// Editar Pet (formulário GET e atualização POST)
-if (preg_match('#^/projeto/vetz/update-pet/(\d+)$#', $request, $matches)) {
+// Garante que o request comece com /
+if (empty($request) || $request === '') {
+    $request = '/';
+}
+if ($request[0] !== '/') {
+    $request = '/' . $request;
+}
+
+// ---------------- ROTAS DINAMICAS ------------------
+
+// Editar Pet (formulario GET e atualizacao POST)
+if (preg_match('#^/update-pet/(\d+)$#', $request, $matches)) {
     $controller = new PetController();
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $controller->showUpdateForm($matches[1]);
@@ -24,14 +41,17 @@ if (preg_match('#^/projeto/vetz/update-pet/(\d+)$#', $request, $matches)) {
 }
 
 // Excluir Pet
-if (preg_match('#^/projeto/vetz/delete-pet/(\d+)$#', $request, $matches)) {
+if (preg_match('#^/delete-pet/(\d+)$#', $request, $matches)) {
     (new PetController())->deletePetById($matches[1]);
     exit;
 }
 
 // Editar Vacina
-if (preg_match('#^/projeto/vetz/editar-vacina/(\d+)$#', $request, $matches)) {
-    $controller = new VacinacaoController();
+if (preg_match('#^/editar-vacina/(\d+)$#', $request, $matches)) {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    $idUsuario = $_SESSION['user_id'] ?? null;
+    $controller = new VacinacaoController($idUsuario);
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller->editar(
             $matches[1],
@@ -39,53 +59,58 @@ if (preg_match('#^/projeto/vetz/editar-vacina/(\d+)$#', $request, $matches)) {
             $_POST['doses'],
             $_POST['id_vacina'],
             $_POST['id_pet'],
-            $_POST['id_usuario']
+            $_POST['proxima_dose'] ?? null
         );
     } else {
         $vacina = $controller->buscarPorId($matches[1]);
-        include '../views/vacinacao/editar.php';
+        include __DIR__ . '/../views/update_vacinacao.php';
     }
     exit;
 }
 
 // Excluir Vacina
-if (preg_match('#^/projeto/vetz/excluir-vacina/(\d+)$#', $request, $matches)) {
-    (new VacinacaoController())->excluir($matches[1]);
+if (preg_match('#^/excluir-vacina/(\d+)$#', $request, $matches)) {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    $idUsuario = $_SESSION['user_id'] ?? null;
+    (new VacinacaoController($idUsuario))->excluir($matches[1]);
     exit;
 }
 
-// Atualizar Usuário - Exibir formulário
-if (preg_match('#^/projeto/vetz/update-usuario/(\d+)$#', $request, $matches) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+// Perfil do Usuario Logado
+if ($request === '/perfil-usuario') {
+    (new UsuarioController())->perfilUsuario();
+    exit;
+}
+
+// Atualizar Usuario - Exibir formulario
+if (preg_match('#^/update-usuario/(\d+)$#', $request, $matches) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    (new UsuarioController())->editarForm($matches[1]);
+    exit;
+}
+
+// Atualizar Usuario - Processar POST
+if (preg_match('#^/update-usuario/(\d+)$#', $request, $matches) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $dados = $_POST;
     $dados['id'] = $matches[1];
     (new UsuarioController())->atualizar($dados, $_FILES);
     exit;
 }
 
-// Atualizar Usuário - Processar POST
-if (preg_match('#^/projeto/vetz/update-usuario/(\d+)$#', $request, $matches) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $dados = $_POST;
-    $dados['id'] = $matches[1];
-    (new UsuarioController())->atualizar($dados, $_FILES);
-    exit;
-}
-
-// Excluir Pet Vinculado às Vacinações
-elseif ($request === '/projeto/vetz/delete-pet') {
+// Excluir Pet Vinculado as Vacinacoes
+if ($request === '/delete-pet') {
     $controller = new PetController();
     if (isset($_GET['id'])) {
         $controller->deletePetById($_GET['id']);
     } else {
-        echo "ID não fornecido para exclusão.";
+        echo "ID nao fornecido para exclusao.";
     }
     exit;
 }
 
-
-// Carteirinha individual de vacinação do pet
-if (preg_match('#^/projeto/vetz/vacinacao-pet/(\d+)$#', $request, $matches)) {
-    session_start();
-    $idUsuario = $_SESSION['usuario_id'] ?? null;
+// Carteirinha individual de vacinacao do pet
+if (preg_match('#^/vacinacao-pet/(\d+)$#', $request, $matches)) {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    $idUsuario = $_SESSION['user_id'] ?? null;
     $idPet = $matches[1];
 
     $controller = new VacinacaoController($idUsuario);
@@ -99,133 +124,139 @@ if (preg_match('#^/projeto/vetz/vacinacao-pet/(\d+)$#', $request, $matches)) {
 // ---------------- ROTAS FIXAS ------------------
 switch ($request) {
 
-    // Guilherme A
-    case '/projeto/vetz/recuperarForm':
-        include '../views/recuperar.php';
+    // Rota raiz - redireciona para homepage
+    case '/':
+        include __DIR__ . '/../views/homepage.php';
         break;
 
-    case '/projeto/vetz/cadastrar':
+    // Guilherme A
+    case '/recuperarForm':
+        include __DIR__ . '/../views/recuperar.php';
+        break;
+
+    case '/cadastrar':
         (new UsuarioController())->cadastrar();
         break;
 
-    case '/projeto/vetz/cadastrarForm':
+    case '/cadastrarForm':
         (new UsuarioController())->cadastrarForm();
         break;
 
-    case '/projeto/vetz/loginForm':
+    case '/loginForm':
         (new UsuarioController())->loginForm();
         break;
 
-    case '/projeto/vetz/login':
+    case '/login':
         (new UsuarioController())->login();
         break;
 
-    case '/projeto/vetz/logout':
+    case '/logout':
         session_start();
         session_destroy();
-        header('Location: /projeto/vetz/');
-        exit;
+        redirect('/');
         break;
 
-    case '/projeto/vetz/enviarCodigo':
+    case '/enviarCodigo':
         (new UsuarioController())->enviarCodigo();
         break;
 
-    case '/projeto/vetz/verificarCodigo':
+    case '/verificarCodigo':
         (new UsuarioController())->verificarCodigo();
         break;
 
-    case '/projeto/vetz/redefinirSenha':
+    case '/redefinirSenha':
         (new UsuarioController())->redefinirSenha();
         break;
 
     // Camilla chefona
-    case '/projeto/vetz/formulario':
+    case '/formulario':
         (new PetController())->showForm();
         break;
 
-    case '/projeto/vetz/save-pet':
+    case '/save-pet':
         (new PetController())->savePet();
         break;
 
-    case '/projeto/vetz/list-pet':
+    case '/list-pet':
         (new PetController())->listPet();
         break;
 
-    case '/projeto/vetz/update-pet':
+    case '/update-pet':
         (new PetController())->updatePet();
         break;
-    
-    case '/projeto/vetz/cadastrar-vacina':
-        (new VacinacaoController())->exibirFormulario();
+
+    case '/cadastrar-vacina':
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $usuarioId = $_SESSION['user_id'] ?? null;
+        (new VacinacaoController($usuarioId))->listVacina();
         break;
 
-    case '/projeto/vetz/salvar-vacina':
+    case '/nova-vacina':
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $usuarioId = $_SESSION['user_id'] ?? null;
+        (new VacinacaoController($usuarioId))->exibirFormulario();
+        break;
+
+    case '/salvar-vacina':
         (new VacinacaoController())->cadastrarVacina();
         break;
 
-    case '/projeto/vetz/list-vacinas':
-        (new VacinacaoController())->listVacina();
+    case '/list-vacinas':
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $usuarioId = $_SESSION['user_id'] ?? null;
+        (new VacinacaoController($usuarioId))->listVacina();
         break;
 
-    case '/projeto/vetz/curiosidades':
-        include '../views/curiosidades.php';
+    case '/curiosidades':
+        include __DIR__ . '/../views/curiosidades.php';
         break;
 
-    case '/projeto/vetz/recomendacoes':
-        include '../views/adocao_pets.php';  
+    case '/recomendacoes':
+        include __DIR__ . '/../views/adocao_pets.php';
         break;
-
-    // case '/projeto/vetz/list-ficha':
-    //     $controller = new FichaController();
-    //     $controller->listFicha();
-    //     break;
 
     // Isadora
-    case '/projeto/vetz/perfil-usuario':
+    case '/perfil-usuario':
         if (!isset($_GET['id'])) {
-            echo "ID não especificado.";
+            echo "ID nao especificado.";
             exit;
         }
         $controller = new UsuarioController();
         $usuario = $controller->perfil($_GET['id']);
-        include '../views/perfil_usuario.php';
+        include __DIR__ . '/../views/perfil_usuario.php';
         break;
 
-    case '/projeto/vetz/excluir-usuario':
+    case '/excluir-usuario':
         if (!isset($_GET['id'])) {
-            echo "ID não especificado.";
+            echo "ID nao especificado.";
             exit;
         }
         $controller = new UsuarioController();
         $sucesso = $controller->excluir($_GET['id']);
-        echo $sucesso ? "Usuário excluído com sucesso." : "Erro ao excluir usuário.";
+        echo $sucesso ? "Usuario excluido com sucesso." : "Erro ao excluir usuario.";
         break;
 
-    case '/projeto/vetz/perfil':
-
-        break;
-    
-    case '/projeto/vetz/homepage':
-        include '../views/homepage.php';
+    case '/perfil':
         break;
 
-    case '/projeto/vetz/sobre-nos':
-        include '../views/sobre_nos.php';
+    case '/homepage':
+        include __DIR__ . '/../views/homepage.php';
         break;
 
-    case '/projeto/vetz/pets-exibir':
-        include '../views/exibicao_pets.php';
+    case '/sobre-nos':
+        include __DIR__ . '/../views/sobre_nos.php';
         break;
 
-            case '/projeto/vetz/pets-perfil':
-        include '../views/perfil_pet.php';
+    case '/pets-exibir':
+        include __DIR__ . '/../views/exibicao_pets.php';
+        break;
+
+    case '/pets-perfil':
+        include __DIR__ . '/../views/perfil_pet.php';
         break;
 
     default:
         http_response_code(404);
-        echo "Página não encontrada: $request";
+        echo "Pagina nao encontrada: $request";
         break;
-
-        //teste
 }

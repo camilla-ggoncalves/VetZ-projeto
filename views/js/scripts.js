@@ -233,6 +233,12 @@ $(window).on("load", function () {
     recentList.innerHTML = "";
     oldList.innerHTML = "";
 
+    // Esconder loader e mostrar conteudo
+    const loader = document.getElementById("videos-loader");
+    const content = document.getElementById("videos-content");
+    if (loader) loader.style.display = "none";
+    if (content) content.classList.remove("content-hidden");
+
     function criarItem(video) {
       const title = (video.snippet.title || "").replace(/#[^\s#]+/g, "").trim();
       const videoId = video.id && video.id.videoId ? video.id.videoId : "";

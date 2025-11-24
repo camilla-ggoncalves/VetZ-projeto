@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . '/../config/config.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -7,95 +13,271 @@
   <title>Cadastro - VetZ</title>
 
     <!-- CSS -->
-    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <link href="<?php echo url('/views/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/all.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/navbar.css'); ?>" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
-    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
+    <link rel="icon" type="image/svg+xml" href="<?php echo url('/views/images/logo_vetz.svg'); ?>">
+    <link rel="alternate icon" type="image/png" href="<?php echo url('/views/images/logoPNG.png'); ?>">
 
-</head>
-         <!-- #region -->
-  <!-- CSS NAVBAR -->
   <style>
+    body {
+      background: linear-gradient(135deg, #B5E7A0 0%, #86C67C 100%);
+      font-family: 'Poppins', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
     .header {
-      position: relative;
+      flex-shrink: 0;
     }
-    .navbar {
-      padding: 15px 0;
+
+    .footer {
+      flex-shrink: 0;
+      margin-top: auto;
     }
-    .navbar .container {
+
+    main {
+      flex: 1;
       display: flex;
+      justify-content: center;
       align-items: center;
+      padding: 40px 20px;
     }
-    .navbar .navbar-expand-lg {
+
+    .cadastro-box {
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      padding: 50px 40px;
+      max-width: 480px;
       width: 100%;
+      position: relative;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cadastro-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .cadastro-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #B5E7A0, #86C67C);
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 4px 15px rgba(3, 134, 84, 0.3);
     }
-    .logomenu {
-      max-height: 50px;
+
+    .cadastro-icon i {
+      font-size: 40px;
+      color: #fff;
     }
-    .left-menu {
-      display: flex;
-      list-style: none;
-      margin: 0;
+
+    .cadastro-title {
+      color: #038654;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .cadastro-subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #038654;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-group label i {
+      margin-right: 5px;
+    }
+
+    form input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    form input:focus {
+      outline: none;
+      border-color: #038654;
+      box-shadow: 0 0 0 4px rgba(3, 134, 84, 0.1);
+    }
+
+    .senha-container {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .senha-container input {
+      margin-bottom: 0;
+      padding-right: 50px;
+    }
+
+    .toggle-senha {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #666;
       padding: 0;
-      gap: 20px;
+      transition: all 0.2s;
     }
-    .left-menu li a {
-      text-decoration: none;
+
+    .toggle-senha:hover {
+      color: #038654;
+    }
+
+    .tooltip-senha {
+      position: absolute;
+      top: 50%;
+      right: -240px;
+      transform: translateY(-50%);
+      width: 220px;
+      background-color: #ffffff;
       color: #333;
-      font-weight: 500;
-      transition: color 0.3s;
+      border: 1px solid #cde7b0;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 10;
     }
-    .left-menu li a:hover {
-      color: #007bff;
+
+    .tooltip-senha.mostrar {
+      opacity: 1;
+      pointer-events: auto;
     }
+
+    .tooltip-senha ul {
+      margin: 5px 0 0 15px;
+      padding: 0;
+    }
+
+    .tooltip-senha li {
+      list-style-type: disc;
+    }
+
+    .mensagem-forca {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 5px 0 15px 5px;
+      text-align: left;
+    }
+
+    .fraca { color: #ff4d4d; }
+    .media { color: #e6b800; }
+    .forte { color: #2e8b57; }
+
+    .erro-senha {
+      display: block;
+      font-size: 13px;
+      margin: 5px 0 15px 5px;
+      color: #ff4d4d;
+    }
+
+    .cadastrar {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #038654, #55974A);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(3, 134, 84, 0.3);
+    }
+
+    .cadastrar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(3, 134, 84, 0.4);
+      color: #000;
+    }
+
     .btn-avancar-login {
       display: block;
-      margin: 25px auto 0 auto;
-      padding: 9px 29px;
+      margin: 15px auto 0;
+      padding: 12px 30px;
       background: #fff;
       color: #038654;
       border: 2px solid #038654;
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 14px;
-      font-family: 'Poppins-SemiBold', Arial, sans-serif;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px rgba(3,134,84,0.08);
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
+
     .btn-avancar-login:hover {
       background: #038654;
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(3,134,84,0.15);
+      color: #000;
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(3, 134, 84, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .cadastro-box {
+        padding: 35px 25px;
+      }
+
+      .cadastro-title {
+        font-size: 24px;
+      }
+
+      .tooltip-senha {
+        display: none;
+      }
     }
   </style>
 
-  <!-- JS NAVBAR -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const userMenuToggle = document.getElementById('userMenuToggle');
-      const userDropdown = document.getElementById('userDropdown');
-      if (userMenuToggle && userDropdown) {
-        userMenuToggle.addEventListener('click', function(e) {
-          e.stopPropagation();
-          userDropdown.classList.toggle('show');
-        });
-        document.addEventListener('click', function(e) {
-          if (!userMenuToggle.contains(e.target) && !userDropdown.contains(e.target)) {
-            userDropdown.classList.remove('show');
-          }
-        });
-        userDropdown.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
-      }
-    });
-  </script>
+</head>
+
+<body>
 
     <!--Begin Header-->
     <?php include __DIR__ . '/navbar.php'; ?>
@@ -104,17 +286,22 @@
   <!-- Conteúdo principal -->
   <main>
     <div class="cadastro-box">
-      <h2 class="cadastro-title">Registrar-se</h2>
+      <div class="cadastro-header">
+        <div class="cadastro-icon">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h2 class="cadastro-title">Criar Conta</h2>
+        <p class="cadastro-subtitle">Preencha os dados para se cadastrar</p>
+      </div>
 
-      <form action="/projeto/vetz/cadastrar" method="POST" id="formCadastro">
-
-        <input type="text" name="nome" placeholder="Digite seu nome" required>
-        <input type="email" name="email" placeholder="Digite seu e-mail" required>
+      <form action="<?php echo url('/cadastrar'); ?>" method="POST" id="formCadastro">
+        <input type="text" name="nome" placeholder="Nome completo" required>
+        <input type="email" name="email" placeholder="E-mail" required>
 
         <!-- Campo de senha com tooltip e olhinho -->
         <div class="senha-container">
           <input type="password" id="senha" name="senha"
-            placeholder="Digite sua senha"
+            placeholder="Senha"
             required minlength="8"
             pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}"
             title="Mínimo 8 caracteres, contendo uma letra maiúscula, uma minúscula, um número e um caractere especial.">
@@ -138,9 +325,16 @@
         <p id="mensagem-forca" class="mensagem-forca">Digite uma senha</p>
         <span id="erro-senha" class="erro-senha"></span>
 
-        <button type="submit" class="cadastrar">Cadastrar</button>
+        <button type="submit" class="cadastrar">
+          <i class="fas fa-user-check"></i> Cadastrar
+        </button>
       </form>
-      <button type="button" class="btn-avancar-login" onclick="window.location.href='/projeto/vetz/views/login.php'">Já tenho conta</button>
+
+      <div style="text-align: center;">
+        <a href="<?php echo url('/loginForm'); ?>" class="btn-avancar-login">
+          <i class="fas fa-sign-in-alt"></i> Já tenho conta
+        </a>
+      </div>
     </div>
   </main>
 
@@ -158,10 +352,89 @@
     <!--End footer-->
 
   <!-- Load JS =============================-->
-  <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-  <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
-  <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
-  <script src="/projeto/vetz/views/js/scripts.js"></script>
+  <script src="<?php echo url('/views/js/jquery-3.3.1.min.js'); ?>"></script>
+  <script src="<?php echo url('/views/js/jquery.scrollTo-min.js'); ?>"></script>
+  <script src="<?php echo url('/views/js/jquery.nav.js'); ?>"></script>
+  <script src="<?php echo url('/views/js/scripts.js'); ?>"></script>
+
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // Toggle senha
+    const senhaInput = document.getElementById('senha');
+    const toggleSenha = document.getElementById('toggleSenha');
+    const tooltipSenha = document.getElementById('tooltip-senha');
+
+    toggleSenha.addEventListener('click', () => {
+      const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      senhaInput.setAttribute('type', tipo);
+      toggleSenha.innerHTML = tipo === 'password' ? '🐵' : '🙈';
+    });
+
+    // Tooltip
+    senhaInput.addEventListener('focus', () => {
+      tooltipSenha.classList.add('mostrar');
+    });
+
+    senhaInput.addEventListener('blur', () => {
+      tooltipSenha.classList.remove('mostrar');
+    });
+
+    // Verificação de força da senha
+    senhaInput.addEventListener('input', () => {
+      const senha = senhaInput.value;
+      const msgForca = document.getElementById('mensagem-forca');
+      const erroSenha = document.getElementById('erro-senha');
+
+      if (senha.length === 0) {
+        msgForca.textContent = 'Digite uma senha';
+        msgForca.className = 'mensagem-forca';
+        erroSenha.textContent = '';
+        return;
+      }
+
+      let forca = 0;
+      if (senha.length >= 8) forca++;
+      if (/[a-z]/.test(senha)) forca++;
+      if (/[A-Z]/.test(senha)) forca++;
+      if (/\d/.test(senha)) forca++;
+      if (/[^A-Za-z0-9]/.test(senha)) forca++;
+
+      if (forca <= 2) {
+        msgForca.textContent = 'Senha fraca';
+        msgForca.className = 'mensagem-forca fraca';
+      } else if (forca <= 4) {
+        msgForca.textContent = 'Senha média';
+        msgForca.className = 'mensagem-forca media';
+      } else {
+        msgForca.textContent = 'Senha forte';
+        msgForca.className = 'mensagem-forca forte';
+      }
+    });
+
+    // Validação no submit
+    document.getElementById('formCadastro').addEventListener('submit', (e) => {
+      const senha = senhaInput.value;
+      const erroSenha = document.getElementById('erro-senha');
+
+      const requisitos = {
+        tamanho: senha.length >= 8,
+        maiuscula: /[A-Z]/.test(senha),
+        minuscula: /[a-z]/.test(senha),
+        numero: /\d/.test(senha),
+        especial: /[^A-Za-z0-9]/.test(senha)
+      };
+
+      const valida = Object.values(requisitos).every(Boolean);
+
+      if (!valida) {
+        e.preventDefault();
+        erroSenha.textContent = 'A senha não atende aos requisitos mínimos.';
+      } else {
+        erroSenha.textContent = '';
+      }
+    });
+  </script>
 
 </body>
 </html>

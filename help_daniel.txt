@@ -14,8 +14,6 @@ o que está dando problema:
 - ter e exibir o perfil do usuário;
 - logout do usuário;
 
-arquivos que talvez não sejam necessário:
-- os de update 
-- os de list
-- check-auth
-- conexao
+possível problema é as rotas, onde vai ser necessário refatorar, acredito que fazer um esquema utilizando base_url
+
+Uma informação que pode ajudar na refatoração das rotas é que o projeto roda utilizando XAMPP dentro da HTDOCS

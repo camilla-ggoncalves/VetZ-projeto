@@ -206,47 +206,13 @@ if (session_status() === PHP_SESSION_NONE) {
       border-radius: 10px;
       margin-bottom: 20px;
       font-size: 14px;
-      text-align: left;
+      text-align: center;
     }
 
     .message-error {
       background: #f8d7da;
       color: #721c24;
       border-left: 4px solid #dc3545;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      animation: shake 0.5s ease;
-    }
-
-    .message-error i {
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .message-warning {
-      background: #fff3cd;
-      color: #856404;
-      border-left: 4px solid #ffc107;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .message-warning i {
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-      20%, 40%, 60%, 80% { transform: translateX(5px); }
-    }
-
-    .form-control.error {
-      border-color: #dc3545 !important;
-      animation: shake 0.5s ease;
     }
 
     @media (max-width: 768px) {
@@ -282,8 +248,7 @@ if (session_status() === PHP_SESSION_NONE) {
       <form action="<?php echo url('/login'); ?>" method="POST">
         <?php if (isset($erro)): ?>
           <div class="message message-error">
-            <i class="fas fa-exclamation-circle"></i>
-            <span><?= htmlspecialchars($erro) ?></span>
+            <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($erro) ?>
           </div>
         <?php endif; ?>
 

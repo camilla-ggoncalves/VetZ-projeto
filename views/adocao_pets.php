@@ -30,7 +30,7 @@ $userName = $_SESSION['user_name'] ?? '';
 <style>
   .section08{
   position: relative;
-  padding-top: 115px;
+  padding-top: 15px;
   padding-bottom: 562px;
   background-color: #f3faed;
   background-size: cover;

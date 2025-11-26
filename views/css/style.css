@@ -448,10 +448,7 @@ R .left-menu {
   font-size: 40px;
   line-height: 52px;
   margin: 0 auto;
-  /* Centraliza horizontalmente */
-  padding: 68px 0 10px 0;
-  text-align: center;
-  /* Centraliza o texto dentro do elemento */
+  text-align: left;
   color: #038654;
 }
 

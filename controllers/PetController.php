@@ -1,6 +1,7 @@
 <?php
-require_once '../models/Pet.php';
-require_once '../models/Vacinacao.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../models/Pet.php';
+require_once __DIR__ . '/../models/Vacinacao.php';
 
 class PetController
 {
@@ -34,7 +35,7 @@ class PetController
     }
 
     public function showForm() {
-        include '../views/pet_form.php';
+        include __DIR__ . '/../views/pet_form.php';
     }
 
     public function savePet() {
@@ -56,9 +57,8 @@ class PetController
         $pet->id_usuario = $_SESSION['user_id'];
 
         if (empty($pet->nome)) {
-            $_SESSION['error_message'] = 'Preencha todos os campos obrigatórios.';
-            header('Location: /projeto/vetz/cadastrar-pet');
-            exit;
+            $_SESSION['error_message'] = 'Preencha todos os campos obrigatorios.';
+            redirect('/formulario');
         }
 
         if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
@@ -77,52 +77,70 @@ class PetController
 
         if ($pet->save()) {
             $_SESSION['success_message'] = 'Pet cadastrado com sucesso!';
-            header('Location: /projeto/vetz/list-pet');
-            exit;
+            redirect('/list-pet');
         } else {
             $_SESSION['error_message'] = 'Erro ao cadastrar o pet.';
-            header('Location: /projeto/vetz/cadastrar-pet');
-            exit;
+            redirect('/formulario');
         }
     }
 
     public function listPet() {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /projeto/vetz/login');
-            exit;
+            redirect('/loginForm');
         }
 
         try {
-            $pets = $this->petModel->getPetsByUsuario($_SESSION['user_id']);
-            include '../views/pet_list.php';
+            // Paginação
+            $petsPerPage = 6;
+            $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $currentPage = max(1, $currentPage);
+
+            $allPets = $this->petModel->getPetsByUsuario($_SESSION['user_id']);
+            $totalPets = count($allPets);
+            $totalPages = ceil($totalPets / $petsPerPage);
+            $offset = ($currentPage - 1) * $petsPerPage;
+
+            // Pegar apenas os pets da página atual
+            $pets = array_slice($allPets, $offset, $petsPerPage);
+
+            // Buscar quantidade de vacinas para cada pet
+            $vacinacaoModel = new Vacinacao();
+            foreach ($pets as $key => $pet) {
+                $vacinas = $vacinacaoModel->listarPorPet($pet['id']);
+                $pets[$key]['total_vacinas'] = count($vacinas);
+            }
+            unset($key, $pet);
+
+            include __DIR__ . '/../views/pet_list.php';
         } catch (Exception $e) {
             $_SESSION['error_message'] = 'Erro ao carregar lista de pets.';
-            include '../views/pet_list.php';
+            $pets = [];
+            $currentPage = 1;
+            $totalPages = 0;
+            $totalPets = 0;
+            include __DIR__ . '/../views/pet_list.php';
         }
     }
 
     public function showUpdateForm($id) {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /projeto/vetz/login');
-            exit;
+            redirect('/loginForm');
         }
 
         if (!$this->petModel->pertenceAoUsuario($id, $_SESSION['user_id'])) {
-            $_SESSION['error_message'] = 'Pet não encontrado ou acesso negado.';
-            header('Location: /projeto/vetz/list-pet');
-            exit;
+            $_SESSION['error_message'] = 'Pet nao encontrado ou acesso negado.';
+            redirect('/list-pet');
         }
 
         $pet = $this->petModel->getById($id);
 
         if ($pet) {
-            include '../views/update_pet.php';
+            include __DIR__ . '/../views/update_pet.php';
         } else {
-            $_SESSION['error_message'] = 'Pet não encontrado.';
-            header('Location: /projeto/vetz/list-pet');
-            exit;
+            $_SESSION['error_message'] = 'Pet nao encontrado.';
+            redirect('/list-pet');
         }
     }
 
@@ -135,8 +153,7 @@ class PetController
 
         if (!$this->petModel->pertenceAoUsuario($petId, $_SESSION['user_id'])) {
             $_SESSION['error_message'] = 'Acesso negado.';
-            header('Location: /projeto/vetz/list-pet');
-            exit;
+            redirect('/list-pet');
         }
 
         $pet = new Pet();
@@ -160,12 +177,10 @@ class PetController
 
         if ($pet->update()) {
             $_SESSION['success_message'] = 'Pet atualizado com sucesso!';
-            header('Location: /projeto/vetz/list-pet');
-            exit;
+            redirect('/list-pet');
         } else {
             $_SESSION['error_message'] = 'Erro ao atualizar o pet.';
-            header('Location: /projeto/vetz/editar-pet?id=' . $petId);
-            exit;
+            redirect('/update-pet/' . $petId);
         }
     }
 
@@ -186,20 +201,18 @@ class PetController
         $pet['user_name'] = $_SESSION['user_name'];
         $pet['user_email'] = $_SESSION['user_email'];
 
-        include '../views/perfil_pet.php';
+        include __DIR__ . '/../views/perfil_pet.php';
     }
 
     public function deletePetById($id) {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (!isset($_SESSION['user_id'])) {
-            header('Location: /projeto/vetz/login');
-            exit;
+            redirect('/loginForm');
         }
 
         if (!$this->petModel->pertenceAoUsuario($id, $_SESSION['user_id'])) {
             $_SESSION['error_message'] = 'Acesso negado.';
-            header('Location: /projeto/vetz/list-pet');
-            exit;
+            redirect('/list-pet');
         }
 
         $naoTemVacinas = $this->petModel->verificarVacinas($id);
@@ -207,16 +220,15 @@ class PetController
         if ($naoTemVacinas) {
             $this->petModel->id = $id;
             if ($this->petModel->delete()) {
-                $_SESSION['success_message'] = 'Pet excluído com sucesso!';
+                $_SESSION['success_message'] = 'Pet excluido com sucesso!';
             } else {
                 $_SESSION['error_message'] = 'Erro ao excluir o pet.';
             }
         } else {
-            $_SESSION['error_message'] = 'Este pet possui vacinas registradas e não pode ser excluído.';
+            $_SESSION['error_message'] = 'Este pet possui vacinas registradas e nao pode ser excluido.';
         }
 
-        header('Location: /projeto/vetz/list-pet');
-        exit;
+        redirect('/list-pet');
     }
 
     public function listarPetsComVacinas() {

@@ -1,5 +1,9 @@
-<?php 
-session_start();
+<?php
+require_once __DIR__ . '/../config/config.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $isLoggedIn = isset($_SESSION['user_id']);
 $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
@@ -24,13 +28,14 @@ function safe($value) {
     <title>Carteirinha - <?= safe($pet['nome'] ?? 'Pet Desconhecido') ?></title>
 
     <!-- CSS -->
-    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <link href="<?php echo url('/views/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/all.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/navbar.css'); ?>" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
-    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
-    
+    <link rel="icon" type="image/svg+xml" href="<?php echo url('/views/images/logo_vetz.svg'); ?>">
+    <link rel="alternate icon" type="image/png" href="<?php echo url('/views/images/logoPNG.png'); ?>">
+
 </head>
 
 <body>
@@ -47,31 +52,33 @@ function safe($value) {
 
         <!-- Informações do Pet -->
         <div class="header-info">
-            <div class="pet-photo">🐕</div>
+            <?php if (!empty($pet['imagem'])): ?>
+                <div class="pet-photo">
+                    <img src="<?php echo url('/uploads/' . htmlspecialchars($pet['imagem'])); ?>"
+                         alt="<?= safe($pet['nome']) ?>"
+                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+            <?php else: ?>
+                <div class="pet-photo">🐕</div>
+            <?php endif; ?>
 
             <h1 class="nome-pet">
                 <?= safe($pet['nome'] ?? 'Nome não informado') ?>
             </h1>
 
-            <p>Tutor: 
-                <?= safe($pet['nome_tutor'] ?? 'Desconhecido') ?>
-            </p>
-
             <div class="pet-details">
+
+                <div class="pet-detail-item">
+                    <span class="pet-detail-label">Tutor</span>
+                    <span class="pet-detail-value">
+                        <?= safe($tutor['nome'] ?? 'Desconhecido') ?>
+                    </span>
+                </div>
 
                 <div class="pet-detail-item">
                     <span class="pet-detail-label">Raça</span>
                     <span class="pet-detail-value">
                         <?= safe($pet['raca'] ?? 'Não informada') ?>
-                    </span>
-                </div>
-
-                <div class="pet-detail-item">
-                    <span class="pet-detail-label">Nascimento</span>
-                    <span class="pet-detail-value">
-                        <?= (isset($pet['data_nascimento']) && !empty($pet['data_nascimento']))
-                            ? date("d/m/Y", strtotime($pet['data_nascimento']))
-                            : 'Não informado' ?>
                     </span>
                 </div>
 
@@ -83,7 +90,7 @@ function safe($value) {
 
             <h2>
                 Carteirinha de Vacinação Digital
-                <a href="/projeto/vetz/views/vacinacao_form.php">
+                <a href="<?php echo url('/cadastrar-vacina?pet_id=' . ($pet['id'] ?? '')); ?>">
                     <button class="edit-btn">✏️ Registrar Vacinas</button>
                 </a>
             </h2>
@@ -123,11 +130,11 @@ function safe($value) {
                             <td><?= safe($v['doses']) ?></td>
 
                             <td>
-                                <?= isset($v['data']) ? date("d/m/Y", strtotime($v['data'])) : '---' ?>
+                                <?= isset($v['data_vacinacao']) && !empty($v['data_vacinacao']) ? date("d/m/Y", strtotime($v['data_vacinacao'])) : '---' ?>
                             </td>
 
                             <td>
-                                <?= isset($v['data']) ? date("d/m/Y", strtotime($v['data'] . " + 1 year")) : '---' ?>
+                                <?= isset($v['proxima_dose']) && !empty($v['proxima_dose']) ? date("d/m/Y", strtotime($v['proxima_dose'])) : '---' ?>
                             </td>
                         </tr>
 
@@ -156,10 +163,10 @@ function safe($value) {
     <!--End footer-->
 
     <!-- Load JS =============================-->
-    <script src="/projeto/vetz/views/js/jquery-3.3.1.min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.scrollTo-min.js"></script>
-    <script src="/projeto/vetz/views/js/jquery.nav.js"></script>
-    <script src="/projeto/vetz/views/js/scripts.js"></script>
+    <script src="<?php echo url('/views/js/jquery-3.3.1.min.js'); ?>"></script>
+    <script src="<?php echo url('/views/js/jquery.scrollTo-min.js'); ?>"></script>
+    <script src="<?php echo url('/views/js/jquery.nav.js'); ?>"></script>
+    <script src="<?php echo url('/views/js/scripts.js'); ?>"></script>
 
 </body>
 </html>

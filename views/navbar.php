@@ -1,54 +1,61 @@
 <?php
-// Navbar padrão para todas as páginas
+// Navbar padrao para todas as paginas
+require_once __DIR__ . '/../config/config.php';
 $isLoggedIn = isset($_SESSION['user_id']);
 $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
+$userId = $isLoggedIn ? $_SESSION['user_id'] : '';
 ?>
 <header class="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar navbar-expand-lg">
-                <a href="/projeto/vetz/" rel="home">
-                    <img class="logomenu" src="/projeto/vetz/views/images/logo_vetz.svg" alt="VET Z" title="VetZ">
-                </a>
-                <div class="navbar-collapse collapse d-none d-lg-flex" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto left-menu">
-                        <li><a href="/projeto/vetz/homepage">HOME PAGE</a></li>
-                        <li><a href="/projeto/vetz/sobre-nos">SOBRE NÓS</a></li>
-                        <li><a href="/projeto/vetz/curiosidades">CURIOSIDADES</a></li>
-                        <li><a href="/projeto/vetz/recomendacoes">ADOÇÃO</a></li>
-                        <li><a href="/projeto/vetz/cadastrar-vacina">VACINAÇÃO</a></li>
-                    </ul>
-                </div>
-                <div class="user-menu-wrapper ml-auto">
-                    <?php if ($isLoggedIn): ?>
-                        <button class="btn-user-toggle" type="button" id="userMenuToggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <div class="user-dropdown" id="userDropdown">
-                            <div class="user-dropdown-header">
-                                <span class="user-greeting">Olá, <?php echo htmlspecialchars($userName); ?></span>
-                            </div>
-                            <div class="user-dropdown-body">
-                                <a class="user-dropdown-item" href="/projeto/vetz/views/perfil_usuario.php">
-                                    <img src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                                    Acessar Perfil
-                                </a>
-                                <a class="user-dropdown-item logout" href="/projeto/vetz/logout.php">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    Sair
-                                </a>
-                            </div>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <ul class="left-menu">
+                <li><a href="<?php echo url('/homepage'); ?>">HOME</a></li>
+                <li><a href="<?php echo url('/sobre-nos'); ?>">SOBRE NOS</a></li>
+                <?php if ($isLoggedIn): ?>
+                    <li><a href="<?php echo url('/list-pet'); ?>">MEUS PETS</a></li>
+                    <li><a href="<?php echo url('/cadastrar-vacina'); ?>">VACINACAO</a></li>
+                <?php endif; ?>
+                <li><a href="<?php echo url('/curiosidades'); ?>">CURIOSIDADES</a></li>
+                <li><a href="<?php echo url('/recomendacoes'); ?>">ADOCAO</a></li>
+            </ul>
+
+            <div class="user-menu-wrapper">
+                <?php if ($isLoggedIn): ?>
+                    <button class="btn-user-toggle" type="button" id="userMenuToggle">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <span class="user-greeting">Ola, <?php echo htmlspecialchars($userName); ?></span>
                         </div>
-                    <?php else: ?>
-                        <a class="btn btn-menu" href="/projeto/vetz/cadastrarForm" role="button">
-                            <img class="imgperfil" src="/projeto/vetz/views/images/icone_perfil.png" alt="Perfil">
-                            CADASTRO
-                        </a>
-                    <?php endif; ?>
-                </div>
+                        <div class="user-dropdown-body">
+                            <a class="user-dropdown-item" href="<?php echo url('/perfil-usuario?id=' . $userId); ?>">
+                                <i class="fas fa-user-circle"></i>
+                                Meu Perfil
+                            </a>
+                            <a class="user-dropdown-item" href="<?php echo url('/list-pet'); ?>">
+                                <i class="fas fa-paw"></i>
+                                Meus Pets
+                            </a>
+                            <a class="user-dropdown-item" href="<?php echo url('/list-vacinas'); ?>">
+                                <i class="fas fa-syringe"></i>
+                                Minhas Vacinacoes
+                            </a>
+                            <a class="user-dropdown-item logout" href="<?php echo url('/logout'); ?>">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <a class="btn-cadastro" href="<?php echo url('/loginForm'); ?>">
+                        <i class="fas fa-sign-in-alt"></i>
+                        LOGIN
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
 </header>
-<link href="/projeto/vetz/views/css/navbar.css" rel="stylesheet">
-<script src="/projeto/vetz/views/js/navbar.js"></script>
+<link href="<?php echo url('/views/css/navbar.css'); ?>" rel="stylesheet">
+<script src="<?php echo url('/views/js/navbar.js'); ?>"></script>

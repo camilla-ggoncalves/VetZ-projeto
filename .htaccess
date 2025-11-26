@@ -1,4 +1,13 @@
+# Desabilitar listagem de diretorios
+Options -Indexes
+
+# Habilitar rewrite
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ public/index.php [L]
+RewriteBase /projeto/vetz/
+
+# Permitir acesso direto a arquivos reais (uploads, css, js, etc)
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Redirecionar tudo mais para public/index.php
+RewriteRule ^(.*)$ public/index.php [L,QSA]

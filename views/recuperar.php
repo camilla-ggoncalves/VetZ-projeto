@@ -1,347 +1,501 @@
-<?php 
-session_start();
+<?php
+require_once __DIR__ . '/../config/config.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $isLoggedIn = isset($_SESSION['user_id']);
 $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Recuperar Senha - VetZ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - VetZ</title>
+
     <!-- CSS -->
-    <link href="/projeto/vetz/views/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/style.css" rel="stylesheet">
-    <link href="/projeto/vetz/views/css/all.min.css" rel="stylesheet">
+    <link href="<?php echo url('/views/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/all.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo url('/views/css/navbar.css'); ?>" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/projeto/vetz/views/images/logo_vetz.svg">
-    <link rel="alternate icon" type="image/png" href="/projeto/vetz/views/images/logoPNG.png">
-    
-   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-    }
-    .topo {
-  background-color: #ffffff;
-  border-bottom: 2px solid #d8e8cc;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-}
+    <link rel="icon" type="image/svg+xml" href="<?php echo url('/views/images/logo_vetz.svg'); ?>">
+    <link rel="alternate icon" type="image/png" href="<?php echo url('/views/images/logoPNG.png'); ?>">
 
-.logo-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    <style>
+        body {
+            background: linear-gradient(135deg, #B5E7A0 0%, #86C67C 100%);
+            font-family: 'Poppins', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-.logo-box img {
-  width: 40px;
-  height: 40px;
-}
+        .header {
+            flex-shrink: 0;
+        }
 
-.titulo {
-  font-size: 20px;
-  font-weight: bold;
-  color: #4b7942;
-}
+        .footer {
+            flex-shrink: 0;
+            margin-top: auto;
+        }
 
-    body {
-      background-color: #fdfcea;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 100vh;
-    }
-      
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      border-bottom: 2px solid #b1b1b1;
-    }
+        .recovery-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
 
-    .logo {
-      height: 60px;
-    }
-.voltar {
-  background-color: #d4f1c5;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  color: #2d5c24;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+        .recovery-card {
+            background: #fff;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            padding: 50px 40px;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
 
-.voltar:hover {
-  background-color: #bde9ad;
-}
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-   
-  
+        .recovery-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
 
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-    }
+        .recovery-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #B5E7A0, #86C67C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(3, 134, 84, 0.3);
+        }
 
-    .box {
-      background: linear-gradient(#ffffff, #fcfcfc);
-      border-radius: 20px;
-      box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
-      padding: 30px;
-      width: 400px;
-      text-align: center;
-    }
+        .recovery-icon i {
+            font-size: 40px;
+            color: #fff;
+        }
 
-    .box h2 {
-      font-size: 24px;
-      color: #464b78;
-      margin-bottom: 20px;
-    }
-  <link rel="stylesheet" href="views\css\style.css">
+        .recovery-header h1 {
+            color: #038654;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-    .box p {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 15px;
-      font-size: 15px;
-      color: #333;
-      margin-bottom: 30px;
-    }
+        .recovery-header p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
 
-    .campo-codigo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 16px;
-    }
+        .form-group {
+            margin-bottom: 25px;
+        }
 
-    .campo-codigo label {
-      font-weight: bold;
-      color: #464b78;
-    }
+        .form-group label {
+            display: block;
+            color: #038654;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
 
-    .campo-codigo input {
-      padding: 10px;
-      border-radius: 15px;
-      border: none;
-      width: 120px;
-      text-align: center;
-      font-size: 16px;
-      background-color: #ffffff;
-      box-shadow: 0 0 4px rgba(0,0,0,0.1);
-    }
+        .form-group label i {
+            margin-right: 5px;
+        }
 
-    footer {
-  text-align: center;
-  padding: 15px;
-  background-color: #eaf7dc;
-  color: #4a6542;
-  font-size: 14px;
-  border-top: 1px solid #cfe8b6;
-}
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #038654;
+            box-shadow: 0 0 0 4px rgba(3, 134, 84, 0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #B5E7A0, #86C67C);
+            color: #038654;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(3, 134, 84, 0.4);
+            color: #000;
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
 
 
-    .icons {
-      position: absolute;
-      right: 20px;
-      top: 10px;
-    }
+        .back-to-login {
+            text-align: center;
+            margin-top: 25px;
+        }
 
-    .icons img {
-      width: 24px;
-      margin-left: 10px;
-    }
-    .envcod {
-      background-color: #7ADEA7;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-    .bt-trsenha{
-      background-color: #7ADEA7;
-      color: #fff;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+        .back-to-login a {
+            color: #038654;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
 
-    @media (max-width: 480px) {
-      .box {
-        width: 90%;
-      }
-    }
-  </style>
+        .back-to-login a:hover {
+            color: #55974A;
+            gap: 8px;
+        }
 
+        .message {
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .message-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #038654;
+        }
+
+        .message-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .code-display {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #856404;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Modal Popup */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            color: #038654;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .modal-header p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .recovery-card {
+                padding: 35px 25px;
+            }
+
+            .recovery-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-
- <header class="topo">
-    <div class="logo-box">
-      <img src="views/images/logo_vetz.svg" alt="Logo da Clínica" />
-      <span class="titulo">VetZ</span>
-    </div>
-    <button class="voltar" onclick="history.back()">VOLTAR</button>
-  </header>
-
-    <!--Begin Header-->
+    <!-- Header -->
     <?php include __DIR__ . '/navbar.php'; ?>
-    <!--End Header-->
 
+    <div class="recovery-container">
+        <div class="recovery-card">
+            <div class="recovery-header">
+                <div class="recovery-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h1>Recuperar Senha</h1>
+                <p>Digite seu e-mail cadastrado e enviaremos um código para redefinir sua senha</p>
+            </div>
 
-  <main>
-    <div class="box">
-      <h2>Recuperando a senha</h2>
-      <p>Será enviado um código para recuperação de senha no email. (exemplo: marc*********@gmail.com)</p>
+            <form id="form-email">
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        E-mail
+                    </label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           class="form-control"
+                           placeholder="seu@email.com"
+                           required>
+                </div>
 
-      <form id="form-email" action="/projeto/vetz/enviarCodigo" method="POST">
-        <input name="email" id="email" type="email" placeholder="Digite seu e-mail" required>
-        <button class= "envcod" >Enviar código</button>
-      </form>
+                <button type="submit" class="btn-submit" id="btn-enviar">
+                    <i class="fas fa-paper-plane"></i> Enviar Código
+                </button>
+            </form>
 
-      <div id="popup-codigo" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:30px; border-radius:15px; width:300px; margin:auto; text-align:center; position:relative;">
-          <h3>Digite o código recebido</h3>
-          <form id="form-codigo" action="/projeto/vetz/verificarCodigo" method="POST">
-            <input name="email" id="popup-email" type="hidden">
-            <input name="codigo" type="text" placeholder="Código" required style="margin-bottom:10px; width:90%;"><br>
-            <input name="nova_senha" type="password" placeholder="Nova senha" required style="margin-bottom:10px; width:90%;"><br>
-            <button class="bt-trsenha" type="submit">Trocar senha</button>
-          </form>
-          <button onclick="fecharPopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:18px; cursor:pointer;">&times;</button>
-          <div id="msg-codigo" style="margin-top:10px; color:#038654;"></div>
+            <div id="msg-email"></div>
+
+            <div class="back-to-login">
+                <a href="<?php echo url('/loginForm'); ?>">
+                    <i class="fas fa-arrow-left"></i> Voltar para o Login
+                </a>
+            </div>
         </div>
-      </div>
-
-      <div id="popup-codigo" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
-  <div style="background:#fff; padding:30px; border-radius:15px; width:300px; margin:auto; text-align:center; position:relative;">
-    <h3>Digite o código recebido</h3>
-    <form action="/projeto/vetz/verificarCodigo" method="POST">
-      <input name="email" id="popup-recupera" type="hidden">
-      <input name="codigo" type="text" placeholder="Código" required style="margin-bottom:10px; width:90%;"><br>
-      <input name="nova_senha" type="password" placeholder="Nova senha" required style="margin-bottom:10px; width:90%;"><br>
-      <button class="bt-trsenha"type="submit">Trocar senha</button>
-    </form>
-    <button onclick="fecharPopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:18px; cursor:pointer;">&times;</button>
-  </div>
-</div>
-
-      <!-- Novo popup de sucesso -->
-      <div id="popup-sucesso" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:2000; align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:30px; border-radius:15px; width:300px; margin:auto; text-align:center; position:relative;">
-          <h3 style="color:#038654;">Senha alterada com sucesso!</h3>
-          <button  onclick="fecharPopupSucesso()" style="margin-top:20px; background:#038654; color:#fff; border:none; border-radius:8px; padding:10px 20px; cursor:pointer;" >OK</button>
-        </div>
-      </div>
-
-      <div id="msg-email" style="margin-top:15px; color:#038654;"></div>
-      <div id="codigo-teste" style="margin-top:10px; color:#b00; font-weight:bold;"></div>
     </div>
-  </main>
-        
-    <!-- Begin footer-->
+
+    <!-- Modal para digitar código -->
+    <div id="popup-codigo" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharPopup()">&times;</button>
+
+            <div class="modal-header">
+                <h3>Digite o Código</h3>
+                <p>Insira o código recebido no seu e-mail e defina uma nova senha</p>
+            </div>
+
+            <form id="form-codigo">
+                <input type="hidden" name="email" id="popup-email">
+
+                <div class="form-group">
+                    <label for="codigo">
+                        <i class="fas fa-lock"></i>
+                        Código de Verificação
+                    </label>
+                    <input type="text"
+                           name="codigo"
+                           id="codigo"
+                           class="form-control"
+                           placeholder="Digite o código"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nova_senha">
+                        <i class="fas fa-key"></i>
+                        Nova Senha
+                    </label>
+                    <input type="password"
+                           name="nova_senha"
+                           id="nova_senha"
+                           class="form-control"
+                           placeholder="Digite sua nova senha"
+                           required>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-trocar">
+                    <i class="fas fa-check"></i> Alterar Senha
+                </button>
+            </form>
+
+            <div id="msg-codigo"></div>
+            <div id="codigo-teste-modal"></div>
+        </div>
+    </div>
+
+
+    <!-- Modal de sucesso -->
+    <div id="popup-sucesso" class="modal-overlay">
+        <div class="modal-content" style="text-align: center;">
+            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #B5E7A0, #86C67C); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <i class="fas fa-check" style="font-size: 40px; color: #fff;"></i>
+            </div>
+            <h3 style="color: #038654; margin-bottom: 15px;">Senha Alterada!</h3>
+            <p style="color: #666; margin-bottom: 25px;">Sua senha foi redefinida com sucesso.</p>
+            <button onclick="fecharPopupSucesso()" class="btn-submit">
+                <i class="fas fa-sign-in-alt"></i> Fazer Login
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <div class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <p class="footerp1">
-                        Todos os direitos reservados <span id="footer-year"></span> © - VetZ </p>
+                        Todos os direitos reservados <span id="footer-year"></span> - VetZ
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-    <!--End footer-->
 
-  <script>
-function fecharPopup() {
-  document.getElementById('popup-codigo').style.display = 'none';
-}
-function fecharPopupSucesso() {
-  document.getElementById('popup-sucesso').style.display = 'none';
-  window.location.href="/projeto/vetz/loginForm"
-  
-}
+    <!-- Scripts -->
+    <script src="<?php echo url('/views/js/jquery-3.3.1.min.js'); ?>"></script>
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-// Envio do e-mail para receber o código
-document.getElementById('form-email').onsubmit = function(e) {
-  e.preventDefault();
-  var email = document.getElementById('email').value;
-  var btn = this.querySelector('button');
-  btn.disabled = true;
-  btn.innerText = 'Enviando...';
-  fetch('/projeto/vetz/enviarCodigo', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: 'email=' + encodeURIComponent(email)
-  })
-  .then(r => r.text())
-  .then(codigo => {
-    document.getElementById('msg-email').innerText = 'Código enviado para o e-mail!';
-    document.getElementById('popup-email').value = email;
-    document.getElementById('popup-codigo').style.display = 'flex';
-    btn.disabled = false;
-    btn.innerText = 'Enviar código';
-    // Exibe o código na tela para teste
-    document.getElementById('codigo-teste').innerText = 'Código de recuperação: ' + codigo;
-  })
-  .catch(() => {
-    document.getElementById('msg-email').innerText = 'Erro ao enviar código.';
-    btn.disabled = false;
-    btn.innerText = 'Enviar código';
-    document.getElementById('codigo-teste').innerText = '';
-  });
-};
+        function fecharPopup() {
+            document.getElementById('popup-codigo').style.display = 'none';
+        }
 
-// Envio do código + nova senha
-document.getElementById('form-codigo').onsubmit = function(e) {
-  e.preventDefault();
-  var form = this;
-  var dados = new FormData(form);
-  var btn = form.querySelector('button');
-  btn.disabled = true;
-  btn.innerText = 'Verificando...';
-  fetch('/projeto/vetz/verificarCodigo', {
-    method: 'POST',
-    body: new URLSearchParams([...dados])
-  })
-  .then(r => r.text())
-  .then(msg => {
-    document.getElementById('msg-codigo').innerText = msg;
-    if (msg.includes('sucesso')) {
-      fecharPopup();
-      // Mostra o popup de sucesso
-      document.getElementById('popup-sucesso').style.display = 'flex';
-      // Opcional: fechar automaticamente após 2 segundos
-      // setTimeout(() => { fecharPopupSucesso(); }, 2000);
-    }
-    btn.disabled = false;
-    btn.innerText = 'Trocar senha';
-  })
-  .catch(() => {
-    document.getElementById('msg-codigo').innerText = 'Erro ao redefinir senha.';
-    btn.disabled = false;
-    btn.innerText = 'Trocar senha';
-  });
-};
-</script>
+        function fecharPopupSucesso() {
+            window.location.href = "<?php echo url('/loginForm'); ?>";
+        }
+
+        // Envio do e-mail
+        document.getElementById('form-email').onsubmit = function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const btn = document.getElementById('btn-enviar');
+            const msgDiv = document.getElementById('msg-email');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+            fetch('<?php echo url('/enviarCodigo'); ?>', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'email=' + encodeURIComponent(email)
+            })
+            .then(r => r.text())
+            .then(codigo => {
+                msgDiv.innerHTML = '<div class="message message-success"><i class="fas fa-check-circle"></i> Código enviado para o e-mail!</div>';
+                document.getElementById('popup-email').value = email;
+                document.getElementById('popup-codigo').style.display = 'flex';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Código';
+
+                // Exibe código para teste dentro do modal (remover em produção)
+                document.getElementById('codigo-teste-modal').innerHTML = '<div class="code-display"><i class="fas fa-info-circle"></i> Código de teste: ' + codigo + '</div>';
+            })
+            .catch(() => {
+                msgDiv.innerHTML = '<div class="message message-error"><i class="fas fa-exclamation-circle"></i> Erro ao enviar código. Verifique o e-mail.</div>';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Código';
+            });
+        };
+
+        // Verificação do código e troca de senha
+        document.getElementById('form-codigo').onsubmit = function(e) {
+            e.preventDefault();
+            const form = this;
+            const dados = new FormData(form);
+            const btn = document.getElementById('btn-trocar');
+            const msgDiv = document.getElementById('msg-codigo');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+
+            fetch('<?php echo url('/verificarCodigo'); ?>', {
+                method: 'POST',
+                body: new URLSearchParams([...dados])
+            })
+            .then(r => r.text())
+            .then(msg => {
+                if (msg.includes('sucesso')) {
+                    fecharPopup();
+                    document.getElementById('popup-sucesso').style.display = 'flex';
+                } else {
+                    msgDiv.innerHTML = '<div class="message message-error"><i class="fas fa-exclamation-circle"></i> ' + msg + '</div>';
+                }
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check"></i> Alterar Senha';
+            })
+            .catch(() => {
+                msgDiv.innerHTML = '<div class="message message-error"><i class="fas fa-exclamation-circle"></i> Erro ao redefinir senha.</div>';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check"></i> Alterar Senha';
+            });
+        };
+    </script>
 
 </body>
 </html>

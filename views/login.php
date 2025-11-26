@@ -309,11 +309,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     <!--End footer-->
 
-    <!-- Load JS =============================-->
-    <script src="<?php echo url('/views/js/jquery-3.3.1.min.js'); ?>"></script>
-    <script src="<?php echo url('/views/js/jquery.scrollTo-min.js'); ?>"></script>
-    <script src="<?php echo url('/views/js/jquery.nav.js'); ?>"></script>
-    <script src="<?php echo url('/views/js/scripts.js'); ?>"></script>
+    
 
     <script>
       document.getElementById('footer-year').textContent = new Date().getFullYear();

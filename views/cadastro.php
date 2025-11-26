@@ -352,84 +352,69 @@ if (session_status() === PHP_SESSION_NONE) {
     <!--End footer-->
 
   <!-- Load JS =============================-->
-  <script src="<?php echo url('/views/js/jquery-3.3.1.min.js'); ?>"></script>
-  <script src="<?php echo url('/views/js/jquery.scrollTo-min.js'); ?>"></script>
-  <script src="<?php echo url('/views/js/jquery.nav.js'); ?>"></script>
-  <script src="<?php echo url('/views/js/scripts.js'); ?>"></script>
-
+  
   <script>
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-    // Toggle senha
     const senhaInput = document.getElementById('senha');
+    const mensagemForca = document.getElementById('mensagem-forca');
+    const erroSenha = document.getElementById('erro-senha');
+    const tooltip = document.getElementById('tooltip-senha');
     const toggleSenha = document.getElementById('toggleSenha');
-    const tooltipSenha = document.getElementById('tooltip-senha');
+    const form = document.getElementById('formCadastro');
 
+    // Mostrar/ocultar senha
     toggleSenha.addEventListener('click', () => {
       const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
       senhaInput.setAttribute('type', tipo);
       toggleSenha.innerHTML = tipo === 'password' ? '🐵' : '🙈';
     });
 
-    // Tooltip
+    // Mostra tooltip
     senhaInput.addEventListener('focus', () => {
-      tooltipSenha.classList.add('mostrar');
+      tooltip.style.opacity = '1';
+      tooltip.style.pointerEvents = 'auto';
     });
 
+    // Esconde tooltip
     senhaInput.addEventListener('blur', () => {
-      tooltipSenha.classList.remove('mostrar');
+      tooltip.style.opacity = '0';
+      tooltip.style.pointerEvents = 'none';
     });
 
-    // Verificação de força da senha
-    senhaInput.addEventListener('input', () => {
+    // Teste de força da senha
+    senhaInput.addEventListener('input', function () {
       const senha = senhaInput.value;
-      const msgForca = document.getElementById('mensagem-forca');
-      const erroSenha = document.getElementById('erro-senha');
-
-      if (senha.length === 0) {
-        msgForca.textContent = 'Digite uma senha';
-        msgForca.className = 'mensagem-forca';
-        erroSenha.textContent = '';
-        return;
-      }
-
       let forca = 0;
+
       if (senha.length >= 8) forca++;
-      if (/[a-z]/.test(senha)) forca++;
       if (/[A-Z]/.test(senha)) forca++;
+      if (/[a-z]/.test(senha)) forca++;
       if (/\d/.test(senha)) forca++;
       if (/[^A-Za-z0-9]/.test(senha)) forca++;
 
-      if (forca <= 2) {
-        msgForca.textContent = 'Senha fraca';
-        msgForca.className = 'mensagem-forca fraca';
-      } else if (forca <= 4) {
-        msgForca.textContent = 'Senha média';
-        msgForca.className = 'mensagem-forca media';
-      } else {
-        msgForca.textContent = 'Senha forte';
-        msgForca.className = 'mensagem-forca forte';
+      if (senha.length === 0) {
+        mensagemForca.textContent = "Digite uma senha";
+        mensagemForca.style.color = "#555";
+      } else if (forca <= 2) {
+        mensagemForca.textContent = "Senha fraca";
+        mensagemForca.style.color = "red";
+      } else if (forca === 3 || forca === 4) {
+        mensagemForca.textContent = "Senha média";
+        mensagemForca.style.color = "orange";
+      } else if (forca === 5) {
+        mensagemForca.textContent = "Senha forte";
+        mensagemForca.style.color = "green";
       }
     });
 
-    // Validação no submit
-    document.getElementById('formCadastro').addEventListener('submit', (e) => {
+    // Validação personalizada no envio
+    form.addEventListener('submit', function (e) {
       const senha = senhaInput.value;
-      const erroSenha = document.getElementById('erro-senha');
+      const padrao = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}/;
 
-      const requisitos = {
-        tamanho: senha.length >= 8,
-        maiuscula: /[A-Z]/.test(senha),
-        minuscula: /[a-z]/.test(senha),
-        numero: /\d/.test(senha),
-        especial: /[^A-Za-z0-9]/.test(senha)
-      };
-
-      const valida = Object.values(requisitos).every(Boolean);
-
-      if (!valida) {
+      if (!padrao.test(senha)) {
         e.preventDefault();
-        erroSenha.textContent = 'A senha não atende aos requisitos mínimos.';
+        erroSenha.textContent = 'Senha inválida.';
+        erroSenha.style.color = "#d62828";
       } else {
         erroSenha.textContent = '';
       }

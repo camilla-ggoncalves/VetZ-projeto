@@ -9,14 +9,17 @@ $userId = $isLoggedIn ? $_SESSION['user_id'] : '';
     <nav class="navbar">
         <div class="navbar-container">
             <ul class="left-menu">
+                <a href="<?php echo url('/homepage'); ?>">
+                    <img src="<?php echo url('/views/images/logo_vetz.svg'); ?>" alt="VetZ" class="nav-logo">
+                </a>
                 <li><a href="<?php echo url('/homepage'); ?>">HOME</a></li>
-                <li><a href="<?php echo url('/sobre-nos'); ?>">SOBRE NOS</a></li>
+                <li><a href="<?php echo url('/sobre-nos'); ?>">SOBRE NÓS</a></li>
                 <?php if ($isLoggedIn): ?>
                     <li><a href="<?php echo url('/list-pet'); ?>">MEUS PETS</a></li>
-                    <li><a href="<?php echo url('/cadastrar-vacina'); ?>">VACINACAO</a></li>
+                    <li><a href="<?php echo url('/cadastrar-vacina'); ?>">VACINAÇÃO</a></li>
                 <?php endif; ?>
                 <li><a href="<?php echo url('/curiosidades'); ?>">CURIOSIDADES</a></li>
-                <li><a href="<?php echo url('/recomendacoes'); ?>">ADOCAO</a></li>
+                <li><a href="<?php echo url('/recomendacoes'); ?>">ADOÇÃO</a></li>
             </ul>
 
             <div class="user-menu-wrapper">

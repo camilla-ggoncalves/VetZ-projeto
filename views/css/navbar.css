@@ -22,6 +22,21 @@
     gap: 20px;
 }
 
+/* Brand / logo */
+.navbar-brand {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-logo {
+    height: 80px;
+    margin: 0 0 -42px 0;
+    max-width: 160px;
+    display: block;
+}
+
 .left-menu {
     display: flex;
     gap: 35px;

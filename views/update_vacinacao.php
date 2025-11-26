@@ -243,6 +243,11 @@ $pets = $petModel->getPetsByUsuario($_SESSION['user_id']);
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="proxima_dose"><i class="fas fa-calendar-plus"></i> Próxima Dose (opcional)</label>
+            <input type="date" id="proxima_dose" name="proxima_dose" value="<?= isset($vacina['proxima_dose']) && $vacina['proxima_dose'] ? htmlspecialchars($vacina['proxima_dose']) : '' ?>">
+          </div>
+
           <button type="submit" class="btn-submit">
             <i class="fas fa-save"></i> Salvar Alterações
           </button>

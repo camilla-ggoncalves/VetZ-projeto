@@ -137,6 +137,23 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
             box-shadow: 0 0 0 4px rgba(3, 134, 84, 0.1);
         }
 
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #B5E7A0, #86C67C);
+            color: #038654;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(3, 134, 84, 0.4);
@@ -308,6 +325,11 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                            required>
                 </div>
 
+                <button type="submit" class="btn-submit" id="btn-enviar">
+                    <i class="fas fa-paper-plane"></i> Enviar Código
+                </button>
+            </form>
+
             <div id="msg-email"></div>
 
             <div class="back-to-login">
@@ -318,18 +340,10 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
         </div>
     </div>
 
-      <div id="popup-codigo" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
-  <div style="background:#fff; padding:30px; border-radius:15px; width:300px; margin:auto; text-align:center; position:relative;">
-    <h3>Digite o código recebido</h3>
-    <form action="/projeto/vetz/verificarCodigo" method="POST">
-      <input name="email" id="popup-recupera" type="hidden">
-      <input name="codigo" type="text" placeholder="Código" required style="margin-bottom:10px; width:90%;"><br>
-      <input name="nova_senha" type="password" placeholder="Nova senha" required style="margin-bottom:10px; width:90%;"><br>
-      <button class="bt-trsenha"type="submit">Trocar senha</button>
-    </form>
-    <button onclick="fecharPopup()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:18px; cursor:pointer;">&times;</button>
-  </div>
-</div>
+    <!-- Modal para digitar código -->
+    <div id="popup-codigo" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharPopup()">&times;</button>
 
             <div class="modal-header">
                 <h3>Digite o Código</h3>

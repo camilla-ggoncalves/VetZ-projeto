@@ -252,8 +252,8 @@ R .left-menu {
   position: relative;
   background: linear-gradient(135deg, #FEFFEF 0%, #038654 100%);
   color: white;
-  padding-top: 108px;
-  padding-bottom: 580px;
+  padding-top: 0;
+  padding-bottom: 640px;
   text-align: center;
   z-index: 10;
   overflow: hidden;

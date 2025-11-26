@@ -48,10 +48,10 @@ $userName = $isLoggedIn ? $_SESSION['user_name'] : '';
                         <?php if (!$isLoggedIn): ?>
                             <div class="hero-buttons">
                                 <a href="<?php echo url('/cadastrarForm'); ?>" class="btn-hero">
-                                    <i class="fas fa-user-plus"></i> Comecar Gratuitamente
+                                    <i class="fas fa-user-plus"></i> Começar Gratuitamente
                                 </a>
                                 <a href="<?php echo url('/loginForm'); ?>" class="btn-hero-outline">
-                                    <i class="fas fa-sign-in-alt"></i> Ja tenho conta
+                                    <i class="fas fa-sign-in-alt"></i> Já tenho conta
                                 </a>
                             </div>
                         <?php endif; ?>
